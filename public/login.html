@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7f5">
+  <title>Connexion · BrainDump</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="login-page">
+  <!--
+  THESIS: Une entrée calme et explicite protège les pensées sans transformer la connexion en page marketing.
+  OWN-WORLD: Canvas mat presque blanc, encre charbon, filet gris chaud et une action indigo nette.
+  STORY: Le visiteur comprend la valeur pratique, voit la frontière de confidentialité et entre avec Kyros.
+  FIRST VIEWPORT: Marque discrète en haut, promesse et démonstration textuelle au centre, bouton Kyros unique et dominant.
+  FORM: Canvas documentaire centré lié à la composition approuvée, seed 769b9e62.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+  -->
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <header class="login-header">
+    <a class="brand" href="/login" aria-label="BrainDump">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M12 5.5a4 4 0 0 0-6.7 2.9A4.5 4.5 0 0 0 4 17a4 4 0 0 0 4 6.8V25a3 3 0 0 0 6 0V7.5a2 2 0 0 0-2-2Zm8 0a4 4 0 0 1 6.7 2.9A4.5 4.5 0 0 1 28 17a4 4 0 0 1-4 6.8V25a3 3 0 0 1-6 0V7.5a2 2 0 0 1 2-2Z"/>
+        <path d="M9 11.5h5M8 18h6m4-6.5h5M18 18h6M11 8v17m10-17v17"/>
+      </svg>
+      <span>BrainDump</span>
+    </a>
+  </header>
+
+  <main id="main" class="login-main">
+    <section class="login-copy" aria-labelledby="login-title">
+      <h1 id="login-title">Libère un peu d’espace.</h1>
+      <p>Dépose ce qui te traverse l’esprit. BrainDump identifie le type, la priorité, le projet et l’échéance pour que tu puisses avancer.</p>
+
+      <div class="thought-demo" aria-label="Exemple de classification d’une pensée">
+        <p>« Penser à réserver le train pour Lyon vendredi. »</p>
+        <div class="demo-result">
+          <span class="chip chip-task">Tâche</span>
+          <span class="chip chip-normal">Priorité normale</span>
+          <span class="demo-date">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v3m10-3v3M3 8h14M4 5h12a1 1 0 0 1 1 1v10H3V6a1 1 0 0 1 1-1Z"/></svg>
+            Vendredi
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-panel" aria-labelledby="access-title">
+      <div>
+        <h2 id="access-title">Retrouve tes notes</h2>
+        <p>La connexion passe par Kyros. Ton mot de passe n’est jamais saisi dans BrainDump.</p>
+      </div>
+      <div id="login-error" class="status error hidden" role="alert"></div>
+      <a id="login-button" class="button primary login-button" href="/auth/login">
+        Continuer avec Kyros
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"/></svg>
+      </a>
+      <p class="login-footnote">Tu seras redirigé vers Kyros pour confirmer ton identité.</p>
+    </section>
+  </main>
+
+  <script type="module" src="/login.js"></script>
+</body>
+</html>

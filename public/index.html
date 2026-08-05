@@ -1,48 +1,107 @@
-<!-- public/index.html -->
 <!doctype html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BrainDump</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="theme-color" content="#f7f7f5">
+  <title>Mes notes · BrainDump</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <main class="shell">
-    <header>
-      <p class="eyebrow">Capture rapide</p>
-      <h1>BrainDump</h1>
-      <p class="tagline">Pose la pensée. Le petit cerveau mécanique s'occupe du rangement.</p>
-    </header>
+  <!--
+  THESIS: Un canvas centré place les pensées avant le chrome et refuse le dashboard à navigation artificielle.
+  OWN-WORLD: Surfaces mates presque blanches, encre charbon, filets gris chauds et accent indigo réservé aux actions.
+  STORY: L’utilisateur capture, vérifie ce que BrainDump comprend, enregistre, puis relit une collection calme.
+  FIRST VIEWPORT: Barre minimale, titre et composeur compact centrés, analyse en ligne, notes aérées en deux colonnes; l’action primaire reste dans le composeur.
+  FORM: Canvas documentaire centré, troisième composition approuvée, seed 769b9e62.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+  -->
+  <a class="skip-link" href="#main">Aller au contenu</a>
 
-    <div class="layout">
-      <!-- Sidebar : composer -->
-      <aside class="sidebar">
-        <section class="composer card">
-          <label for="note">Nouvelle note</label>
-          <textarea id="note" placeholder="Ex. Corriger l'erreur 500 sur l'API Nino avant vendredi" autofocus></textarea>
-          <p class="kbd-hint"><kbd>⌘</kbd>+<kbd>↵</kbd> pour enregistrer</p>
-          <div class="actions">
-            <button id="analyze" class="secondary">Analyser</button>
-            <button id="save" class="primary">Enregistrer</button>
-          </div>
-          <div id="preview" class="preview hidden"></div>
-        </section>
-      </aside>
+  <header class="app-bar">
+    <a class="brand" href="/" aria-label="BrainDump, accueil">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M12 5.5a4 4 0 0 0-6.7 2.9A4.5 4.5 0 0 0 4 17a4 4 0 0 0 4 6.8V25a3 3 0 0 0 6 0V7.5a2 2 0 0 0-2-2Zm8 0a4 4 0 0 1 6.7 2.9A4.5 4.5 0 0 1 28 17a4 4 0 0 1-4 6.8V25a3 3 0 0 1-6 0V7.5a2 2 0 0 1 2-2Z"/>
+        <path d="M9 11.5h5M8 18h6m4-6.5h5M18 18h6M11 8v17m10-17v17"/>
+      </svg>
+      <span>BrainDump</span>
+    </a>
 
-      <!-- Contenu : notes -->
-      <section class="notes-section">
-        <div class="section-header">
-          <h2>Notes</h2>
-          <span id="counter">0 note</span>
+    <p class="top-count" id="top-counter" aria-live="polite">Chargement…</p>
+
+    <details class="account-menu">
+      <summary aria-label="Ouvrir le menu du compte">
+        <span class="avatar" id="user-avatar" aria-hidden="true">··</span>
+        <span class="account-name" id="user-name">Compte</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
+      </summary>
+      <div class="account-popover">
+        <div class="account-identity">
+          <strong id="popover-name">Compte</strong>
+          <span id="popover-username"></span>
         </div>
-        <div id="notes" class="notes"></div>
-      </section>
+        <button id="logout" class="menu-action" type="button">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H4v12h4m4-3 3-3-3-3m3 3H7"/></svg>
+          <span>Se déconnecter</span>
+        </button>
+      </div>
+    </details>
+  </header>
+
+  <main id="main" class="workspace">
+    <div class="page-heading">
+      <h1>Mes notes</h1>
+      <p>Capture maintenant, range ensuite.</p>
     </div>
+
+    <section class="composer" aria-labelledby="capture-title">
+      <h2 id="capture-title" class="sr-only">Nouvelle note</h2>
+      <label for="note">Dépose ta pensée.</label>
+      <textarea
+        id="note"
+        maxlength="5000"
+        placeholder="Réserver le train, creuser une idée, ne pas oublier…"
+        aria-describedby="composer-help character-count"
+      ></textarea>
+
+      <div id="preview" class="analysis hidden" aria-live="polite"></div>
+
+      <div class="composer-footer">
+        <div class="composer-meta">
+          <span id="character-count">0 / 5 000</span>
+          <span id="composer-help"><kbd>Ctrl</kbd> ou <kbd>⌘</kbd> + <kbd>Entrée</kbd></span>
+        </div>
+        <div class="actions">
+          <button id="analyze" class="button secondary" type="button">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.2 3.8L15 7l-3.8 1.2L10 12 8.8 8.2 5 7l3.8-1.2L10 2Zm5 9 .7 2.3L18 14l-2.3.7L15 17l-.7-2.3L12 14l2.3-.7L15 11Z"/></svg>
+            <span>Analyser</span>
+          </button>
+          <button id="save" class="button primary" type="button">
+            <span>Enregistrer</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div id="app-status" class="status hidden" role="alert"></div>
+
+    <section class="library" aria-labelledby="library-title">
+      <div class="library-heading">
+        <div>
+          <h2 id="library-title">Dernières pensées</h2>
+          <p id="counter">0 note</p>
+        </div>
+      </div>
+      <div id="notes" class="notes" aria-live="polite" aria-busy="true">
+        <div class="loading-state">
+          <span class="spinner" aria-hidden="true"></span>
+          Chargement des notes…
+        </div>
+      </div>
+    </section>
   </main>
+
   <script type="module" src="/app.js"></script>
 </body>
 </html>
