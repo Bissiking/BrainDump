@@ -1,0 +1,45 @@
+{
+  "title": "Choisir la composition de BrainDump",
+  "question": "Même direction visuelle, trois organisations. Laquelle doit guider l’implémentation ?",
+  "options": [
+    {
+      "id": "focus-first",
+      "label": "Capture en premier",
+      "kicker": "COMPOSITION A",
+      "lineage": "navigation légère, saisie pleine largeur, liste calme",
+      "thesis": "La capture domine immédiatement, puis les notes se lisent comme un flux ordonné.",
+      "palette": ["#F7F7F5", "#202124", "#536DFE", "#E7E5E1"],
+      "materials": ["surfaces mates", "filets discrets"],
+      "viewport": "Rail gauche étroit, composeur horizontal en haut, liste de notes pleine largeur en dessous.",
+      "risk": "Le rail devient superflu tant que l’application ne contient qu’une seule vue.",
+      "hero": ".impeccable/mocks/focus-first.png"
+    },
+    {
+      "id": "split-workspace",
+      "label": "Espace partagé",
+      "kicker": "COMPOSITION B",
+      "lineage": "capture fixe à gauche, bibliothèque à droite",
+      "thesis": "Écrire et consulter restent visibles simultanément, avec deux rythmes très distincts.",
+      "palette": ["#F7F7F5", "#202124", "#536DFE", "#E7E5E1"],
+      "materials": ["surfaces mates", "séparation verticale"],
+      "viewport": "Un panneau de capture sur 38 % de la largeur et une bibliothèque de notes sur 62 %.",
+      "risk": "Le panneau de gauche réduit l’espace de lecture sur les écrans intermédiaires.",
+      "hero": ".impeccable/mocks/split-workspace.png"
+    },
+    {
+      "id": "centered-canvas",
+      "label": "Canvas centré",
+      "kicker": "COMPOSITION C",
+      "lineage": "barre minimale, capture compacte, collection aérée",
+      "thesis": "Toute l’attention reste sur les pensées, sans navigation persistante ni chrome inutile.",
+      "palette": ["#F7F7F5", "#202124", "#536DFE", "#E7E5E1"],
+      "materials": ["canvas mat", "règles fines"],
+      "viewport": "Barre haute minimale, composeur compact centré et notes en deux colonnes respirantes.",
+      "risk": "La grille doit se replier soigneusement pour préserver l’ordre de lecture sur mobile.",
+      "hero": ".impeccable/mocks/centered-canvas.png"
+    }
+  ],
+  "reroll": false,
+  "canon": false,
+  "steer": true
+}

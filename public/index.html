@@ -1,0 +1,48 @@
+<!-- public/index.html -->
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BrainDump</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <p class="eyebrow">Capture rapide</p>
+      <h1>BrainDump</h1>
+      <p class="tagline">Pose la pensée. Le petit cerveau mécanique s'occupe du rangement.</p>
+    </header>
+
+    <div class="layout">
+      <!-- Sidebar : composer -->
+      <aside class="sidebar">
+        <section class="composer card">
+          <label for="note">Nouvelle note</label>
+          <textarea id="note" placeholder="Ex. Corriger l'erreur 500 sur l'API Nino avant vendredi" autofocus></textarea>
+          <p class="kbd-hint"><kbd>⌘</kbd>+<kbd>↵</kbd> pour enregistrer</p>
+          <div class="actions">
+            <button id="analyze" class="secondary">Analyser</button>
+            <button id="save" class="primary">Enregistrer</button>
+          </div>
+          <div id="preview" class="preview hidden"></div>
+        </section>
+      </aside>
+
+      <!-- Contenu : notes -->
+      <section class="notes-section">
+        <div class="section-header">
+          <h2>Notes</h2>
+          <span id="counter">0 note</span>
+        </div>
+        <div id="notes" class="notes"></div>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

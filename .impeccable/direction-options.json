@@ -1,0 +1,75 @@
+{
+  "title": "Choisir l’univers de BrainDump",
+  "question": "La piste principale transforme chaque pensée en échantillon classé. Garde-la, choisis une alternative ou relance les pistes.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Plateau d’échantillons",
+      "kicker": "PISTE PRINCIPALE",
+      "lineage": "plateaux de laboratoire, étiquettes de prélèvement et fiches d’observation",
+      "thesis": "Chaque pensée brute devient un échantillon net, étiqueté et rangé sans ralentir la capture.",
+      "palette": ["#F2F0E8", "#17211D", "#D65A3A", "#B9D9CF"],
+      "materials": ["papier minéral", "verre dépoli", "encre de marquage"],
+      "viewport": "Une bande de capture compacte domine le haut, puis les notes respirent dans un plateau quadrillé de fiches-échantillons.",
+      "risk": "Peut devenir clinique si la matière et la voix ne gardent pas assez de chaleur.",
+      "sketch": ".impeccable/sketches/assigned.webp"
+    },
+    {
+      "id": "challenger-variable-specimen",
+      "label": "Spécimen typographique",
+      "kicker": "ALTERNATIVE",
+      "lineage": "spécimens de fonderie et axes de fontes variables",
+      "thesis": "La hiérarchie change de poids et d’échelle selon le type et l’urgence de chaque note.",
+      "case": "Très lisible et personnel, mais la transformation automatique est moins évidente que sur le plateau.",
+      "palette": ["#FAFAF7", "#141414", "#2F5BFF", "#D9D9D2"],
+      "materials": ["papier de spécimen", "encre noire", "repères de composition"],
+      "viewport": "La zone de saisie ressemble à une ligne de composition et la collection devient une galerie typographique très aérée.",
+      "risk": "La personnalité repose fortement sur la qualité du dessin typographique.",
+      "sketch": ".impeccable/sketches/challenger-variable-specimen.webp",
+      "hero": "https://impeccable.style/worlds/cards/variable-font-specimen-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/variable-font-specimen.webp"
+    },
+    {
+      "id": "challenger-origami",
+      "label": "Pli après pli",
+      "kicker": "ALTERNATIVE",
+      "lineage": "séquences d’origami et papier washi vermillon",
+      "thesis": "Une pensée se plie visuellement en type, priorité, projet et échéance jusqu’à devenir exploitable.",
+      "case": "La transformation est mémorable, mais le langage du pli peut ralentir une interface utilisée souvent.",
+      "palette": ["#F4F0E5", "#241E1A", "#D73D2F", "#C69A45"],
+      "materials": ["washi fibreux", "encre sumi", "traits de pli"],
+      "viewport": "La capture occupe une feuille continue dont les plis révèlent l’analyse, suivie d’une pile calme de notes déployées.",
+      "risk": "Une animation trop littérale gênerait la vitesse de capture.",
+      "sketch": ".impeccable/sketches/challenger-origami.webp",
+      "hero": "https://impeccable.style/worlds/cards/paper-folds-pleats-deployable-orizuru-crane-sequence-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/paper-folds-pleats-deployable-orizuru-crane-sequence.webp"
+    },
+    {
+      "id": "challenger-oscilloscope",
+      "label": "Signal capturé",
+      "kicker": "ALTERNATIVE",
+      "lineage": "oscilloscopes de banc et graticules de mesure",
+      "thesis": "BrainDump stabilise le bruit mental en signal lisible, mesuré et conservé.",
+      "case": "Le mécanisme est clair et expressif, mais l’esthétique instrumentale sombre identifie moins bien l’usage quotidien personnel.",
+      "palette": ["#0B1210", "#B7FF64", "#E6B657", "#52635C"],
+      "materials": ["verre phosphore", "métal graphite", "graticule gravé"],
+      "viewport": "La pensée entre comme une trace vive dans un grand champ de saisie, tandis que les notes stabilisées occupent des canaux mesurés.",
+      "risk": "Le contraste et la densité instrumentale peuvent fatiguer lors d’une longue consultation.",
+      "sketch": ".impeccable/sketches/challenger-oscilloscope.webp",
+      "hero": "https://impeccable.style/worlds/cards/scientific-notation-oscilloscope-signal-bench-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/scientific-notation-oscilloscope-signal-bench.webp"
+    }
+  ],
+  "reroll": true,
+  "canon": true,
+  "canonCard": {
+    "label": "Le standard de la catégorie",
+    "thesis": "Un dashboard de notes familier, exécuté avec soin et sans métaphore visuelle.",
+    "palette": ["#F7F8FA", "#17191D", "#5967E8", "#E5E8EF"],
+    "materials": ["surfaces neutres", "cartes sobres"],
+    "viewport": "Une barre d’application, un composeur en colonne et une liste de cartes immédiatement familière.",
+    "risk": "Très facile à comprendre, mais moins distinctif et moins propre à BrainDump.",
+    "sketch": ".impeccable/sketches/canon.webp"
+  },
+  "steer": true
+}
