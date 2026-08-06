@@ -50,7 +50,10 @@ declare module "fastify" {
 }
 
 export function createAuthService(config: AuthConfig) {
-  function verifyAccessToken(accessToken: string): KyrosClaims {
+  function verifyAccessToken(
+    accessToken: string,
+    { apiRequest = false } = {}
+  ): KyrosClaims {
     const claims = jwt.verify(accessToken, config.jwtSecret, {
       algorithms: ["HS256"],
       issuer: config.issuer,
@@ -62,12 +65,17 @@ export function createAuthService(config: AuthConfig) {
       throw new Error("Le token Kyros est incomplet.");
     }
 
-    if (claims.resource_aud !== config.resourceAudience) {
-      throw new Error("Le token Kyros vise une autre application.");
-    }
+    const ownApplication =
+      claims.resource_aud === config.resourceAudience &&
+      claims.client_id === config.clientId;
+    const lumaApplication =
+      apiRequest &&
+      Boolean(config.lumaClientId && config.lumaResourceAudience) &&
+      claims.resource_aud === config.lumaResourceAudience &&
+      claims.client_id === config.lumaClientId;
 
-    if (claims.client_id !== config.clientId) {
-      throw new Error("Le client Kyros est invalide.");
+    if (!ownApplication && !lumaApplication) {
+      throw new Error("Le token Kyros ne vise pas une application autorisée.");
     }
 
     const grantedScopes = new Set(
@@ -75,7 +83,10 @@ export function createAuthService(config: AuthConfig) {
         .split(/\s+/)
         .filter(Boolean)
     );
-    const missingScope = config.requiredScopes.find(
+    const requiredScopes = apiRequest
+      ? config.apiRequiredScopes
+      : config.requiredScopes;
+    const missingScope = requiredScopes.find(
       (scope) => !grantedScopes.has(scope)
     );
 
@@ -173,6 +184,27 @@ export function createAuthService(config: AuthConfig) {
     request: FastifyRequest,
     reply: FastifyReply
   ) {
+    const authorization = request.headers.authorization;
+    if (authorization?.startsWith("Bearer ")) {
+      try {
+        const claims = verifyAccessToken(
+          authorization.slice("Bearer ".length).trim(),
+          { apiRequest: true }
+        );
+        const username = claims.username ?? String(claims.sub);
+        request.currentUser = {
+          id: String(claims.sub),
+          username,
+          displayName: claims.display_name ?? username
+        };
+        return;
+      } catch {
+        return reply.code(401).send({
+          error: "Le jeton Kyros transmis à BrainDump est invalide."
+        });
+      }
+    }
+
     const authenticated = await refreshSessionIfNeeded(request);
 
     if (!authenticated || !request.session.user) {

@@ -28,6 +28,8 @@ Toutes les routes métier exigent une session Kyros valide. Les routes natives L
 
 Les notes sont automatiquement isolées avec l'identifiant Kyros de l'utilisateur connecté. Les routes historiques sous `/api/*` restent disponibles pour l'interface autonome.
 
+Luma OS peut appeler ces routes sans seconde connexion en relayant son jeton Kyros dans l’en-tête `Authorization: Bearer …`. Le client et l’audience LUMA doivent être explicitement autorisés avec `KYROS_LUMA_CLIENT_ID` et `KYROS_LUMA_RESOURCE_AUDIENCE`; le jeton doit posséder le scope `braindump:access`.
+
 ## Production locale
 
 ```powershell

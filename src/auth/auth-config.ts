@@ -9,6 +9,9 @@ export interface AuthConfig {
   resourceAudience: string;
   requestedScopes: string;
   requiredScopes: string[];
+  apiRequiredScopes: string[];
+  lumaClientId: string | null;
+  lumaResourceAudience: string | null;
 }
 
 const requiredVariables = [
@@ -45,6 +48,14 @@ export function loadAuthConfig(port: number): AuthConfig {
       process.env.KYROS_REQUIRED_SCOPES ?? requestedScopes
     )
       .split(/\s+/)
-      .filter(Boolean)
+      .filter(Boolean),
+    apiRequiredScopes: (
+      process.env.KYROS_API_REQUIRED_SCOPES ?? "braindump:access"
+    )
+      .split(/\s+/)
+      .filter(Boolean),
+    lumaClientId: process.env.KYROS_LUMA_CLIENT_ID ?? null,
+    lumaResourceAudience:
+      process.env.KYROS_LUMA_RESOURCE_AUDIENCE ?? null
   };
 }
