@@ -4,7 +4,9 @@ import { mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import type { ClassificationResult, NoteRecord } from "../types.js";
 
-const databasePath = resolve("data/braindump.db");
+const databasePath = process.env.BRAINDUMP_DATABASE_PATH
+  ? resolve(process.env.BRAINDUMP_DATABASE_PATH)
+  : resolve("data/braindump.db");
 mkdirSync(dirname(databasePath), { recursive: true });
 
 const db = new Database(databasePath);
@@ -13,6 +15,7 @@ db.pragma("journal_mode = WAL");
 db.exec(`
   CREATE TABLE IF NOT EXISTS notes (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
+    owner_id TEXT NOT NULL,
     content TEXT NOT NULL,
     type TEXT NOT NULL,
     priority TEXT NOT NULL,
@@ -26,12 +29,30 @@ db.exec(`
   )
 `);
 
-export function createNote(content: string, classification: ClassificationResult): NoteRecord {
+const columns = db.prepare("PRAGMA table_info(notes)").all() as Array<{
+  name: string;
+}>;
+
+if (!columns.some((column) => column.name === "owner_id")) {
+  db.exec("ALTER TABLE notes ADD COLUMN owner_id TEXT");
+}
+
+db.exec(`
+  CREATE INDEX IF NOT EXISTS idx_notes_owner_created
+  ON notes (owner_id, id DESC)
+`);
+
+export function createNote(
+  ownerId: string,
+  content: string,
+  classification: ClassificationResult
+): NoteRecord {
   const createdAt = new Date().toISOString();
   const result = db.prepare(`
-    INSERT INTO notes (content, type, priority, project, due_date, tags, confidence, scores, status, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'new', ?)
+    INSERT INTO notes (owner_id, content, type, priority, project, due_date, tags, confidence, scores, status, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?)
   `).run(
+    ownerId,
     content,
     classification.type,
     classification.priority,
@@ -52,8 +73,12 @@ export function createNote(content: string, classification: ClassificationResult
   };
 }
 
-export function listNotes(): NoteRecord[] {
-  const rows = db.prepare("SELECT * FROM notes ORDER BY id DESC").all() as Record<string, unknown>[];
+export function listNotes(ownerId: string): NoteRecord[] {
+  const rows = db.prepare(`
+    SELECT * FROM notes
+    WHERE owner_id = ?
+    ORDER BY id DESC
+  `).all(ownerId) as Record<string, unknown>[];
   return rows.map((row) => ({
     id: Number(row.id),
     content: String(row.content),
@@ -69,6 +94,9 @@ export function listNotes(): NoteRecord[] {
   }));
 }
 
-export function deleteNote(id: number): boolean {
-  return db.prepare("DELETE FROM notes WHERE id = ?").run(id).changes > 0;
+export function deleteNote(ownerId: string, id: number): boolean {
+  return db.prepare(`
+    DELETE FROM notes
+    WHERE id = ? AND owner_id = ?
+  `).run(id, ownerId).changes > 0;
 }

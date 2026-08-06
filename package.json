@@ -1,12 +1,13 @@
 {
   "name": "braindump",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Capture et classification locale de notes.",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc -p tsconfig.json",
+    "test": "tsx --test test/**/*.test.ts",
     "start": "node dist/server.js",
     "orbis": "tsx src/server.ts"
   },

@@ -11,10 +11,22 @@ Mini application locale de capture et classification de notes.
 
 ```powershell
 npm install
+cp .env.exemple .env
 npm run dev
 ```
 
-Ouvrir ensuite : `http://localhost:3000`
+Renseigner les paramètres Kyros dans `.env`, puis ouvrir `http://localhost:3005`.
+
+## API
+
+Toutes les routes métier exigent une session Kyros valide. Les routes natives LUMA sont :
+
+- `GET /api/braindump/notes`
+- `POST /api/braindump/analyze`
+- `POST /api/braindump/notes`
+- `DELETE /api/braindump/notes/:id`
+
+Les notes sont automatiquement isolées avec l'identifiant Kyros de l'utilisateur connecté. Les routes historiques sous `/api/*` restent disponibles pour l'interface autonome.
 
 ## Production locale
 

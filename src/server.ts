@@ -60,57 +60,61 @@ app.get("/login", async (request, reply) => {
   return reply.sendFile("login.html");
 });
 
-app.get(
-  "/api/notes",
-  { preHandler: auth.requireSession },
-  async () => listNotes()
-);
+for (const apiPrefix of ["/api", "/api/braindump"]) {
+  app.get(
+    `${apiPrefix}/notes`,
+    { preHandler: auth.requireSession },
+    async (request) => listNotes(request.currentUser!.id)
+  );
 
-app.post(
-  "/api/analyze",
-  { preHandler: auth.requireSession },
-  async (request, reply) => {
-    const result = noteSchema.safeParse(request.body);
-    if (!result.success) {
-      return reply.code(400).send({
-        error: "Écris au moins deux caractères avant d’analyser."
-      });
+  app.post(
+    `${apiPrefix}/analyze`,
+    { preHandler: auth.requireSession },
+    async (request, reply) => {
+      const result = noteSchema.safeParse(request.body);
+      if (!result.success) {
+        return reply.code(400).send({
+          error: "Écris au moins deux caractères avant d’analyser."
+        });
+      }
+      return classifyNote(result.data.content);
     }
-    return classifyNote(result.data.content);
-  }
-);
+  );
 
-app.post(
-  "/api/notes",
-  { preHandler: auth.requireSession },
-  async (request, reply) => {
-    const result = noteSchema.safeParse(request.body);
-    if (!result.success) {
-      return reply.code(400).send({
-        error: "Écris au moins deux caractères avant d’enregistrer."
-      });
+  app.post(
+    `${apiPrefix}/notes`,
+    { preHandler: auth.requireSession },
+    async (request, reply) => {
+      const result = noteSchema.safeParse(request.body);
+      if (!result.success) {
+        return reply.code(400).send({
+          error: "Écris au moins deux caractères avant d’enregistrer."
+        });
+      }
+      const classification = classifyNote(result.data.content);
+      return reply.code(201).send(createNote(
+        request.currentUser!.id,
+        result.data.content,
+        classification
+      ));
     }
-    const classification = classifyNote(result.data.content);
-    return reply
-      .code(201)
-      .send(createNote(result.data.content, classification));
-  }
-);
+  );
 
-app.delete<{ Params: { id: string } }>(
-  "/api/notes/:id",
-  { preHandler: auth.requireSession },
-  async (request, reply) => {
-    const id = Number(request.params.id);
-    if (!Number.isInteger(id) || id < 1) {
-      return reply.code(400).send({ error: "Identifiant invalide." });
+  app.delete<{ Params: { id: string } }>(
+    `${apiPrefix}/notes/:id`,
+    { preHandler: auth.requireSession },
+    async (request, reply) => {
+      const id = Number(request.params.id);
+      if (!Number.isInteger(id) || id < 1) {
+        return reply.code(400).send({ error: "Identifiant invalide." });
+      }
+      if (!deleteNote(request.currentUser!.id, id)) {
+        return reply.code(404).send({ error: "Note introuvable." });
+      }
+      return reply.code(204).send();
     }
-    if (!deleteNote(id)) {
-      return reply.code(404).send({ error: "Note introuvable." });
-    }
-    return reply.code(204).send();
-  }
-);
+  );
+}
 
 app.setNotFoundHandler((request, reply) => {
   if (

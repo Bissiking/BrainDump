@@ -28,7 +28,7 @@ L’usage principal est une capture personnelle et fréquente depuis un navigate
 - Persistance locale SQLite.
 - Authentification déléguée à Kyros avec code d’autorisation, session serveur, renouvellement de jeton et révocation à la déconnexion.
 - Capture, analyse, enregistrement, consultation et suppression de notes.
-- Le modèle multi-utilisateur et l’isolation des notes par propriétaire restent une décision ouverte.
+- Les notes sont isolées par l’identifiant Kyros de leur propriétaire. Les anciennes notes sans propriétaire restent volontairement inaccessibles après migration.
 
 ## Brand Commitments
 
