@@ -2,7 +2,7 @@
 import type { NoteType } from "../types.js";
 
 export const categoryRules: Record<NoteType, string[]> = {
-  bug: ["bug", "erreur", "crash", "plantage", "ko", "panne", "exception", "500", "404", "ne marche pas"],
+  bug: ["bug", "erreur", "crash", "plantage", "ko", "panne", "exception", "500", "501", "502", "503", "504", "404", "403", "ne marche pas"],
   task: ["faire", "corriger", "ajouter", "modifier", "installer", "vérifier", "tester", "déployer", "mettre à jour"],
   idea: ["idée", "imaginer", "pourrait", "concept", "peut-être", "ce serait bien", "j'aimerais"],
   reminder: ["rappeler", "rappel", "penser à", "ne pas oublier", "demain", "vendredi", "avant", "ce soir"],
@@ -15,7 +15,7 @@ export const priorityRules = {
   low: ["un jour", "plus tard", "quand j'aurai le temps", "facultatif"]
 };
 
-export const knownProjects = ["Nino", "Orion", "Kyros", "Aion", "LUMA", "Harmonix", "DropIt", "ARC"];
+export const knownProjects = ["Nino", "Orion", "Kyros", "Aion", "LUMA", "Harmonix", "DropIt", "ARC", "Orbis"];
 
 export const tagRules: Record<string, string[]> = {
   api: ["api", "endpoint", "route"],
