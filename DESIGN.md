@@ -281,7 +281,7 @@ La navigation desktop utilise des lignes de 51 px avec icône, libellé et compt
 
 ### Capture Plane
 
-Le titre, le textarea, les choix de type, les options repliables et l’action forment un seul plan. La saisie illumine légèrement le plan et ajoute une profondeur temporaire; les options secondaires restent cachées tant qu’elles ne sont pas demandées.
+Le titre, le textarea, les choix de type, les options repliables et l’action forment un seul plan. La saisie illumine légèrement le plan et ajoute une profondeur temporaire; les options secondaires restent cachées tant qu’elles ne sont pas demandées. Un rail de triage sombre et chanfreiné apparaît dans le bas du textarea après une courte temporisation : il présente type, destination, échéance, priorité, tags et confiance sans déplacer la composition ni prétendre que le Dump est déjà enregistré.
 
 ### Search, Dialogs and Feedback
 

@@ -66,9 +66,12 @@
 
       <section class="capture-plane r-capture-plane" id="capture-plane" aria-labelledby="capture-title">
         <h2 id="capture-title" class="r-capture-title">Vide ta tête.</h2>
-        <textarea id="capture-content" class="r-capture-input" maxlength="20000" placeholder="Écris ici tout ce qui te passe par la tête…" aria-label="Nouvelle pensée"></textarea>
+        <div class="capture-input-wrap">
+          <textarea id="capture-content" class="r-capture-input" maxlength="20000" placeholder="Écris ici tout ce qui te passe par la tête…" aria-label="Nouvelle pensée"></textarea>
+          <div id="triage-preview" class="triage-preview" aria-live="polite" hidden></div>
+        </div>
         <div class="type-selector r-capture-types" id="type-selector" aria-label="Type du Dump">
-          <button type="button" data-type="task" class="selected"><svg><use href="#i-check"/></svg>Tâche</button>
+          <button type="button" data-type="task"><svg><use href="#i-check"/></svg>Tâche</button>
           <button type="button" data-type="note"><svg><use href="#i-note"/></svg>Note</button>
           <button type="button" data-type="idea"><svg><use href="#i-idea"/></svg>Idée</button>
           <button type="button" data-type="bug"><svg><use href="#i-bug"/></svg>Bug</button>
@@ -121,7 +124,10 @@
 
   <dialog id="mobile-capture" class="bottom-sheet">
     <form method="dialog" class="sheet-head"><strong>Capture rapide</strong><button aria-label="Fermer"><svg><use href="#i-close"/></svg></button></form>
-    <textarea id="mobile-content" maxlength="20000" placeholder="Qu’est-ce qui te traverse l’esprit ?" autofocus></textarea>
+    <div class="capture-input-wrap">
+      <textarea id="mobile-content" maxlength="20000" placeholder="Qu’est-ce qui te traverse l’esprit ?" autofocus></textarea>
+      <div id="mobile-triage-preview" class="triage-preview" aria-live="polite" hidden></div>
+    </div>
     <div class="mobile-types" id="mobile-types">
       <button type="button" data-type="task"><svg><use href="#i-check"/></svg>Tâche</button><button type="button" data-type="note"><svg><use href="#i-note"/></svg>Note</button><button type="button" data-type="idea"><svg><use href="#i-idea"/></svg>Idée</button><button type="button" data-type="bug"><svg><use href="#i-bug"/></svg>Bug</button><button type="button" data-type="reminder"><svg><use href="#i-bell"/></svg>Rappel</button>
     </div>

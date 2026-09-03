@@ -12,6 +12,7 @@ export interface ClassificationResult {
   tags: string[];
   confidence: number;
   scores: Record<string, number>;
+  signals: string[];
 }
 
 export interface ProjectRecord {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-03T08:58:41Z",
+  "generatedAt": "2026-09-03T10:38:58Z",
   "title": "Design System: BrainDump",
   "extensions": {
     "colorMeta": {
@@ -114,6 +114,13 @@
       "description": "Commande de recherche globale bordée avec raccourci clavier visible.",
       "html": "<button class=\"ds-search\" type=\"button\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 5 5\"/></svg><span>Rechercher partout…</span><kbd>⌘ K</kbd></button>",
       "css": ".ds-search{display:flex;align-items:center;gap:10px;width:350px;max-width:100%;padding:11px 12px;border:1px solid var(--line,#3d4c58);border-radius:7px;background:#182632;color:var(--muted,#b2bac1);font:400 14px/1.5 'IBM Plex Sans',sans-serif;text-align:left}.ds-search svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.65}.ds-search kbd{margin-left:auto;padding:2px 7px;border:1px solid #415160;border-radius:4px;background:#1d2c39;color:#cad0d4;font:400 11px/1.5 'IBM Plex Sans',sans-serif}.ds-search:hover{background:#20303e;color:var(--ink,#f0f1f2)}.ds-search:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}"
+    },
+    {
+      "name": "Triage Preview",
+      "kind": "custom",
+      "description": "Lecture locale et non persistée du type, de la destination et des métadonnées probables pendant la saisie.",
+      "html": "<div class=\"ds-triage\" role=\"status\"><span class=\"ds-triage-label\">Triage proposé</span><strong>Bug</strong><span>Inbox → BrainDump</span><span>Urgente</span><small>91%</small></div>",
+      "css": ".ds-triage{display:flex;align-items:center;gap:8px;min-height:42px;padding:6px 9px;border:1px solid #465968;background:rgba(16,27,39,.96);color:#c8cfd4;font:400 11px/1.5 'IBM Plex Sans',sans-serif;clip-path:polygon(0 0,calc(100% - 7px) 0,100% 7px,100% 100%,7px 100%,0 calc(100% - 7px));box-shadow:0 8px 18px rgba(4,9,14,.24)}.ds-triage-label{color:var(--faint,#85919c)}.ds-triage strong{color:var(--accent,#d85d30);font-size:12px}.ds-triage span+span{padding-left:8px;border-left:1px solid var(--line,#3d4c58)}.ds-triage small{margin-left:auto;color:var(--faint,#85919c);font-variant-numeric:tabular-nums}.ds-triage:hover{border-color:#526574}.ds-triage:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}"
     },
     {
       "name": "Toast",

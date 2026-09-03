@@ -29,6 +29,7 @@ L’usage principal est une capture personnelle et fréquente depuis un navigate
 - Authentification Kyros SSO V4 avec PAR, PKCE S256, jetons RS256 vérifiés par JWKS, session serveur, renouvellement et révocation.
 - Modèle unifié `Dump` pour tâches, notes, idées, liens et rappels, avec statut, priorité, échéance, favori, projet, tags et pièces jointes référencées.
 - Inbox, Aujourd’hui, vues par type, projets, tags, recherche globale et panneau de détail avec sauvegarde automatique.
+- Aperçu de triage en temps réel dans la capture, sans persistance : type, destination, priorité, échéance, tags et confiance restent des suggestions jusqu’à l’enregistrement explicite.
 - Les dumps sont isolés par l’identifiant Kyros de leur propriétaire. La migration V1 ne rattache automatiquement que les anciennes notes possédant déjà un propriétaire.
 
 ## Brand Commitments

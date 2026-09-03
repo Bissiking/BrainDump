@@ -22,7 +22,7 @@ test("enchaîne projets, création, édition, recherche et suppression d'un Dump
   const todayDueAt=new Date();todayDueAt.setHours(12,0,0,0);await app.inject({method:"PATCH",url:`/api/dumps/${dump.id}`,headers:{"x-user":"user-a"},payload:{dueAt:todayDueAt.toISOString(),status:"todo"}});
   const today=await app.inject({method:"GET",url:"/api/today",headers:{"x-user":"user-a"}});assert.equal(today.statusCode,200);assert.equal(today.json().today.some((item:any)=>item.id===dump.id),true);
   const foreign=await app.inject({method:"GET",url:`/api/dumps/${dump.id}`,headers:{"x-user":"user-b"}});assert.equal(foreign.statusCode,404);
-  const update=await app.inject({method:"PATCH",url:`/api/dumps/${dump.id}`,headers:{"x-user":"user-a"},payload:{status:"done",favorite:true}});assert.equal(update.statusCode,200);assert.equal(update.json().completedAt!=null,true);
+  const update=await app.inject({method:"PATCH",url:`/api/dumps/${dump.id}`,headers:{"x-user":"user-a"},payload:{status:"done",favorite:true}});assert.equal(update.statusCode,200);assert.equal(update.json().completedAt!=null,true);assert.equal(update.json().content,"Corriger le bug de recherche demain");assert.equal(update.json().title,null);
   const search=await app.inject({method:"GET",url:"/api/dumps?search=recherche",headers:{"x-user":"user-a"}});assert.equal(search.statusCode,200);assert.equal(search.json().length,1);
   const remove=await app.inject({method:"DELETE",url:`/api/dumps/${dump.id}`,headers:{"x-user":"user-a"}});assert.equal(remove.statusCode,204);
 });
@@ -30,4 +30,11 @@ test("enchaîne projets, création, édition, recherche et suppression d'un Dump
 test("refuse un projectId appartenant à un autre utilisateur",async()=>{
   const project=(await app.inject({method:"POST",url:"/api/projects",headers:{"x-user":"user-b"},payload:{name:"Privé"}})).json();
   const response=await app.inject({method:"POST",url:"/api/dumps",headers:{"x-user":"user-a"},payload:{content:"Tentative",projectId:project.id}});assert.equal(response.statusCode,400);assert.equal(response.json().error,"Projet invalide.");
+});
+
+test("le triage utilise les projets réels de l'utilisateur",async()=>{
+  const project=(await app.inject({method:"POST",url:"/api/projects",headers:{"x-user":"user-c"},payload:{name:"Atelier Mars"}})).json();
+  const analyze=await app.inject({method:"POST",url:"/api/analyze",headers:{"x-user":"user-c"},payload:{content:"Préparer la réunion Atelier Mars demain"}});assert.equal(analyze.statusCode,200);assert.equal(analyze.json().project,"Atelier Mars");assert.equal(analyze.json().type,"task");assert.equal(Array.isArray(analyze.json().signals),true);
+  const afterAnalyze=await app.inject({method:"GET",url:"/api/dumps",headers:{"x-user":"user-c"}});assert.equal(afterAnalyze.statusCode,200);assert.equal(afterAnalyze.json().length,0);
+  const create=await app.inject({method:"POST",url:"/api/dumps",headers:{"x-user":"user-c"},payload:{content:"Préparer la réunion Atelier Mars demain"}});assert.equal(create.statusCode,201);assert.equal(create.json().projectId,project.id);assert.equal(create.json().type,"task");assert.equal(create.json().dueAt!==null,true);
 });

@@ -58,6 +58,10 @@ Les pièces jointes V2 sont des références HTTPS avec nom, type MIME et taille
 
 Les mêmes routes existent sous `/api/braindump`. Les routes V1 `/api/notes` sont conservées comme compatibilité de transition.
 
+## Triage automatique
+
+Le moteur local combine des signaux pondérés plutôt qu’une simple recherche de sous-chaînes : préfixes explicites (`Tâche:`, `Idée:`, `Rappel:`), verbes d’action, formulations conditionnelles, signatures HTTP/JavaScript, négations, échéances françaises, hashtags et vocabulaire technique. Une date enrichit l’échéance sans transformer automatiquement une action en rappel. Les projets actifs de l’utilisateur sont injectés dans l’analyse, et la réponse `/api/analyze` expose `scores`, `confidence` et `signals` pour rendre la décision explicable. Pendant la frappe, l’interface affiche cette lecture dans le champ de capture sans effectuer d’écriture en base; rien n’est conservé avant l’action « Ajouter à l’Inbox ».
+
 ## Validation
 
 ```bash
