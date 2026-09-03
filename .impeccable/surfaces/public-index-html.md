@@ -3,6 +3,7 @@ version: 1
 slug: "public-index-html"
 primary_target: "public/index.html"
 related_targets: ["public/login.html"]
+approved_comp: ".impeccable/mocks/v2-capture-home.png"
 ---
 
 # BrainDump workspace and login
@@ -25,7 +26,7 @@ The primary user captures a thought in seconds, optionally checks the automatic 
 
 ## Chosen direction
 
-Category-standard notes application, held to Notion's level of clarity and progressive disclosure. Approved composition: `.impeccable/mocks/centered-canvas.png`. The memorable moment is a compact capture strip that expands into a focused writing surface while the library remains visually quiet.
+Dark precisionist workbench: flat blue-gray planes, hard directional hierarchy, and a restrained rust-orange action accent. Approved composition: `.impeccable/mocks/v2-capture-home.png`. The memorable moment is a dominant capture plane that lets the user write first and reveal organization only afterward.
 
 ## Composition and implementation inventory
 

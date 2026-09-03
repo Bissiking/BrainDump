@@ -1,31 +1,63 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-05T22:30:00+02:00",
+  "generatedAt": "2026-09-03T08:58:41Z",
   "title": "Design System: BrainDump",
   "extensions": {
     "colorMeta": {
-      "primary": { "role": "primary", "displayName": "Indigo Action", "canonical": "#425ee8", "tonalRamp": ["#111938", "#1d2b69", "#2c43a7", "#425ee8", "#7488ef", "#a5b1f6", "#d3d9fb", "#f1f3ff"] },
-      "canvas": { "role": "neutral", "displayName": "Quiet Canvas", "canonical": "#f7f7f5", "tonalRamp": ["#262624", "#444441", "#686864", "#8e8e88", "#b6b6b0", "#d8d8d3", "#eeeeeb", "#f7f7f5"] },
-      "ink": { "role": "neutral", "displayName": "Graphite Ink", "canonical": "#202124", "tonalRamp": ["#202124", "#35363a", "#525358", "#74757a", "#999a9e", "#bebfc2", "#dedfe0", "#f4f4f5"] }
+      "canvas": { "role": "neutral", "displayName": "Ardoise canvas", "canonical": "#1c2a38", "tonalRamp": ["oklch(15% 0.032 249.0)", "oklch(25% 0.032 249.0)", "oklch(35% 0.032 249.0)", "oklch(45% 0.032 249.0)", "oklch(55% 0.032 249.0)", "oklch(65% 0.032 249.0)", "oklch(80% 0.032 249.0)", "oklch(95% 0.032 249.0)"] },
+      "sidebar": { "role": "neutral", "displayName": "Bleu nuit de navigation", "canonical": "#101b27", "tonalRamp": ["oklch(15% 0.029 251.3)", "oklch(25% 0.029 251.3)", "oklch(35% 0.029 251.3)", "oklch(45% 0.029 251.3)", "oklch(55% 0.029 251.3)", "oklch(65% 0.029 251.3)", "oklch(80% 0.029 251.3)", "oklch(95% 0.029 251.3)"] },
+      "plane-2": { "role": "neutral", "displayName": "Ardoise intérieure", "canonical": "#1b2a38", "tonalRamp": ["oklch(15% 0.033 247.4)", "oklch(25% 0.033 247.4)", "oklch(35% 0.033 247.4)", "oklch(45% 0.033 247.4)", "oklch(55% 0.033 247.4)", "oklch(65% 0.033 247.4)", "oklch(80% 0.033 247.4)", "oklch(95% 0.033 247.4)"] },
+      "plane-3": { "role": "neutral", "displayName": "Plan de capture", "canonical": "#243340", "tonalRamp": ["oklch(15% 0.031 245.2)", "oklch(25% 0.031 245.2)", "oklch(35% 0.031 245.2)", "oklch(45% 0.031 245.2)", "oklch(55% 0.031 245.2)", "oklch(65% 0.031 245.2)", "oklch(80% 0.031 245.2)", "oklch(95% 0.031 245.2)"] },
+      "field": { "role": "neutral", "displayName": "Champ ardoise", "canonical": "#1d2c39", "tonalRamp": ["oklch(15% 0.031 245.4)", "oklch(25% 0.031 245.4)", "oklch(35% 0.031 245.4)", "oklch(45% 0.031 245.4)", "oklch(55% 0.031 245.4)", "oklch(65% 0.031 245.4)", "oklch(80% 0.031 245.4)", "oklch(95% 0.031 245.4)"] },
+      "control-plane": { "role": "neutral", "displayName": "Plan de contrôle", "canonical": "#172633", "tonalRamp": ["oklch(15% 0.032 245.6)", "oklch(25% 0.032 245.6)", "oklch(35% 0.032 245.6)", "oklch(45% 0.032 245.6)", "oklch(55% 0.032 245.6)", "oklch(65% 0.032 245.6)", "oklch(80% 0.032 245.6)", "oklch(95% 0.032 245.6)"] },
+      "nav-active": { "role": "neutral", "displayName": "Navigation active", "canonical": "#20303e", "tonalRamp": ["oklch(15% 0.033 245.6)", "oklch(25% 0.033 245.6)", "oklch(35% 0.033 245.6)", "oklch(45% 0.033 245.6)", "oklch(55% 0.033 245.6)", "oklch(65% 0.033 245.6)", "oklch(80% 0.033 245.6)", "oklch(95% 0.033 245.6)"] },
+      "selection-plane": { "role": "neutral", "displayName": "Cœur de sélection", "canonical": "#27333c", "tonalRamp": ["oklch(15% 0.023 240.9)", "oklch(25% 0.023 240.9)", "oklch(35% 0.023 240.9)", "oklch(45% 0.023 240.9)", "oklch(55% 0.023 240.9)", "oklch(65% 0.023 240.9)", "oklch(80% 0.023 240.9)", "oklch(95% 0.023 240.9)"] },
+      "line": { "role": "neutral", "displayName": "Filet technique", "canonical": "#3d4c58", "tonalRamp": ["oklch(15% 0.028 242.5)", "oklch(25% 0.028 242.5)", "oklch(35% 0.028 242.5)", "oklch(45% 0.028 242.5)", "oklch(55% 0.028 242.5)", "oklch(65% 0.028 242.5)", "oklch(80% 0.028 242.5)", "oklch(95% 0.028 242.5)"] },
+      "line-soft": { "role": "neutral", "displayName": "Filet discret", "canonical": "#32424f", "tonalRamp": ["oklch(15% 0.030 243.2)", "oklch(25% 0.030 243.2)", "oklch(35% 0.030 243.2)", "oklch(45% 0.030 243.2)", "oklch(55% 0.030 243.2)", "oklch(65% 0.030 243.2)", "oklch(80% 0.030 243.2)", "oklch(95% 0.030 243.2)"] },
+      "ink": { "role": "neutral", "displayName": "Encre froide", "canonical": "#f0f1f2", "tonalRamp": ["oklch(15% 0.002 247.8)", "oklch(25% 0.002 247.8)", "oklch(35% 0.002 247.8)", "oklch(45% 0.002 247.8)", "oklch(55% 0.002 247.8)", "oklch(65% 0.002 247.8)", "oklch(80% 0.002 247.8)", "oklch(95% 0.002 247.8)"] },
+      "muted": { "role": "neutral", "displayName": "Graphite lisible", "canonical": "#b2bac1", "tonalRamp": ["oklch(15% 0.013 244.3)", "oklch(25% 0.013 244.3)", "oklch(35% 0.013 244.3)", "oklch(45% 0.013 244.3)", "oklch(55% 0.013 244.3)", "oklch(65% 0.013 244.3)", "oklch(80% 0.013 244.3)", "oklch(95% 0.013 244.3)"] },
+      "faint": { "role": "neutral", "displayName": "Graphite lointain", "canonical": "#85919c", "tonalRamp": ["oklch(15% 0.022 245.8)", "oklch(25% 0.022 245.8)", "oklch(35% 0.022 245.8)", "oklch(45% 0.022 245.8)", "oklch(55% 0.022 245.8)", "oklch(65% 0.022 245.8)", "oklch(80% 0.022 245.8)", "oklch(95% 0.022 245.8)"] },
+      "accent": { "role": "primary", "displayName": "Rouille d’action", "canonical": "#d85d30", "tonalRamp": ["oklch(15% 0.166 39.5)", "oklch(25% 0.166 39.5)", "oklch(35% 0.166 39.5)", "oklch(45% 0.166 39.5)", "oklch(55% 0.166 39.5)", "oklch(65% 0.166 39.5)", "oklch(80% 0.166 39.5)", "oklch(95% 0.166 39.5)"] },
+      "accent-hover": { "role": "primary", "displayName": "Rouille vive", "canonical": "#ed7042", "tonalRamp": ["oklch(15% 0.166 40.1)", "oklch(25% 0.166 40.1)", "oklch(35% 0.166 40.1)", "oklch(45% 0.166 40.1)", "oklch(55% 0.166 40.1)", "oklch(65% 0.166 40.1)", "oklch(80% 0.166 40.1)", "oklch(95% 0.166 40.1)"] },
+      "danger": { "role": "tertiary", "displayName": "Corail de danger", "canonical": "#ef6b64", "tonalRamp": ["oklch(15% 0.165 25.4)", "oklch(25% 0.165 25.4)", "oklch(35% 0.165 25.4)", "oklch(45% 0.165 25.4)", "oklch(55% 0.165 25.4)", "oklch(65% 0.165 25.4)", "oklch(80% 0.165 25.4)", "oklch(95% 0.165 25.4)"] },
+      "success": { "role": "tertiary", "displayName": "Vert de résolution", "canonical": "#61c58b", "tonalRamp": ["oklch(15% 0.127 156.1)", "oklch(25% 0.127 156.1)", "oklch(35% 0.127 156.1)", "oklch(45% 0.127 156.1)", "oklch(55% 0.127 156.1)", "oklch(65% 0.127 156.1)", "oklch(80% 0.127 156.1)", "oklch(95% 0.127 156.1)"] },
+      "warning": { "role": "tertiary", "displayName": "Ambre d’échéance", "canonical": "#f1b95d", "tonalRamp": ["oklch(15% 0.127 77.8)", "oklch(25% 0.127 77.8)", "oklch(35% 0.127 77.8)", "oklch(45% 0.127 77.8)", "oklch(55% 0.127 77.8)", "oklch(65% 0.127 77.8)", "oklch(80% 0.127 77.8)", "oklch(95% 0.127 77.8)"] },
+      "focus": { "role": "primary", "displayName": "Pêche de focus", "canonical": "#f6a183", "tonalRamp": ["oklch(15% 0.110 40.2)", "oklch(25% 0.110 40.2)", "oklch(35% 0.110 40.2)", "oklch(45% 0.110 40.2)", "oklch(55% 0.110 40.2)", "oklch(65% 0.110 40.2)", "oklch(80% 0.110 40.2)", "oklch(95% 0.110 40.2)"] },
+      "on-accent": { "role": "neutral", "displayName": "Blanc d’action", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(55% 0 0)", "oklch(65% 0 0)", "oklch(80% 0 0)", "oklch(95% 0 0)"] }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Promesse de la page de connexion uniquement." },
-      "title": { "displayName": "Title", "purpose": "Titre principal des espaces opératoires." },
-      "body": { "displayName": "Body", "purpose": "Notes et contenu explicatif." },
-      "label": { "displayName": "Label", "purpose": "Actions, champs et titres compacts." }
+      "hero": { "displayName": "Hero", "purpose": "Accroche de connexion fluide et exceptionnelle." },
+      "display": { "displayName": "Capture Display", "purpose": "Invitation principale à vider sa tête." },
+      "headline": { "displayName": "Workspace Headline", "purpose": "Titre de vue et repère de navigation." },
+      "title": { "displayName": "Panel Title", "purpose": "Titres de panneaux, éditeur et états vides." },
+      "body-prominent": { "displayName": "Body Prominent", "purpose": "Saisie et contenu de premier plan." },
+      "body": { "displayName": "Body", "purpose": "Navigation, contrôles et texte courant." },
+      "action": { "displayName": "Action", "purpose": "Actions primaires et confirmations." },
+      "label": { "displayName": "Label", "purpose": "Groupes et contrôles compacts." },
+      "metadata": { "displayName": "Metadata", "purpose": "Dates, projets, tags et états secondaires." }
     },
     "shadows": [
-      { "name": "focus-ambient", "value": "0 8px 28px rgba(37, 45, 78, .08)", "purpose": "Signaler que le composeur est actif." },
-      { "name": "popover", "value": "0 14px 36px rgba(31, 34, 32, .14)", "purpose": "Séparer le menu de compte du canvas." }
+      { "name": "action-low", "value": "0 10px 24px rgba(106,43,21,.25)", "purpose": "Détache l’action rouille du plan de capture." },
+      { "name": "capture-focus", "value": "0 22px 50px rgba(6,12,18,.2)", "purpose": "Donne une profondeur temporaire au plan pendant la saisie." },
+      { "name": "menu-float", "value": "0 15px 38px rgba(0,0,0,.35)", "purpose": "Sépare le menu de compte de la navigation." },
+      { "name": "drawer-float", "value": "-18px 0 50px rgba(0,0,0,.32)", "purpose": "Sépare l’éditeur contextuel en mode tablette." },
+      { "name": "dialog-deep", "value": "0 30px 90px rgba(0,0,0,.55)", "purpose": "Élève le dialogue de recherche au-dessus du backdrop." },
+      { "name": "toast-medium", "value": "0 12px 30px rgba(0,0,0,.35)", "purpose": "Détache le feedback temporaire du contenu." }
     ],
     "motion": [
-      { "name": "ease-out", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Révélation rapide et calme des états." },
-      { "name": "fast", "value": "140ms", "purpose": "Survol, focus et boutons." },
-      { "name": "slow", "value": "320ms", "purpose": "Révélation de l’analyse." }
+      { "name": "ease-standard", "value": "cubic-bezier(.16,1,.3,1)", "purpose": "Easing commun aux changements d’état expressifs." },
+      { "name": "state-fast", "value": "180ms", "purpose": "Bord, fond et survol de ligne ou champ." },
+      { "name": "action-standard", "value": "200ms", "purpose": "Survol et activation des actions." },
+      { "name": "nav-standard", "value": "220ms", "purpose": "Transition de navigation latérale." },
+      { "name": "sheet-enter", "value": "250ms", "purpose": "Apparition de la capture rapide mobile." },
+      { "name": "feedback-enter", "value": "350ms", "purpose": "Entrée du toast et illumination du plan de capture." },
+      { "name": "reduced-motion", "value": "0.01ms", "purpose": "Neutralise transitions et animations quand la préférence système le demande." }
     ],
     "breakpoints": [
-      { "name": "mobile", "value": "760px" },
-      { "name": "compact", "value": "460px" }
+      { "name": "mobile", "value": "720px" },
+      { "name": "login-stack", "value": "780px" },
+      { "name": "tablet", "value": "1100px" },
+      { "name": "desktop-tight", "value": "1450px" }
     ]
   },
   "components": [
@@ -33,52 +65,96 @@
       "name": "Primary Button",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Action dominante d’une vue.",
-      "html": "<button class=\"ds-btn-primary\">Enregistrer</button>",
-      "css": ".ds-btn-primary{min-height:42px;padding:9px 15px;border:0;border-radius:8px;background:var(--accent,#425ee8);color:#fff;font:600 .875rem ui-sans-serif,sans-serif;cursor:pointer;transition:background 140ms}.ds-btn-primary:hover{background:#314bd0}.ds-btn-primary:focus-visible{outline:3px solid rgba(66,94,232,.36);outline-offset:2px}"
+      "description": "Action dominante rouille, utilisée une seule fois par contexte décisionnel.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 4h16l2 10v6H2v-6L4 4Zm-2 10h6l2 3h4l2-3h6\"/></svg>Ajouter à l’Inbox</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:52px;padding:0 18px;border:0;border-radius:0;background:var(--accent,#d85d30);color:#fff;font:600 14px/1.5 'IBM Plex Sans',sans-serif;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));box-shadow:0 10px 24px rgba(106,43,21,.25);transition:background .2s,transform .2s cubic-bezier(.16,1,.3,1)}.ds-btn-primary svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.ds-btn-primary:hover{background:var(--accent-hover,#ed7042)}.ds-btn-primary:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:1px}.ds-btn-primary:active{transform:scale(.985)}"
     },
     {
-      "name": "Secondary Button",
-      "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Action utile mais non dominante.",
-      "html": "<button class=\"ds-btn-secondary\">Analyser</button>",
-      "css": ".ds-btn-secondary{min-height:42px;padding:9px 15px;border:1px solid #deded9;border-radius:8px;background:transparent;color:#6f706e;font:600 .875rem ui-sans-serif,sans-serif;cursor:pointer}.ds-btn-secondary:hover{background:#f1f1ef;color:#202124}.ds-btn-secondary:focus-visible{outline:3px solid rgba(66,94,232,.36);outline-offset:2px}"
-    },
-    {
-      "name": "Capture Field",
-      "kind": "input",
-      "description": "Zone de dépôt principale, regroupée avec ses actions.",
-      "html": "<label class=\"ds-capture\">Dépose ta pensée.<textarea placeholder=\"Réserver le train…\"></textarea></label>",
-      "css": ".ds-capture{display:block;padding:18px 20px;border:1px solid #c7c8c3;border-radius:12px;background:#fff;color:#6f706e;font:600 .875rem ui-sans-serif,sans-serif}.ds-capture:focus-within{border-color:#425ee8;box-shadow:0 8px 28px rgba(37,45,78,.08)}.ds-capture textarea{display:block;width:100%;min-height:88px;margin-top:8px;padding:0;border:0;outline:0;resize:vertical;color:#202124;font:400 1rem/1.65 ui-sans-serif,sans-serif}"
-    },
-    {
-      "name": "Type Chip",
+      "name": "Selected Type Choice",
       "kind": "chip",
-      "description": "Classification compacte et non interactive.",
-      "html": "<span class=\"ds-chip\">Tâche</span>",
-      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:25px;padding:3px 8px;border-radius:6px;background:#eaf0ff;color:#3653ad;font:400 .75rem ui-sans-serif,sans-serif}"
+      "refersTo": "type-choice-selected",
+      "description": "Choix de type actif avec contour rouille chanfreiné et cœur ardoise.",
+      "html": "<button class=\"ds-type-selected\" type=\"button\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 12.5 9 17l11-11\"/></svg>Tâche</button>",
+      "css": ".ds-type-selected{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:125px;height:58px;padding:0 14px;border:0;border-radius:0;background:var(--accent,#d85d30);color:var(--accent,#d85d30);font:400 14px/1.5 'IBM Plex Sans',sans-serif;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px))}.ds-type-selected::before{content:'';position:absolute;z-index:-1;inset:1px;background:#27333c;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px))}.ds-type-selected svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.ds-type-selected:hover::before{background:#263847}.ds-type-selected:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:1px}"
     },
     {
-      "name": "Note Container",
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Champ ardoise bordé pour la capture et l’édition longue.",
+      "html": "<label class=\"ds-field-label\">Nouvelle pensée<textarea class=\"ds-field\" placeholder=\"Écris ici tout ce qui te passe par la tête…\"></textarea></label>",
+      "css": ".ds-field-label{display:grid;gap:7px;color:var(--muted,#b2bac1);font:500 12px/1.5 'IBM Plex Sans',sans-serif}.ds-field{width:100%;height:132px;resize:none;padding:14px 16px;border:1px solid #526574;border-radius:5px;background:#1d2c39;color:var(--ink,#f0f1f2);caret-color:var(--accent,#d85d30);font:400 16px/1.55 'IBM Plex Sans',sans-serif;transition:border-color .18s,box-shadow .18s}.ds-field::placeholder{color:#9fa9b1}.ds-field:hover{border-color:#657988}.ds-field:focus{border-color:#8293a1;box-shadow:0 10px 28px rgba(5,10,15,.24);outline:2px solid var(--focus,#f6a183);outline-offset:3px}"
+    },
+    {
+      "name": "Active Navigation Item",
+      "kind": "nav",
+      "refersTo": "nav-active",
+      "description": "Destination active avec plan relevé, filet rouille et icône colorée.",
+      "html": "<a class=\"ds-nav-active\" href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m3 11 9-8 9 8v9h-6v-6H9v6H3Z\"/></svg><span>Accueil</span></a>",
+      "css": ".ds-nav-active{position:relative;display:grid;grid-template-columns:28px 1fr;align-items:center;gap:10px;min-height:51px;padding:0 13px;border-radius:6px;background:#20303e;color:var(--ink,#f0f1f2);font:400 14px/1.5 'IBM Plex Sans',sans-serif;text-decoration:none;transition:background .22s cubic-bezier(.16,1,.3,1),color .22s cubic-bezier(.16,1,.3,1)}.ds-nav-active::before{content:'';position:absolute;left:-14px;top:0;bottom:0;width:1px;background:var(--accent,#d85d30)}.ds-nav-active svg{width:20px;height:20px;fill:none;stroke:var(--accent,#d85d30);stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.ds-nav-active:hover{background:#273945}.ds-nav-active:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}"
+    },
+    {
+      "name": "Dump Row",
       "kind": "card",
-      "refersTo": "note-container",
-      "description": "Feuille de lecture sans ombre au repos.",
-      "html": "<article class=\"ds-note\"><span class=\"ds-chip\">Idée</span><p>Creuser une piste pour le prochain projet.</p></article>",
-      "css": ".ds-note{max-width:460px;padding:19px 20px 17px;border:1px solid #deded9;border-radius:12px;background:#fff;color:#202124;font:400 1rem/1.65 ui-sans-serif,sans-serif;transition:border-color 140ms}.ds-note:hover{border-color:#c7c8c3}.ds-note:focus-within{outline:3px solid rgba(66,94,232,.36);outline-offset:2px}.ds-note p{margin:18px 0 0}"
+      "description": "Ligne de collection dense, plate et séparée par un filet.",
+      "html": "<article class=\"ds-dump-row\"><button class=\"ds-check\" type=\"button\" aria-label=\"Marquer comme terminé\"></button><button class=\"ds-dump-main\" type=\"button\"><strong>Préparer le point hebdo avec l’équipe</strong><small>Tâche · Harmonix · Priorité haute</small></button><time>3 sept., 10:00</time></article>",
+      "css": ".ds-dump-row{display:grid;grid-template-columns:28px minmax(0,1fr) auto;align-items:center;gap:9px;min-height:57px;padding:7px 5px;border-bottom:1px solid #30414e;background:transparent;color:var(--ink,#f0f1f2);font-family:'IBM Plex Sans',sans-serif;transition:background .18s}.ds-dump-row:hover{background:#192936}.ds-dump-row:focus-within{background:#20313f}.ds-check{width:21px;height:21px;padding:0;border:1px solid #72818c;border-radius:3px;background:transparent}.ds-check:hover{border-color:var(--accent,#d85d30)}.ds-check:focus-visible,.ds-dump-main:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}.ds-dump-main{min-width:0;padding:0;border:0;background:transparent;color:inherit;text-align:left}.ds-dump-main strong{display:block;overflow:hidden;font-size:14px;font-weight:500;white-space:nowrap;text-overflow:ellipsis}.ds-dump-main small,.ds-dump-row time{color:var(--faint,#85919c);font-size:11px}.ds-dump-main small{display:block;margin-top:4px}.ds-dump-row time{font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Tag compact posé sur un plan intérieur avec filet contextualisé.",
+      "html": "<span class=\"ds-tag\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m3 12 9-9h7l2 2v7l-9 9Zm13-5h.01\"/></svg>Harmonix <small>4</small></span>",
+      "css": ".ds-tag{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid #72819a66;border-radius:5px;background:#172633;color:var(--muted,#b2bac1);font:500 12px/1.5 'IBM Plex Sans',sans-serif}.ds-tag svg{width:16px;height:16px;fill:none;stroke:var(--faint,#85919c);stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}.ds-tag small{color:var(--faint,#85919c);font-size:11px}.ds-tag:hover{background:#1d2e3b}.ds-tag:focus-within{outline:2px solid var(--focus,#f6a183);outline-offset:3px}"
+    },
+    {
+      "name": "Search Trigger",
+      "kind": "button",
+      "description": "Commande de recherche globale bordée avec raccourci clavier visible.",
+      "html": "<button class=\"ds-search\" type=\"button\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 5 5\"/></svg><span>Rechercher partout…</span><kbd>⌘ K</kbd></button>",
+      "css": ".ds-search{display:flex;align-items:center;gap:10px;width:350px;max-width:100%;padding:11px 12px;border:1px solid var(--line,#3d4c58);border-radius:7px;background:#182632;color:var(--muted,#b2bac1);font:400 14px/1.5 'IBM Plex Sans',sans-serif;text-align:left}.ds-search svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.65}.ds-search kbd{margin-left:auto;padding:2px 7px;border:1px solid #415160;border-radius:4px;background:#1d2c39;color:#cad0d4;font:400 11px/1.5 'IBM Plex Sans',sans-serif}.ds-search:hover{background:#20303e;color:var(--ink,#f0f1f2)}.ds-search:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}"
+    },
+    {
+      "name": "Toast",
+      "kind": "custom",
+      "description": "Feedback temporaire compact, lisible au-dessus des plans de travail.",
+      "html": "<div class=\"ds-toast\" role=\"status\">Ajouté à l’Inbox.</div>",
+      "css": ".ds-toast{min-width:260px;padding:12px 15px;border:1px solid #52616c;border-radius:6px;background:#233440;color:#fff;font:400 14px/1.5 'IBM Plex Sans',sans-serif;box-shadow:0 12px 30px rgba(0,0,0,.35);animation:ds-toast-in .35s cubic-bezier(.16,1,.3,1)}.ds-toast:hover{border-color:#657783}.ds-toast:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}@keyframes ds-toast-in{from{opacity:0;transform:translateY(12px);filter:blur(3px)}}@media(prefers-reduced-motion:reduce){.ds-toast{animation-duration:.01ms}}"
     }
   ],
   "narrative": {
-    "northStar": "The Clear Desk",
-    "overview": "BrainDump ressemble à un bureau remis au propre juste assez pour que la prochaine pensée trouve immédiatement sa place. La capture est dense et directe; tout ce qui suit ralentit volontairement le rythme pour rendre la collection facile à relire. L’interface assume les conventions familières d’une application de notes et vise le niveau de retenue de Notion.",
-    "keyCharacteristics": ["Canvas centré et navigation minimale.", "Accent indigo rare, réservé aux actions et au focus.", "Surfaces mates, filets discrets et ombres uniquement en réponse à un état.", "Densité forte pendant la capture, espace généreux pendant la lecture.", "Icônes linéaires cohérentes et contrôles progressivement révélés."],
-    "rules": [
-      { "name": "The One Action Rule", "body": "Une vue n’expose qu’une action indigo dominante; analyser, naviguer et supprimer restent secondaires.", "section": "colors" },
-      { "name": "The Semantic Color Rule", "body": "Rouge et vert ne décorent jamais: ils signalent exclusivement une erreur, une suppression ou une réussite.", "section": "colors" },
-      { "name": "The Familiar Voice Rule", "body": "Aucun monospace de costume ni contraste de familles; la hiérarchie doit rester évidente même sans couleur.", "section": "typography" },
-      { "name": "The Earned Shadow Rule", "body": "Une ombre indique un changement d’état ou de plan; elle n’accompagne jamais une carte au repos.", "section": "elevation" }
+    "northStar": "L’établi numérique précisionniste",
+    "overview": "BrainDump ressemble à un outil de terrain personnel : des plans bleu ardoise mats, des filets techniques et une encre claire installent un espace calme où la pensée peut être déposée sans mise en scène superflue. La capture domine visuellement; l’organisation vient ensuite, dans une densité utile plutôt que dans une mosaïque de cartes.\n\nLa voix condensée et légèrement imprimée donne de la présence aux titres, tandis qu’IBM Plex Sans maintient les contrôles et les données nets. L’orange rouille est rare et opérationnel : il désigne l’action courante, la sélection et quelques repères d’état, jamais le décor.",
+    "keyCharacteristics": [
+      "Plans sombres continus séparés par des filets fins.",
+      "Capture surdimensionnée, immédiatement accessible.",
+      "Titres condensés à bord sec et contenu courant sobre.",
+      "Accent rouille parcimonieux et toujours signifiant.",
+      "Chanfrein diagonal réservé aux actions primaires et sélections."
     ],
-    "dos": ["Do réserver l’indigo à l’action primaire, au focus et à quelques repères de classification.", "Do garder la capture compacte et la bibliothèque sensiblement plus aérée.", "Do afficher les états de chargement, vide, erreur et réussite dans la voix directe de BrainDump.", "Do rendre les actions destructives explicites et utilisables au clavier comme au tactile."],
-    "donts": ["Don't ajouter une navigation, une métrique ou une carte sans fonction réelle.", "Don't utiliser gradients, verre, halos ou ombres permanentes pour fabriquer de la profondeur.", "Don't remplacer les icônes linéaires par des emoji ou des glyphes Unicode.", "Don't transformer l’interface en page marketing une fois la session ouverte."]
+    "rules": [
+      { "name": "The One Rust Action Rule", "body": "Une vue ne présente qu’une action rouille de poids équivalent; sa rareté donne la hiérarchie.", "section": "colors" },
+      { "name": "The Semantic Signal Rule", "body": "Le corail, le vert et l’ambre ne servent jamais d’ornement et le sens ne repose jamais sur la couleur seule.", "section": "colors" },
+      { "name": "The Condensed Authority Rule", "body": "La police condensée structure les titres et la marque; elle ne remplace jamais la police de lecture dans les champs, listes ou métadonnées.", "section": "typography" },
+      { "name": "The No Decorative Caps Rule", "body": "Aucun texte en capitales espacées n’est utilisé comme ornement.", "section": "typography" },
+      { "name": "The Capture-First Rule", "body": "Sur chaque format, le champ de capture, son type et son action principale restent visibles avant les outils d’organisation.", "section": "layout" },
+      { "name": "The Planes Before Shadows Rule", "body": "Une surface gagne d’abord sa hiérarchie par sa teinte et son filet; l’ombre est réservée à un état temporaire ou flottant.", "section": "elevation" },
+      { "name": "The Chamfer Is A Verb Rule", "body": "Le chanfrein signale une action ou une sélection; les surfaces informatives conservent leurs coins doucement arrondis.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do montrer la capture immédiatement et préserver sa dominance visuelle.",
+      "Do structurer les collections par plans continus, filets et lignes denses.",
+      "Do réserver le rouille à l’action courante, au focus actif et aux petits repères d’état.",
+      "Do conserver des cibles tactiles d’au moins 42 px sur mobile et un focus clavier distinct.",
+      "Do utiliser le cerveau linéaire comme marque sur les surfaces authentifiées et de connexion."
+    ],
+    "donts": [
+      "Don't transformer l’interface en tableau de bord SaaS ou en mosaïque de cartes flottantes.",
+      "Don't introduire de gradients, verre, halos ou grosses pilules décoratives.",
+      "Don't multiplier les actions rouille de poids équivalent dans une même vue.",
+      "Don't utiliser le chanfrein sur les conteneurs informatifs ou les champs ordinaires.",
+      "Don't masquer une action destructive, simuler une fonction absente ou faire reposer un sens sur la couleur seule."
+    ]
   }
 }

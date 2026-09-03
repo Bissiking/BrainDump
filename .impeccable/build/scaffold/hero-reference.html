@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Scaffold reference: v2-capture-home.png</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:wght@400&display=swap">
+  <link rel="stylesheet" href="layout.css">
+  <style>html,body{margin:0}body{background:#1c2a38}.region{box-sizing:border-box}.region.text p{white-space:pre-wrap}</style>
+</head>
+<body>
+<!-- Reference only. Every region sits at its measured box inside a comp-aspect frame. Take the boxes (layout.css), keep your own semantic structure. -->
+<main class="comp-frame" style="max-width:1536px">
+  <div class="r-app-shell region chrome" data-region="app-shell"><!-- matte blue-gray application frame --></div>
+  <div class="r-sidebar region chrome" data-region="sidebar"><!-- persistent desktop navigation rail --></div>
+  <div class="r-workspace-header region chrome" data-region="workspace-header"><!-- page title and global search --></div>
+  <div class="r-page-title region text" data-region="page-title"><!-- Accueil heading --><p style="font-size:var(--r-page-title-font);line-height:1.05;margin:0">page-title</p></div>
+  <div class="r-capture-plane region chrome" data-region="capture-plane"><!-- dominant quick capture workplane --></div>
+  <div class="r-capture-title region text" data-region="capture-title"><!-- Vide ta tête heading --><p style="font-size:var(--r-capture-title-font);font-family:var(--r-capture-title-family),sans-serif;font-weight:var(--r-capture-title-weight);line-height:1.05;margin:0">capture-title</p></div>
+  <div class="r-capture-input region control" data-region="capture-input"><!-- large textarea: rebuild the control's chrome from the crop (comp-spec.mjs --crop capture-input); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-capture-types region control" data-region="capture-types"><!-- type selectors: rebuild the control's chrome from the crop (comp-spec.mjs --crop capture-types); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-capture-options region control" data-region="capture-options"><!-- progressive metadata and submit action: rebuild the control's chrome from the crop (comp-spec.mjs --crop capture-options); its ink box, border, fill, radius, and label size are the comp's --></div>
+  <div class="r-resume-list region chrome" data-region="resume-list"><!-- quiet list of recent dumps --></div>
+  <div class="r-resume-title region text" data-region="resume-title"><!-- A reprendre heading --><p style="font-size:var(--r-resume-title-font);line-height:1.05;margin:0">resume-title</p></div>
+  <div class="r-today-panel region chrome" data-region="today-panel"><!-- today and overdue context panel --></div>
+  <div class="r-today-title region text" data-region="today-title"><!-- Aujourd'hui heading --><p style="font-size:var(--r-today-title-font);line-height:1.05;margin:0">today-title</p></div>
+  <div class="r-navigation-labels region text" data-region="navigation-labels"><!-- brand and navigation labels --><p style="font-size:var(--r-navigation-labels-font);line-height:1.05;margin:0">navigation-labels</p></div>
+</main>
+</body>
+</html>

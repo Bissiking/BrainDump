@@ -1,38 +1,69 @@
-# BrainDump
+# BrainDump V2
 
-Mini application locale de capture et classification de notes.
+BrainDump est une application personnelle de capture rapide : on vide ce que l’on a en tête, puis on organise plus tard. Elle regroupe notes, tâches, idées, bugs et rappels autour d’un modèle commun `Dump`.
 
-## Prérequis
+## Stack
 
-- Node.js 22 ou supérieur
-- npm
+- Fastify 5 et TypeScript
+- interface HTML/CSS/JavaScript native, sans framework client
+- SQLite avec migrations automatiques au démarrage
+- Kyros SSO V4 : PAR, PKCE S256, callback avec `state` et `iss`, jetons RS256 vérifiés par JWKS, session serveur et refresh rotatif
 
-## Installation
+## Lancer le projet
 
-```powershell
+```bash
 npm install
 cp .env.exemple .env
 npm run dev
 ```
 
-Renseigner les paramètres Kyros dans `.env`, puis ouvrir `http://localhost:3005`.
+Ouvrir ensuite `http://localhost:3005`.
+
+## Migration V1 vers V2
+
+Au premier démarrage, BrainDump crée `projects`, `dumps`, `tags`, `dump_tags` et `attachments`, puis enregistre la migration dans `schema_migrations`.
+
+- chaque ancienne note avec `owner_id` est copiée dans `dumps` ;
+- `information` devient `note` ;
+- les projets et tags historiques sont conservés et normalisés ;
+- la table `notes` reste en place pour permettre un retour arrière ;
+- les anciennes lignes sans propriétaire ne sont pas attribuées arbitrairement et restent inaccessibles.
+
+Sauvegarder `data/braindump.db` avant une première montée de version en production reste recommandé.
+
+## Kyros SSO V4
+
+Le client Kyros associé à BrainDump doit être configuré avec `sso_protocol_version=v4`. Kyros doit exposer `/par`, `/authorize`, `/token`, `/revoke` et `/sso/v4/jwks`. En production, activer également SSO V4 côté Kyros et vérifier `/health/ready` avant de basculer le client.
+
+`KYROS_REQUESTED_SCOPES` doit correspondre aux scopes autorisés sur le client Kyros. S’il est omis, BrainDump demande désormais la valeur de `KYROS_REQUIRED_SCOPES`, ce qui évite qu’un scope par défaut différent provoque `invalid_scope` pendant la requête PAR.
+
+BrainDump ne stocke aucun mot de passe. Les secrets client, refresh tokens et codes PKCE restent côté serveur et les champs sensibles sont masqués dans les logs.
 
 ## API
 
-Toutes les routes métier exigent une session Kyros valide. Les routes natives LUMA sont :
+Toutes les routes exigent une session Kyros ou un bearer Kyros explicitement autorisé. Les ressources sont systématiquement filtrées par l’identifiant du propriétaire.
 
-- `GET /api/braindump/notes`
-- `POST /api/braindump/analyze`
-- `POST /api/braindump/notes`
-- `DELETE /api/braindump/notes/:id`
+- `GET/POST /api/dumps`
+- `GET/PATCH/DELETE /api/dumps/:id`
+- `GET /api/today`
+- `POST /api/analyze`
+- `GET/POST /api/projects`
+- `PATCH/DELETE /api/projects/:id`
+- `GET/POST /api/tags`
+- `DELETE /api/tags/:id`
+- `POST /api/dumps/:id/attachments`
+- `DELETE /api/attachments/:id`
 
-Les notes sont automatiquement isolées avec l'identifiant Kyros de l'utilisateur connecté. Les routes historiques sous `/api/*` restent disponibles pour l'interface autonome.
+Les pièces jointes V2 sont des références HTTPS avec nom, type MIME et taille optionnels. Le stockage binaire et son service d’upload ne sont pas simulés par BrainDump : ils doivent être fournis par un stockage privé dédié avant d’exposer un sélecteur de fichiers dans l’interface.
 
-Luma OS peut appeler ces routes sans seconde connexion en relayant son jeton Kyros dans l’en-tête `Authorization: Bearer …`. Le client et l’audience LUMA doivent être explicitement autorisés avec `KYROS_LUMA_CLIENT_ID` et `KYROS_LUMA_RESOURCE_AUDIENCE`; le jeton doit posséder le scope `braindump:access`.
+Les mêmes routes existent sous `/api/braindump`. Les routes V1 `/api/notes` sont conservées comme compatibilité de transition.
 
-## Production locale
+## Validation
 
-```powershell
+```bash
 npm run build
-npm start
+npm test
+npm run visual:qa
 ```
+
+La validation visuelle locale utilise Chrome installé sur macOS et un serveur de données simulé ; elle ne remplace pas un parcours réel contre une instance Kyros V4 configurée.

@@ -2,106 +2,138 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f7f7f5">
-  <title>Mes notes · BrainDump</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111a24">
+  <title>BrainDump · Vide ta tête</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <!--
-  THESIS: Un canvas centré place les pensées avant le chrome et refuse le dashboard à navigation artificielle.
-  OWN-WORLD: Surfaces mates presque blanches, encre charbon, filets gris chauds et accent indigo réservé aux actions.
-  STORY: L’utilisateur capture, vérifie ce que BrainDump comprend, enregistre, puis relit une collection calme.
-  FIRST VIEWPORT: Barre minimale, titre et composeur compact centrés, analyse en ligne, notes aérées en deux colonnes; l’action primaire reste dans le composeur.
-  FORM: Canvas documentaire centré, troisième composition approuvée, seed 769b9e62.
-  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
-  -->
   <a class="skip-link" href="#main">Aller au contenu</a>
+  <svg class="icon-sprite" aria-hidden="true">
+    <filter id="chalk-edge" x="-4%" y="-6%" width="108%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="1" seed="7" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.15" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8v9h-6v-6H9v6H3Z"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 4h16l2 10v6H2v-6L4 4Zm-2 10h6l2 3h4l2-3h6"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M5 3v4m14-4v4M3 9h18M4 5h16v16H4Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5 9 17l11-11"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 3h10l4 4v14H5Zm10 0v5h5M8 12h8m-8 4h8"/></symbol>
+    <symbol id="i-idea" viewBox="0 0 24 24"><path d="M9 18h6m-5 3h4m4-9a6 6 0 1 0-12 0c0 2 1 3.5 2.5 4.5L9 18h6l.5-1.5C17 15.5 18 14 18 12Z"/></symbol>
+    <symbol id="i-bug" viewBox="0 0 24 24"><path d="M8 8h8v9a4 4 0 0 1-8 0Zm2-4h4l2 4H8l2-4ZM4 11h4m8 0h4M3 16h5m8 0h5M6 6l3 3m9-3-3 3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Zm-8 12h4"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 5h7l2 3h9v12H3Z"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><path d="M3 5h18v4H3Zm2 4h14v11H5Zm5 4h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="m3 12 9-9h7l2 2v7l-9 9Zm13-5h.01"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 3h6l1 4H8Zm-2 4 1 14h8l1-14M10 11v6m4-6v6"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="m8 12 6-6a4 4 0 0 1 6 6l-8 8a6 6 0 0 1-8-8l8-8"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 32 32"><path d="M12 5.5a4 4 0 0 0-6.7 2.9A4.5 4.5 0 0 0 4 17a4 4 0 0 0 4 6.8V25a3 3 0 0 0 6 0V7.5a2 2 0 0 0-2-2Zm8 0a4 4 0 0 1 6.7 2.9A4.5 4.5 0 0 1 28 17a4 4 0 0 1-4 6.8V25a3 3 0 0 1-6 0V7.5a2 2 0 0 1 2-2Z"/><path d="M9 11.5h5M8 18h6m4-6.5h5M18 18h6M11 8v17m10-17v17"/></symbol>
+  </svg>
 
-  <header class="app-bar">
-    <a class="brand" href="/" aria-label="BrainDump, accueil">
-      <svg viewBox="0 0 32 32" aria-hidden="true">
-        <path d="M12 5.5a4 4 0 0 0-6.7 2.9A4.5 4.5 0 0 0 4 17a4 4 0 0 0 4 6.8V25a3 3 0 0 0 6 0V7.5a2 2 0 0 0-2-2Zm8 0a4 4 0 0 1 6.7 2.9A4.5 4.5 0 0 1 28 17a4 4 0 0 1-4 6.8V25a3 3 0 0 1-6 0V7.5a2 2 0 0 1 2-2Z"/>
-        <path d="M9 11.5h5M8 18h6m4-6.5h5M18 18h6M11 8v17m10-17v17"/>
-      </svg>
-      <span>BrainDump</span>
-    </a>
+  <div class="app-shell r-app-shell">
+    <aside class="sidebar r-sidebar" aria-label="Navigation principale">
+      <a class="brand" href="#home" data-view="home" aria-label="BrainDump, accueil"><span class="brand-mark"><svg><use href="#i-brain"/></svg></span><span>BrainDump</span></a>
+      <nav class="side-nav" id="side-nav">
+        <a href="#home" data-view="home" class="active"><svg><use href="#i-home"/></svg><span>Accueil</span></a>
+        <a href="#inbox" data-view="inbox"><svg><use href="#i-inbox"/></svg><span>Inbox</span><b id="inbox-count">0</b></a>
+        <a href="#today" data-view="today"><svg><use href="#i-calendar"/></svg><span>Aujourd’hui</span></a>
+        <a href="#tasks" data-view="tasks"><svg><use href="#i-check"/></svg><span>Tâches</span></a>
+        <a href="#notes" data-view="notes"><svg><use href="#i-note"/></svg><span>Notes</span></a>
+        <a href="#ideas" data-view="ideas"><svg><use href="#i-idea"/></svg><span>Idées</span></a>
+        <a href="#bugs" data-view="bugs"><svg><use href="#i-bug"/></svg><span>Bugs</span></a>
+        <a href="#reminders" data-view="reminders"><svg><use href="#i-bell"/></svg><span>Rappels</span></a>
+        <a href="#projects" data-view="projects"><svg><use href="#i-folder"/></svg><span>Projets</span></a>
+        <a href="#archives" data-view="archives"><svg><use href="#i-archive"/></svg><span>Archives</span></a>
+      </nav>
+      <details class="account-menu">
+        <summary><span class="avatar" id="user-avatar">M</span><span id="user-name">Mathéo</span><svg><use href="#i-chevron"/></svg></summary>
+        <div><strong id="account-name">Mathéo</strong><small id="account-username"></small><button id="logout" type="button">Se déconnecter</button></div>
+      </details>
+    </aside>
 
-    <p class="top-count" id="top-counter" aria-live="polite">Chargement…</p>
+    <main id="main" class="workspace">
+      <header class="workspace-header r-workspace-header">
+        <div><button class="mobile-logo" data-view="home" aria-label="Accueil"><svg><use href="#i-brain"/></svg></button><h1 id="view-title" class="r-page-title">Accueil</h1><p id="view-subtitle">Un endroit net pour ce qui te traverse.</p></div>
+        <button class="search-trigger" id="open-search" type="button"><svg><use href="#i-search"/></svg><span>Rechercher partout…</span><kbd>⌘ K</kbd></button>
+      </header>
 
-    <details class="account-menu">
-      <summary aria-label="Ouvrir le menu du compte">
-        <span class="avatar" id="user-avatar" aria-hidden="true">··</span>
-        <span class="account-name" id="user-name">Compte</span>
-        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg>
-      </summary>
-      <div class="account-popover">
-        <div class="account-identity">
-          <strong id="popover-name">Compte</strong>
-          <span id="popover-username"></span>
+      <section class="capture-plane r-capture-plane" id="capture-plane" aria-labelledby="capture-title">
+        <h2 id="capture-title" class="r-capture-title">Vide ta tête.</h2>
+        <textarea id="capture-content" class="r-capture-input" maxlength="20000" placeholder="Écris ici tout ce qui te passe par la tête…" aria-label="Nouvelle pensée"></textarea>
+        <div class="type-selector r-capture-types" id="type-selector" aria-label="Type du Dump">
+          <button type="button" data-type="task" class="selected"><svg><use href="#i-check"/></svg>Tâche</button>
+          <button type="button" data-type="note"><svg><use href="#i-note"/></svg>Note</button>
+          <button type="button" data-type="idea"><svg><use href="#i-idea"/></svg>Idée</button>
+          <button type="button" data-type="bug"><svg><use href="#i-bug"/></svg>Bug</button>
+          <button type="button" data-type="reminder"><svg><use href="#i-bell"/></svg>Rappel</button>
         </div>
-        <button id="logout" class="menu-action" type="button">
-          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8 4H4v12h4m4-3 3-3-3-3m3 3H7"/></svg>
-          <span>Se déconnecter</span>
-        </button>
-      </div>
-    </details>
-  </header>
+        <div class="capture-options r-capture-options">
+          <button class="options-toggle" id="options-toggle" type="button" aria-expanded="false"><svg><use href="#i-chevron"/></svg>Plus d’options</button>
+          <div class="capture-fields" id="capture-fields">
+            <label>Projet<select id="capture-project"><option value="">Aucun</option></select></label>
+            <label>Tags<input id="capture-tags" placeholder="travail, idée"></label>
+            <label>Échéance<input id="capture-due" type="datetime-local"></label>
+          </div>
+          <button class="primary-action" id="save-dump" type="button"><svg><use href="#i-inbox"/></svg><span>Ajouter à l’Inbox</span></button>
+        </div>
+      </section>
 
-  <main id="main" class="workspace">
-    <div class="page-heading">
-      <h1>Mes notes</h1>
-      <p>Capture maintenant, range ensuite.</p>
+      <section class="content-plane r-resume-list" aria-labelledby="content-title">
+        <header><div><h2 id="content-title" class="r-resume-title">À reprendre</h2><p id="content-count">Chargement…</p></div><button class="text-action" id="view-all" type="button">Voir tout <svg><use href="#i-chevron"/></svg></button></header>
+        <div id="dump-list" class="dump-list" aria-live="polite" aria-busy="true"><div class="skeleton-list" aria-label="Chargement"><i></i><i></i><i></i><i></i></div></div>
+      </section>
+    </main>
+
+    <aside class="context-panel r-today-panel" id="context-panel" aria-label="Contexte">
+      <div id="today-context">
+        <header><h2 class="r-today-title"><svg><use href="#i-calendar"/></svg>Aujourd’hui</h2><button class="icon-button" type="button" data-view="today" aria-label="Ouvrir Aujourd’hui"><svg><use href="#i-chevron"/></svg></button></header>
+        <div id="today-summary" class="today-summary"><div class="skeleton-list"><i></i><i></i><i></i></div></div>
+      </div>
+      <form id="detail-form" class="detail-form" hidden>
+        <header><button class="icon-button" id="favorite-dump" type="button" aria-label="Ajouter aux favoris"><svg><use href="#i-star"/></svg></button><span id="save-state">Enregistré</span><button class="icon-button" id="close-detail" type="button" aria-label="Fermer"><svg><use href="#i-close"/></svg></button></header>
+        <input id="detail-title" class="detail-title" maxlength="200" placeholder="Sans titre" aria-label="Titre">
+        <label>Contenu<textarea id="detail-content" maxlength="20000" placeholder="Commence à écrire…"></textarea></label>
+        <div class="detail-grid">
+          <label>Type<select id="detail-type"></select></label><label>Statut<select id="detail-status"></select></label>
+          <label>Priorité<select id="detail-priority"></select></label><label>Projet<select id="detail-project"><option value="">Aucun</option></select></label>
+          <label>Échéance<input id="detail-due" type="datetime-local"></label><label>Tags<input id="detail-tags" placeholder="tag, tag"></label>
+        </div>
+        <div id="detail-attachments" class="attachments"></div>
+        <footer><button id="archive-dump" type="button">Archiver</button><button class="danger-action" id="delete-dump" type="button"><svg><use href="#i-trash"/></svg>Supprimer</button></footer>
+      </form>
+    </aside>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navigation mobile">
+    <button data-view="home" class="active"><svg><use href="#i-home"/></svg><span>Accueil</span></button>
+    <button data-view="tasks"><svg><use href="#i-check"/></svg><span>Tâches</span></button>
+    <button id="mobile-add" class="mobile-add" aria-label="Capture rapide"><svg><use href="#i-plus"/></svg></button>
+    <button data-view="notes"><svg><use href="#i-note"/></svg><span>Notes</span></button>
+    <button data-view="more"><svg><use href="#i-more"/></svg><span>Plus</span></button>
+  </nav>
+
+  <dialog id="mobile-capture" class="bottom-sheet">
+    <form method="dialog" class="sheet-head"><strong>Capture rapide</strong><button aria-label="Fermer"><svg><use href="#i-close"/></svg></button></form>
+    <textarea id="mobile-content" maxlength="20000" placeholder="Qu’est-ce qui te traverse l’esprit ?" autofocus></textarea>
+    <div class="mobile-types" id="mobile-types">
+      <button type="button" data-type="task"><svg><use href="#i-check"/></svg>Tâche</button><button type="button" data-type="note"><svg><use href="#i-note"/></svg>Note</button><button type="button" data-type="idea"><svg><use href="#i-idea"/></svg>Idée</button><button type="button" data-type="bug"><svg><use href="#i-bug"/></svg>Bug</button><button type="button" data-type="reminder"><svg><use href="#i-bell"/></svg>Rappel</button>
     </div>
+    <button class="primary-action mobile-save" id="mobile-save" type="button">Ajouter à l’Inbox</button>
+  </dialog>
 
-    <section class="composer" aria-labelledby="capture-title">
-      <h2 id="capture-title" class="sr-only">Nouvelle note</h2>
-      <label for="note">Dépose ta pensée.</label>
-      <textarea
-        id="note"
-        maxlength="5000"
-        placeholder="Réserver le train, creuser une idée, ne pas oublier…"
-        aria-describedby="composer-help character-count"
-      ></textarea>
+  <dialog id="search-dialog" class="search-dialog">
+    <form method="dialog" class="search-box"><svg><use href="#i-search"/></svg><input id="global-search" type="search" placeholder="Chercher dans les titres, contenus, projets et tags…" autocomplete="off"><button aria-label="Fermer"><svg><use href="#i-close"/></svg></button></form>
+    <div id="search-results" class="search-results"><p>Commence à écrire pour retrouver une pensée.</p></div>
+  </dialog>
 
-      <div id="preview" class="analysis hidden" aria-live="polite"></div>
-
-      <div class="composer-footer">
-        <div class="composer-meta">
-          <span id="character-count">0 / 5 000</span>
-          <span id="composer-help"><kbd>Ctrl</kbd> ou <kbd>⌘</kbd> + <kbd>Entrée</kbd></span>
-        </div>
-        <div class="actions">
-          <button id="analyze" class="button secondary" type="button">
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.2 3.8L15 7l-3.8 1.2L10 12 8.8 8.2 5 7l3.8-1.2L10 2Zm5 9 .7 2.3L18 14l-2.3.7L15 17l-.7-2.3L12 14l2.3-.7L15 11Z"/></svg>
-            <span>Analyser</span>
-          </button>
-          <button id="save" class="button primary" type="button">
-            <span>Enregistrer</span>
-            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 4 6 6-6 6"/></svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <div id="app-status" class="status hidden" role="alert"></div>
-
-    <section class="library" aria-labelledby="library-title">
-      <div class="library-heading">
-        <div>
-          <h2 id="library-title">Dernières pensées</h2>
-          <p id="counter">0 note</p>
-        </div>
-      </div>
-      <div id="notes" class="notes" aria-live="polite" aria-busy="true">
-        <div class="loading-state">
-          <span class="spinner" aria-hidden="true"></span>
-          Chargement des notes…
-        </div>
-      </div>
-    </section>
-  </main>
-
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
   <script type="module" src="/app.js"></script>
 </body>
 </html>

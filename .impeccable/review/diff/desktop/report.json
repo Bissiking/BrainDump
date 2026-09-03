@@ -1,0 +1,577 @@
+{
+  "tool": "comp-diff",
+  "version": 1,
+  "createdAt": "2026-09-03T08:27:57.506Z",
+  "label": "desktop",
+  "comp": ".impeccable/mocks/v2-capture-home.png",
+  "build": ".impeccable/review/desktop.png",
+  "spec": ".impeccable/build/spec.json",
+  "compSize": "1536x1024",
+  "buildSize": "1440x1000",
+  "align": "top",
+  "overall": 0.7689,
+  "verdict": "drift",
+  "scores": {
+    "overall": 0.7689,
+    "structure": 0.7816,
+    "color": 0.9139,
+    "colorIntersection": 0.8347,
+    "paletteMatch": 0.9566,
+    "detail": 0.5916,
+    "detailRaw": 0.6176,
+    "detailAdded": 0.0521,
+    "bands": 0.7929
+  },
+  "palette": {
+    "comp": [
+      {
+        "hex": "#1c2a38",
+        "coverage": 0.9648
+      },
+      {
+        "hex": "#4a5760",
+        "coverage": 0.0117
+      },
+      {
+        "hex": "#cdced1",
+        "coverage": 0.0083
+      },
+      {
+        "hex": "#7f858e",
+        "coverage": 0.0077
+      },
+      {
+        "hex": "#d35a2a",
+        "coverage": 0.005
+      },
+      {
+        "hex": "#a4abb0",
+        "coverage": 0.0025
+      }
+    ],
+    "build": [
+      {
+        "hex": "#1b2838",
+        "coverage": 0.9544
+      },
+      {
+        "hex": "#3e4c59",
+        "coverage": 0.0237
+      },
+      {
+        "hex": "#d85838",
+        "coverage": 0.0062
+      },
+      {
+        "hex": "#98a0a8",
+        "coverage": 0.0055
+      },
+      {
+        "hex": "#6a757d",
+        "coverage": 0.0052
+      },
+      {
+        "hex": "#e6e6e6",
+        "coverage": 0.0049
+      }
+    ]
+  },
+  "regions": [
+    {
+      "id": "app-shell",
+      "x": 0,
+      "y": 0,
+      "w": 1,
+      "h": 1,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.7689,
+        "structure": 0.7816,
+        "color": 0.9139,
+        "colorIntersection": 0.8347,
+        "paletteMatch": 0.9566,
+        "detail": 0.5916,
+        "detailRaw": 0.6176,
+        "detailAdded": 0.0521,
+        "bands": 0.7929
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 11,
+          "y": 29,
+          "w": 1482,
+          "h": 948
+        },
+        "build": {
+          "x": 24,
+          "y": 33,
+          "w": 1487,
+          "h": 991
+        }
+      }
+    },
+    {
+      "id": "sidebar",
+      "x": 0,
+      "y": 0,
+      "w": 0.2,
+      "h": 1,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.7218,
+        "structure": 0.8086,
+        "color": 0.8029,
+        "colorIntersection": 0.6651,
+        "paletteMatch": 0.8772,
+        "detail": 0.4318,
+        "detailRaw": 0.4579,
+        "detailAdded": 0.0521,
+        "bands": 0.8673
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 11,
+          "y": 28,
+          "w": 296,
+          "h": 952
+        },
+        "build": {
+          "x": 22,
+          "y": 33,
+          "w": 285,
+          "h": 991
+        }
+      }
+    },
+    {
+      "id": "workspace-header",
+      "x": 0.2,
+      "y": 0,
+      "w": 0.8,
+      "h": 0.1,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.6109,
+        "structure": 0.9423,
+        "color": 0.9562,
+        "colorIntersection": 0.929,
+        "paletteMatch": 0.9709,
+        "detail": 0.1683,
+        "detailRaw": 0.2621,
+        "detailAdded": 0.1875,
+        "bands": 0
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 29,
+          "w": 1175,
+          "h": 73
+        },
+        "build": {
+          "x": 0,
+          "y": 35,
+          "w": 796,
+          "h": 31
+        }
+      }
+    },
+    {
+      "id": "page-title",
+      "x": 0.1999,
+      "y": 0.0176,
+      "w": 0.0742,
+      "h": 0.0469,
+      "kind": "text",
+      "score": {
+        "overall": 0.6561,
+        "structure": 0.6632,
+        "color": 0.8647,
+        "colorIntersection": 0.7734,
+        "paletteMatch": 0.9139,
+        "detail": 0.5688,
+        "detailRaw": 0.6313,
+        "detailAdded": 0.125,
+        "bands": 0.23
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 11,
+          "w": 104,
+          "h": 29
+        },
+        "build": {
+          "x": 0,
+          "y": 17,
+          "w": 102,
+          "h": 31
+        }
+      }
+    },
+    {
+      "id": "capture-plane",
+      "x": 0.2,
+      "y": 0,
+      "w": 0.5,
+      "h": 0.6,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.7793,
+        "structure": 0.8689,
+        "color": 0.8431,
+        "colorIntersection": 0.7274,
+        "paletteMatch": 0.9054,
+        "detail": 0.5827,
+        "detailRaw": 0.6087,
+        "detailAdded": 0.0521,
+        "bands": 0.7917
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 29,
+          "w": 768,
+          "h": 571
+        },
+        "build": {
+          "x": 0,
+          "y": 35,
+          "w": 768,
+          "h": 579
+        }
+      }
+    },
+    {
+      "id": "capture-title",
+      "x": 0.1999,
+      "y": 0.1172,
+      "w": 0.1875,
+      "h": 0.0586,
+      "kind": "text",
+      "score": {
+        "overall": 0.5283,
+        "structure": 0.3515,
+        "color": 0.8839,
+        "colorIntersection": 0.8174,
+        "paletteMatch": 0.9197,
+        "detail": 0.4196,
+        "detailRaw": 0.5029,
+        "detailAdded": 0.1667,
+        "bands": 0.6867
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 8,
+          "y": 7,
+          "w": 272,
+          "h": 42
+        },
+        "build": {
+          "x": 5,
+          "y": 0,
+          "w": 235,
+          "h": 41
+        }
+      }
+    },
+    {
+      "id": "capture-input",
+      "x": 0.2116,
+      "y": 0.2061,
+      "w": 0.2148,
+      "h": 0.0352,
+      "kind": "control",
+      "score": {
+        "overall": 0.703,
+        "structure": 0.8384,
+        "color": 0.4908,
+        "colorIntersection": 0.1639,
+        "paletteMatch": 0.6668,
+        "detail": 0.7695,
+        "detailRaw": 0.7799,
+        "detailAdded": 0.0208,
+        "bands": 0
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 9,
+          "y": 12,
+          "w": 311,
+          "h": 23
+        },
+        "build": {
+          "x": 7,
+          "y": 13,
+          "w": 323,
+          "h": 20
+        }
+      }
+    },
+    {
+      "id": "capture-types",
+      "x": 0.1999,
+      "y": 0.3584,
+      "w": 0.0898,
+      "h": 0.0703,
+      "kind": "control",
+      "score": {
+        "overall": 0.5702,
+        "structure": 0.6958,
+        "color": 0.5632,
+        "colorIntersection": 0.3523,
+        "paletteMatch": 0.6769,
+        "detail": 0.2998,
+        "detailRaw": 0.357,
+        "detailAdded": 0.1146,
+        "bands": 0.58
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 6,
+          "y": 7,
+          "w": 124,
+          "h": 58
+        },
+        "build": {
+          "x": 6,
+          "y": 28,
+          "w": 108,
+          "h": 35
+        }
+      }
+    },
+    {
+      "id": "capture-options",
+      "x": 0.5905,
+      "y": 0.4414,
+      "w": 0.1094,
+      "h": 0.0703,
+      "kind": "control",
+      "score": {
+        "overall": 0.6489,
+        "structure": 0.7671,
+        "color": 0.4925,
+        "colorIntersection": 0.1253,
+        "paletteMatch": 0.6902,
+        "detail": 0.6568,
+        "detailRaw": 0.6672,
+        "detailAdded": 0.0208,
+        "bands": 1
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 168,
+          "h": 72
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 168,
+          "h": 72
+        }
+      }
+    },
+    {
+      "id": "resume-list",
+      "x": 0.2,
+      "y": 0.5,
+      "w": 0.5,
+      "h": 0.5,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.7564,
+        "structure": 0.7618,
+        "color": 0.961,
+        "colorIntersection": 0.925,
+        "paletteMatch": 0.9805,
+        "detail": 0.518,
+        "detailRaw": 0.5493,
+        "detailAdded": 0.0625,
+        "bands": 0.8
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 454
+        },
+        "build": {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 418
+        }
+      }
+    },
+    {
+      "id": "resume-title",
+      "x": 0.1999,
+      "y": 0.5469,
+      "w": 0.082,
+      "h": 0.0469,
+      "kind": "text",
+      "score": {
+        "overall": 0.7681,
+        "structure": 0.7103,
+        "color": 0.9301,
+        "colorIntersection": 0.8882,
+        "paletteMatch": 0.9526,
+        "detail": 0.5979,
+        "detailRaw": 0.6188,
+        "detailAdded": 0.0417,
+        "bands": 0.9077
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 9,
+          "w": 119,
+          "h": 31
+        },
+        "build": {
+          "x": 0,
+          "y": 11,
+          "w": 97,
+          "h": 29
+        }
+      }
+    },
+    {
+      "id": "today-panel",
+      "x": 0.7,
+      "y": 0,
+      "w": 0.3,
+      "h": 1,
+      "kind": "chrome",
+      "score": {
+        "overall": 0.6843,
+        "structure": 0.7573,
+        "color": 0.9499,
+        "colorIntersection": 0.895,
+        "paletteMatch": 0.9795,
+        "detail": 0.4116,
+        "detailRaw": 0.4585,
+        "detailAdded": 0.0938,
+        "bands": 0.5257
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 0,
+          "y": 33,
+          "w": 418,
+          "h": 879
+        },
+        "build": {
+          "x": 0,
+          "y": 40,
+          "w": 436,
+          "h": 875
+        }
+      }
+    },
+    {
+      "id": "today-title",
+      "x": 0.7585,
+      "y": 0.1055,
+      "w": 0.1133,
+      "h": 0.0469,
+      "kind": "text",
+      "score": {
+        "overall": 0.5756,
+        "structure": 0.5325,
+        "color": 0.882,
+        "colorIntersection": 0.7792,
+        "paletteMatch": 0.9373,
+        "detail": 0.3825,
+        "detailRaw": 0.5075,
+        "detailAdded": 0.25,
+        "bands": 0.3143
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 8,
+          "y": 10,
+          "w": 156,
+          "h": 28
+        },
+        "build": {
+          "x": 12,
+          "y": 8,
+          "w": 141,
+          "h": 28
+        }
+      }
+    },
+    {
+      "id": "navigation-labels",
+      "x": 0.0117,
+      "y": 0.0176,
+      "w": 0.1276,
+      "h": 0.0508,
+      "kind": "text",
+      "score": {
+        "overall": 0.5461,
+        "structure": 0.5478,
+        "color": 0.646,
+        "colorIntersection": 0.3564,
+        "paletteMatch": 0.802,
+        "detail": 0.4042,
+        "detailRaw": 0.4771,
+        "detailAdded": 0.1458,
+        "bands": 0.5
+      },
+      "verdict": "drift",
+      "inkBox": {
+        "comp": {
+          "x": 8,
+          "y": 10,
+          "w": 181,
+          "h": 36
+        },
+        "build": {
+          "x": 6,
+          "y": 15,
+          "w": 168,
+          "h": 36
+        }
+      }
+    }
+  ],
+  "files": {
+    "sideBySide": ".impeccable/review/diff/desktop/side-by-side.png",
+    "heatmap": ".impeccable/review/diff/desktop/heatmap.png",
+    "regionFiles": [
+      ".impeccable/review/diff/desktop/regions/app-shell.png",
+      ".impeccable/review/diff/desktop/regions/sidebar.png",
+      ".impeccable/review/diff/desktop/regions/workspace-header.png",
+      ".impeccable/review/diff/desktop/regions/page-title.png",
+      ".impeccable/review/diff/desktop/regions/capture-plane.png",
+      ".impeccable/review/diff/desktop/regions/capture-title.png",
+      ".impeccable/review/diff/desktop/regions/capture-input.png",
+      ".impeccable/review/diff/desktop/regions/capture-types.png",
+      ".impeccable/review/diff/desktop/regions/capture-options.png",
+      ".impeccable/review/diff/desktop/regions/resume-list.png",
+      ".impeccable/review/diff/desktop/regions/resume-title.png",
+      ".impeccable/review/diff/desktop/regions/today-panel.png",
+      ".impeccable/review/diff/desktop/regions/today-title.png",
+      ".impeccable/review/diff/desktop/regions/navigation-labels.png"
+    ]
+  }
+}

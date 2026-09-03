@@ -20,19 +20,20 @@ Le produit transforme directement une pensée non structurée en note classée p
 
 ## Operating Context
 
-L’usage principal est une capture personnelle et fréquente depuis un navigateur, suivie de la consultation ou de la suppression des notes. L’accès passe par l’authentification Kyros.
+L’usage principal est une capture personnelle et fréquente depuis un navigateur, suivie du tri dans l’Inbox, de la planification dans Aujourd’hui et de la consultation par projet, tag ou recherche. L’accès passe par Kyros SSO V4.
 
 ## Capabilities and Constraints
 
 - Application web en HTML, CSS et JavaScript natifs, servie par Fastify et TypeScript.
 - Persistance locale SQLite.
-- Authentification déléguée à Kyros avec code d’autorisation, session serveur, renouvellement de jeton et révocation à la déconnexion.
-- Capture, analyse, enregistrement, consultation et suppression de notes.
-- Les notes sont isolées par l’identifiant Kyros de leur propriétaire. Les anciennes notes sans propriétaire restent volontairement inaccessibles après migration.
+- Authentification Kyros SSO V4 avec PAR, PKCE S256, jetons RS256 vérifiés par JWKS, session serveur, renouvellement et révocation.
+- Modèle unifié `Dump` pour tâches, notes, idées, liens et rappels, avec statut, priorité, échéance, favori, projet, tags et pièces jointes référencées.
+- Inbox, Aujourd’hui, vues par type, projets, tags, recherche globale et panneau de détail avec sauvegarde automatique.
+- Les dumps sont isolés par l’identifiant Kyros de leur propriétaire. La migration V1 ne rattache automatiquement que les anciennes notes possédant déjà un propriétaire.
 
 ## Brand Commitments
 
-Le nom BrainDump et la langue française sont conservés. Le ton peut rester direct et légèrement malicieux, sans gêner la compréhension des actions importantes. La direction d’interface choisie assume les conventions familières d’une application de notes, avec Notion comme niveau de référence pour la clarté, le calme, la lisibilité et la révélation progressive des contrôles.
+Le nom BrainDump et la langue française sont conservés. Le ton peut rester direct et légèrement malicieux, sans gêner la compréhension des actions importantes. La direction choisie est un établi numérique sombre et précisionniste : plans bleu ardoise, typographie condensée et accent rouille réservé à l’action. La capture reste visuellement dominante sur chaque format.
 
 ## Evidence on Hand
 

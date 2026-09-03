@@ -1,268 +1,102 @@
+// public/app.js
 import { apiRequest, logout, requireSession } from "/auth.js";
 
-const elements = {
-  note: document.querySelector("#note"),
-  preview: document.querySelector("#preview"),
-  notes: document.querySelector("#notes"),
-  counter: document.querySelector("#counter"),
-  topCounter: document.querySelector("#top-counter"),
-  status: document.querySelector("#app-status"),
-  analyze: document.querySelector("#analyze"),
-  save: document.querySelector("#save"),
-  characterCount: document.querySelector("#character-count"),
-  logout: document.querySelector("#logout")
+const $=(selector,root=document)=>root.querySelector(selector);
+const $$=(selector,root=document)=>[...root.querySelectorAll(selector)];
+const state={view:"home",dumps:[],projects:[],tags:[],today:null,selectedId:null,captureType:"task",mobileType:null,saveTimer:null,searchTimer:null};
+const viewConfig={
+  home:{title:"Accueil",subtitle:"Un endroit net pour ce qui te traverse."},inbox:{title:"Inbox",subtitle:"Capture maintenant, range ensuite."},today:{title:"Aujourd’hui",subtitle:new Intl.DateTimeFormat("fr-FR",{weekday:"long",day:"numeric",month:"long"}).format(new Date())},
+  tasks:{title:"Tâches",subtitle:"Ce qui mérite une prochaine action."},notes:{title:"Notes",subtitle:"Les informations que tu veux garder."},ideas:{title:"Idées",subtitle:"Des pistes à laisser grandir."},bugs:{title:"Bugs",subtitle:"Les accrocs à corriger sans les oublier."},reminders:{title:"Rappels",subtitle:"Ce qui doit revenir au bon moment."},projects:{title:"Projets & tags",subtitle:"Juste assez de structure pour retrouver les choses."},archives:{title:"Archives",subtitle:"Hors de vue, jamais perdu."},more:{title:"Plus",subtitle:"Tous tes espaces BrainDump."}
 };
+const typeLabels={note:"Note",task:"Tâche",idea:"Idée",bug:"Bug",reminder:"Rappel"};
+const statusLabels={inbox:"Inbox",todo:"À faire",in_progress:"En cours",done:"Terminé",cancelled:"Annulé"};
+const priorityLabels={low:"Basse",normal:"Normale",high:"Haute",urgent:"Urgente"};
+const typeIcons={note:"i-note",task:"i-check",idea:"i-idea",bug:"i-bug",reminder:"i-bell"};
+const icon=(name)=>`<svg aria-hidden="true"><use href="#${name}"/></svg>`;
+const escapeHtml=(value="")=>String(value).replace(/[&<>'"]/g,(character)=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[character]);
+const localDateValue=(value)=>value?new Date(value).toISOString().slice(0,16):"";
+const apiDateValue=(value)=>value?new Date(value).toISOString():null;
+const parseTags=(value)=>[...new Set(value.split(",").map((tag)=>tag.trim()).filter(Boolean))].slice(0,12);
 
-let analyzedContent = "";
+function toast(message,tone="success"){
+  const node=document.createElement("div");node.className=`toast ${tone}`;node.textContent=message;$("#toast-region").append(node);setTimeout(()=>node.remove(),3200);
+}
+function setBusy(button,busy,label){if(!button.dataset.label)button.dataset.label=$("span",button)?.textContent||button.textContent;button.disabled=busy;if($("span",button))$("span",button).textContent=busy?label:button.dataset.label;else button.textContent=busy?label:button.dataset.label}
+function formatDate(value,{time=false}={}){if(!value)return"";const date=new Date(value);return new Intl.DateTimeFormat("fr-FR",{day:"numeric",month:"short",hour:time?"2-digit":undefined,minute:time?"2-digit":undefined}).format(date)}
+function titleFor(dump){return dump.title||dump.content.split("\n")[0].slice(0,100)||"Sans titre"}
+function metaFor(dump){const values=[`<span>${icon(typeIcons[dump.type])}${typeLabels[dump.type]}</span>`];if(dump.project)values.push(`<span>${icon("i-folder")}${escapeHtml(dump.project.name)}</span>`);if(dump.tags[0])values.push(`<span>${icon("i-tag")}${escapeHtml(dump.tags.slice(0,2).map((tag)=>tag.name).join(", "))}</span>`);if(dump.priority!=="normal")values.push(`<span class="priority-${dump.priority}">${dump.priority==="urgent"?"Priorité urgente":"Priorité haute"}</span>`);return values.join("")}
 
-const icons = {
-  calendar: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v3m10-3v3M3 8h14M4 5h12a1 1 0 0 1 1 1v10H3V6a1 1 0 0 1 1-1Z"/></svg>',
-  folder: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h5l2 2h7v9H3V5Z"/></svg>',
-  tag: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m3 10 7-7h6l1 1v6l-7 7-7-7Zm10-3h.01"/></svg>',
-  trash: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 6h12M8 3h4l1 3H7l1-3Zm-2 3 1 11h6l1-11M8.5 9v5m3-5v5"/></svg>',
-  spark: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m10 2 1.2 3.8L15 7l-3.8 1.2L10 12 8.8 8.2 5 7l3.8-1.2L10 2Z"/></svg>'
-};
+function renderRows(dumps){
+  if(!dumps.length)return`<div class="empty-state">${icon("i-inbox")}<h3>Tout est calme ici.</h3><p>Ajoute une pensée : elle apparaîtra immédiatement dans cet espace.</p></div>`;
+  return dumps.map((dump)=>`<article class="dump-row ${state.selectedId===dump.id?"active":""}" data-id="${dump.id}">
+    <button class="complete-button ${dump.status==="done"?"done":""}" data-complete="${dump.id}" aria-label="${dump.status==="done"?"Rouvrir":"Marquer comme terminé"}">${icon("i-check")}</button>
+    <button class="dump-main" data-open="${dump.id}"><strong class="dump-title">${escapeHtml(titleFor(dump))}</strong><span class="dump-meta">${metaFor(dump)}</span></button>
+    <time class="dump-time" datetime="${escapeHtml(dump.updatedAt)}">${dump.dueAt?formatDate(dump.dueAt,{time:true}):formatDate(dump.updatedAt)}</time>
+  </article>`).join("");
+}
+function wireRows(root=document){
+  $$('[data-open]',root).forEach((button)=>button.addEventListener("click",()=>openDump(Number(button.dataset.open))));
+  $$('[data-complete]',root).forEach((button)=>button.addEventListener("click",()=>toggleComplete(Number(button.dataset.complete))));
+}
+function renderList(dumps,title,countLabel){state.dumps=dumps;$("#content-title").textContent=title;$("#content-count").textContent=countLabel??`${dumps.length} élément${dumps.length>1?"s":""}`;$("#dump-list").innerHTML=renderRows(dumps);$("#dump-list").setAttribute("aria-busy","false");wireRows($("#dump-list"));}
+function renderTodaySummary(today){
+  const groups=[{title:"En retard",items:today.overdue.slice(0,3)},{title:"À faire aujourd’hui",items:today.today.slice(0,4)},{title:"Important",items:today.important.slice(0,3)}].filter((group)=>group.items.length);
+  $("#today-summary").innerHTML=groups.length?groups.map((group)=>`<section class="today-group"><h3>${group.title}<strong>${group.items.length}</strong></h3>${group.items.map((dump)=>`<div class="today-row">${icon(typeIcons[dump.type])}<button data-open="${dump.id}">${escapeHtml(titleFor(dump))}</button><time>${dump.dueAt?formatDate(dump.dueAt,{time:true}):""}</time></div>`).join("")}</section>`).join("")+`<button class="today-link" data-view="today">Voir tout aujourd’hui</button>`:`<div class="empty-state"><h3>Rien ne presse.</h3><p>Les échéances et rappels du jour apparaîtront ici.</p></div>`;wireRows($("#today-summary"));wireViewButtons($("#today-summary"));
+}
+async function loadReferenceData(){
+  const [projects,tags,today]=await Promise.all([apiRequest("/api/projects"),apiRequest("/api/tags"),apiRequest("/api/today")]);state.projects=projects;state.tags=tags;state.today=today;renderProjectOptions();renderTodaySummary(today);
+}
+function renderProjectOptions(){for(const select of [$("#capture-project"),$("#detail-project")]){const current=select.value;select.innerHTML=`<option value="">Aucun</option>`+state.projects.filter((project)=>project.status==="active").map((project)=>`<option value="${project.id}">${escapeHtml(project.name)}</option>`).join("");select.value=current}}
 
-const typeLabels = {
-  bug: "Bug",
-  task: "Tâche",
-  idea: "Idée",
-  reminder: "Rappel",
-  information: "Information"
-};
-
-const priorityLabels = {
-  low: "Basse",
-  normal: "Normale",
-  high: "Élevée",
-  urgent: "Urgente"
-};
-
-function escapeHtml(value = "") {
-  return String(value).replace(/[&<>'"]/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    "'": "&#39;",
-    '"': "&quot;"
-  })[character]);
+async function loadView(view=state.view){
+  state.view=view in viewConfig?view:"home";const config=viewConfig[state.view];$("#view-title").textContent=config.title;$("#view-subtitle").textContent=config.subtitle;document.title=`${config.title} · BrainDump`;
+  $$("[data-view]").forEach((item)=>item.classList.toggle("active",item.dataset.view===state.view));
+  const capture=$("#capture-plane");capture.hidden=state.view!=="home";$("#main").classList.toggle("view-list",state.view!=="home");$("#dump-list").innerHTML=`<div class="skeleton-list"><i></i><i></i><i></i></div>`;
+  if(state.view==="projects"){renderProjects();return}if(state.view==="more"){renderMore();return}
+  if(state.view==="today"){const today=await apiRequest("/api/today");state.today=today;const combined=[...today.overdue,...today.today,...today.important.filter((item)=>![...today.overdue,...today.today].some((known)=>known.id===item.id))];renderList(combined,"À faire aujourd’hui",`${today.overdue.length} en retard · ${today.today.length} aujourd’hui`);renderTodaySummary(today);return}
+  const query=new URLSearchParams();const typeByView={tasks:"task",notes:"note",ideas:"idea",bugs:"bug",reminders:"reminder"};
+  if(state.view==="inbox")query.set("status","inbox");if(typeByView[state.view])query.set("type",typeByView[state.view]);if(state.view==="archives")query.set("status","archived");if(state.view==="home")query.set("limit","8");
+  const dumps=await apiRequest(`/api/dumps?${query}`);renderList(dumps,state.view==="home"?"À reprendre":viewConfig[state.view].title);
+  const inbox=await apiRequest("/api/dumps?status=inbox&limit=500");$("#inbox-count").textContent=inbox.length;
 }
 
-function setStatus(message = "", tone = "error") {
-  elements.status.textContent = message;
-  elements.status.className = message ? `status ${tone}` : "status hidden";
+async function createFrom(content,type,options={}){if(content.trim().length<1)throw new Error("Écris quelque chose avant d’enregistrer.");return apiRequest("/api/dumps",{method:"POST",body:JSON.stringify({content:content.trim(),type:type||undefined,...options})})}
+async function saveCapture(){const button=$("#save-dump");setBusy(button,true,"Ajout…");try{await createFrom($("#capture-content").value,state.captureType,{projectId:$("#capture-project").value?Number($("#capture-project").value):null,tags:parseTags($("#capture-tags").value),dueAt:apiDateValue($("#capture-due").value)});$("#capture-content").value="";$("#capture-tags").value="";$("#capture-due").value="";selectType(null,false);toast("Ajouté à l’Inbox.");await Promise.all([loadReferenceData(),loadView()]);$("#capture-content").focus()}catch(error){toast(error.message,"error")}finally{setBusy(button,false)}}
+async function saveMobile(){const button=$("#mobile-save");setBusy(button,true,"Ajout…");try{await createFrom($("#mobile-content").value,state.mobileType);$("#mobile-content").value="";state.mobileType=null;$("#mobile-capture").close();toast("Ajouté. Tu peux fermer BrainDump.");await Promise.all([loadReferenceData(),loadView()])}catch(error){toast(error.message,"error")}finally{setBusy(button,false)}}
+function selectType(type,mobile){state[mobile?"mobileType":"captureType"]=type;$$(`[data-type]`,mobile?$("#mobile-types"):$("#type-selector")).forEach((button)=>button.classList.toggle("selected",button.dataset.type===type))}
+
+async function openDump(id){try{const dump=await apiRequest(`/api/dumps/${id}`);state.selectedId=id;$("#today-context").hidden=true;$("#detail-form").hidden=false;$("#context-panel").classList.add("detail-open");$("#detail-form").dataset.id=id;$("#detail-title").value=dump.title||"";$("#detail-content").value=dump.content;fillSelect($("#detail-type"),typeLabels,dump.type);fillSelect($("#detail-status"),statusLabels,dump.status);fillSelect($("#detail-priority"),priorityLabels,dump.priority);$("#detail-project").value=dump.projectId||"";$("#detail-due").value=localDateValue(dump.dueAt);$("#detail-tags").value=dump.tags.map((tag)=>tag.name).join(", ");$("#favorite-dump").classList.toggle("favorite-on",dump.favorite);$("#favorite-dump").dataset.favorite=String(dump.favorite);$("#dump-list").innerHTML=renderRows(state.dumps);wireRows($("#dump-list"))}catch(error){toast(error.message,"error")}}
+function fillSelect(select,labels,value){select.innerHTML=Object.entries(labels).map(([key,label])=>`<option value="${key}">${label}</option>`).join("");select.value=value}
+function closeDetail(){state.selectedId=null;$("#detail-form").hidden=true;$("#today-context").hidden=false;$("#context-panel").classList.remove("detail-open");renderList(state.dumps,$("#content-title").textContent,$("#content-count").textContent)}
+function detailPayload(){return{title:$("#detail-title").value.trim()||null,content:$("#detail-content").value,type:$("#detail-type").value,status:$("#detail-status").value,priority:$("#detail-priority").value,projectId:$("#detail-project").value?Number($("#detail-project").value):null,dueAt:apiDateValue($("#detail-due").value),tags:parseTags($("#detail-tags").value)}}
+function scheduleSave(){clearTimeout(state.saveTimer);$("#save-state").textContent="Modification…";state.saveTimer=setTimeout(saveDetail,550)}
+async function saveDetail(){const id=Number($("#detail-form").dataset.id);try{await apiRequest(`/api/dumps/${id}`,{method:"PATCH",body:JSON.stringify(detailPayload())});$("#save-state").textContent="Enregistré";await loadView()}catch(error){$("#save-state").textContent="Échec";toast(error.message,"error")}}
+async function toggleComplete(id){const dump=state.dumps.find((item)=>item.id===id);if(!dump)return;try{await apiRequest(`/api/dumps/${id}`,{method:"PATCH",body:JSON.stringify({status:dump.status==="done"?"todo":"done"})});toast(dump.status==="done"?"Tâche rouverte.":"C’est fait.");await Promise.all([loadReferenceData(),loadView()])}catch(error){toast(error.message,"error")}}
+
+function renderProjects(){
+  $("#content-title").textContent="Projets";$("#content-count").textContent=`${state.projects.length} projet${state.projects.length>1?"s":""}`;
+  $("#dump-list").innerHTML=`<form class="inline-form" id="project-form"><input name="name" placeholder="Nouveau projet" maxlength="80" required><input name="color" type="color" value="#e7653b" aria-label="Couleur"><button class="primary-action" type="submit">Créer</button></form><div class="project-grid">${state.projects.map((project)=>`<button class="project-card" data-project="${project.id}" style="--project-color:${escapeHtml(project.color)}"><i class="project-color"></i><span><strong>${escapeHtml(project.name)}</strong><small>${project.dumpCount} élément${project.dumpCount>1?"s":""}</small></span>${icon("i-chevron")}</button>`).join("")}</div><header class="subsection-head"><h2>Tags</h2><p>${state.tags.length} tag${state.tags.length>1?"s":""}</p></header><form class="inline-form" id="tag-form"><input name="name" placeholder="Nouveau tag" maxlength="40" required><input name="color" type="color" value="#72819a" aria-label="Couleur"><button class="primary-action" type="submit">Créer</button></form><div class="tag-cloud">${state.tags.map((tag)=>`<span class="tag-item" style="border-color:${escapeHtml(tag.color)}66"><button data-tag-filter="${escapeHtml(tag.name)}" aria-label="Filtrer sur ${escapeHtml(tag.name)}">${icon("i-tag")}</button>${escapeHtml(tag.name)} <small>${tag.dumpCount}</small><button data-delete-tag="${tag.id}" aria-label="Supprimer ${escapeHtml(tag.name)}">${icon("i-close")}</button></span>`).join("")}</div>`;
+  $("#project-form").addEventListener("submit",createProject);$("#tag-form").addEventListener("submit",createTag);$$('[data-project]').forEach((button)=>button.addEventListener("click",()=>loadProject(Number(button.dataset.project))));$$('[data-tag-filter]').forEach((button)=>button.addEventListener("click",()=>loadTag(button.dataset.tagFilter)));$$('[data-delete-tag]').forEach((button)=>button.addEventListener("click",()=>removeTag(Number(button.dataset.deleteTag))));
 }
+async function createProject(event){event.preventDefault();const data=new FormData(event.currentTarget);try{await apiRequest("/api/projects",{method:"POST",body:JSON.stringify({name:data.get("name"),color:data.get("color")})});toast("Projet créé.");await loadReferenceData();renderProjects()}catch(error){toast(error.message,"error")}}
+async function createTag(event){event.preventDefault();const data=new FormData(event.currentTarget);try{await apiRequest("/api/tags",{method:"POST",body:JSON.stringify({name:data.get("name"),color:data.get("color")})});toast("Tag créé.");await loadReferenceData();renderProjects()}catch(error){toast(error.message,"error")}}
+async function removeTag(id){if(!confirm("Supprimer ce tag ? Il sera retiré des Dumps associés."))return;try{await apiRequest(`/api/tags/${id}`,{method:"DELETE"});await loadReferenceData();renderProjects();toast("Tag supprimé.")}catch(error){toast(error.message,"error")}}
+async function loadProject(id){const project=state.projects.find((item)=>item.id===id);const dumps=await apiRequest(`/api/dumps?projectId=${id}`);renderList(dumps,project.name,`${dumps.length} élément${dumps.length>1?"s":""}`)}
+async function loadTag(tag){const dumps=await apiRequest(`/api/dumps?tag=${encodeURIComponent(tag)}`);renderList(dumps,`#${tag}`,`${dumps.length} résultat${dumps.length>1?"s":""}`)}
+function renderMore(){$("#content-title").textContent="Tous les espaces";$("#content-count").textContent="";$("#dump-list").innerHTML=`<div class="more-grid"><button id="more-search">Rechercher${icon("i-search")}</button>${Object.entries(viewConfig).filter(([key])=>!["home","tasks","notes","more"].includes(key)).map(([key,value])=>`<button data-view="${key}">${value.title}${icon("i-chevron")}</button>`).join("")}</div>`;wireViewButtons($("#dump-list"));$("#more-search").addEventListener("click",openSearch)}
 
-function setButtonBusy(button, busy, busyLabel) {
-  button.disabled = busy;
-  button.setAttribute("aria-busy", String(busy));
-  const label = button.querySelector("span");
-  if (!button.dataset.label) button.dataset.label = label.textContent;
-  label.textContent = busy ? busyLabel : button.dataset.label;
-}
+async function search(value){if(value.trim().length<2){$("#search-results").innerHTML="<p>Écris au moins deux caractères.</p>";return}try{const results=await apiRequest(`/api/dumps?search=${encodeURIComponent(value.trim())}&limit=30`);$("#search-results").innerHTML=results.length?results.map((dump)=>`<button class="search-result" data-search-open="${dump.id}">${icon(typeIcons[dump.type])}<span><strong>${escapeHtml(titleFor(dump))}</strong><small>${dump.project?escapeHtml(dump.project.name):typeLabels[dump.type]}</small></span><small>${formatDate(dump.updatedAt)}</small></button>`).join(""):"<p>Aucun résultat. Essaie un autre mot.</p>";$$('[data-search-open]').forEach((button)=>button.addEventListener("click",()=>{$("#search-dialog").close();openDump(Number(button.dataset.searchOpen))}))}catch(error){$("#search-results").innerHTML=`<p>${escapeHtml(error.message)}</p>`}}
+function wireViewButtons(root=document){$$('[data-view]',root).forEach((button)=>button.addEventListener("click",(event)=>{event.preventDefault();navigate(button.dataset.view)}))}
+function navigate(view){history.replaceState(null,"",`#${view}`);closeDetail();loadView(view).catch((error)=>toast(error.message,"error"))}
 
-function formatDate(value, includeTime = false) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Date inconnue";
-  return new Intl.DateTimeFormat("fr-FR", {
-    day: "numeric",
-    month: "short",
-    year: date.getFullYear() === new Date().getFullYear() ? undefined : "numeric",
-    hour: includeTime ? "2-digit" : undefined,
-    minute: includeTime ? "2-digit" : undefined
-  }).format(date);
-}
+wireViewButtons();$$('[data-type]',$("#type-selector")).forEach((button)=>button.addEventListener("click",()=>selectType(button.dataset.type,false)));$$('[data-type]',$("#mobile-types")).forEach((button)=>button.addEventListener("click",()=>selectType(button.dataset.type,true)));
+$("#options-toggle").addEventListener("click",()=>{const open=$("#options-toggle").getAttribute("aria-expanded")!=="true";$("#options-toggle").setAttribute("aria-expanded",String(open));$("#capture-fields").classList.toggle("open",open)});$("#save-dump").addEventListener("click",saveCapture);$("#capture-content").addEventListener("keydown",(event)=>{if((event.metaKey||event.ctrlKey)&&event.key==="Enter"){event.preventDefault();saveCapture()}});
+$("#view-all").addEventListener("click",()=>navigate("inbox"));$("#close-detail").addEventListener("click",closeDetail);$$('input,textarea,select',$("#detail-form")).forEach((field)=>field.addEventListener("input",scheduleSave));
+$("#favorite-dump").addEventListener("click",async()=>{const id=Number($("#detail-form").dataset.id);const favorite=$("#favorite-dump").dataset.favorite!=="true";await apiRequest(`/api/dumps/${id}`,{method:"PATCH",body:JSON.stringify({favorite})});$("#favorite-dump").dataset.favorite=String(favorite);$("#favorite-dump").classList.toggle("favorite-on",favorite);toast(favorite?"Ajouté aux favoris.":"Retiré des favoris.")});
+$("#archive-dump").addEventListener("click",async()=>{const id=Number($("#detail-form").dataset.id);await apiRequest(`/api/dumps/${id}`,{method:"PATCH",body:JSON.stringify({archivedAt:new Date().toISOString()})});closeDetail();await loadView();toast("Dump archivé.")});
+$("#delete-dump").addEventListener("click",async()=>{if(!confirm("Supprimer définitivement ce Dump ?"))return;const id=Number($("#detail-form").dataset.id);await apiRequest(`/api/dumps/${id}`,{method:"DELETE"});closeDetail();await loadView();toast("Dump supprimé.")});
+$("#mobile-add").addEventListener("click",()=>{$("#mobile-capture").showModal();setTimeout(()=>$("#mobile-content").focus(),60)});$("#mobile-save").addEventListener("click",saveMobile);
+function openSearch(){$("#search-dialog").showModal();setTimeout(()=>$("#global-search").focus(),50)}$("#open-search").addEventListener("click",openSearch);$("#global-search").addEventListener("input",(event)=>{clearTimeout(state.searchTimer);state.searchTimer=setTimeout(()=>search(event.target.value),180)});document.addEventListener("keydown",(event)=>{if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="k"){event.preventDefault();openSearch()}if(event.key==="Escape"&&$("#context-panel").classList.contains("detail-open"))closeDetail()});
+$("#logout").addEventListener("click",async()=>{try{await logout()}catch(error){toast(error.message,"error")}});
 
-function renderAnalysis(result) {
-  const type = typeLabels[result.type] ?? result.type;
-  const priority = priorityLabels[result.priority] ?? result.priority;
-  analyzedContent = elements.note.value.trim();
-  elements.preview.classList.remove("hidden");
-  elements.preview.innerHTML = `
-    <div class="analysis-title">${icons.spark}<strong>Analyse rapide</strong><span>${escapeHtml(result.confidence)} % de confiance</span></div>
-    <div class="analysis-items">
-      <span class="chip chip-${escapeHtml(result.type)}">${escapeHtml(type)}</span>
-      <span class="chip chip-${escapeHtml(result.priority)}">Priorité ${escapeHtml(priority.toLowerCase())}</span>
-      ${result.project ? `<span class="analysis-meta">${icons.folder}${escapeHtml(result.project)}</span>` : ""}
-      ${result.dueDate ? `<span class="analysis-meta">${icons.calendar}${escapeHtml(formatDate(result.dueDate, true))}</span>` : ""}
-    </div>`;
-}
-
-async function analyze() {
-  const content = elements.note.value.trim();
-  if (content.length < 2) {
-    setStatus("Écris au moins deux caractères avant d’analyser.");
-    elements.note.focus();
-    return;
-  }
-
-  setStatus();
-  setButtonBusy(elements.analyze, true, "Analyse…");
-  try {
-    const result = await apiRequest("/api/analyze", {
-      method: "POST",
-      body: JSON.stringify({ content })
-    });
-    renderAnalysis(result);
-  } catch (error) {
-    setStatus(error.message);
-  } finally {
-    setButtonBusy(elements.analyze, false);
-  }
-}
-
-async function save() {
-  const content = elements.note.value.trim();
-  if (content.length < 2) {
-    setStatus("Écris au moins deux caractères avant d’enregistrer.");
-    elements.note.focus();
-    return;
-  }
-
-  setStatus();
-  setButtonBusy(elements.save, true, "Enregistrement…");
-  try {
-    await apiRequest("/api/notes", {
-      method: "POST",
-      body: JSON.stringify({ content })
-    });
-    elements.note.value = "";
-    elements.preview.classList.add("hidden");
-    elements.characterCount.textContent = "0 / 5 000";
-    analyzedContent = "";
-    await loadNotes();
-    setStatus("La pensée est rangée.", "success");
-    elements.note.focus();
-  } catch (error) {
-    setStatus(error.message);
-  } finally {
-    setButtonBusy(elements.save, false);
-  }
-}
-
-async function removeNote(id, content) {
-  const summary = content.length > 70 ? `${content.slice(0, 70)}…` : content;
-  if (!window.confirm(`Supprimer définitivement « ${summary} » ?`)) return;
-
-  try {
-    await apiRequest(`/api/notes/${id}`, { method: "DELETE" });
-    await loadNotes();
-    setStatus("La note a été supprimée.", "success");
-  } catch (error) {
-    setStatus(error.message);
-  }
-}
-
-function renderNote(note) {
-  const type = typeLabels[note.type] ?? note.type;
-  const priority = priorityLabels[note.priority] ?? note.priority;
-  const tags = Array.isArray(note.tags) ? note.tags : [];
-  const encodedContent = encodeURIComponent(note.content);
-
-  return `
-    <article class="note-card">
-      <div class="note-topline">
-        <div class="note-chips">
-          <span class="chip chip-${escapeHtml(note.type)}">${escapeHtml(type)}</span>
-          <span class="priority priority-${escapeHtml(note.priority)}"><i></i>${escapeHtml(priority)}</span>
-        </div>
-        <button class="icon-button delete-note" type="button" data-delete="${note.id}" data-content="${encodedContent}" aria-label="Supprimer cette note">
-          ${icons.trash}
-        </button>
-      </div>
-      <p class="note-content">${escapeHtml(note.content)}</p>
-      <footer class="note-footer">
-        ${note.project ? `<span>${icons.folder}${escapeHtml(note.project)}</span>` : ""}
-        ${note.dueDate ? `<span>${icons.calendar}${escapeHtml(formatDate(note.dueDate))}</span>` : ""}
-        ${tags.slice(0, 3).map((tag) => `<span>${icons.tag}${escapeHtml(tag)}</span>`).join("")}
-        <time datetime="${escapeHtml(note.createdAt)}">${escapeHtml(formatDate(note.createdAt))}</time>
-      </footer>
-    </article>`;
-}
-
-async function loadNotes() {
-  elements.notes.setAttribute("aria-busy", "true");
-  try {
-    const notes = await apiRequest("/api/notes");
-    const countLabel = `${notes.length} note${notes.length > 1 ? "s" : ""}`;
-    elements.counter.textContent = countLabel;
-    elements.topCounter.textContent = countLabel;
-
-    if (!notes.length) {
-      elements.notes.innerHTML = `
-        <div class="empty-state">
-          <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 4h13l5 5v19H7V4Zm13 0v6h6M11 16h10m-10 5h7"/></svg>
-          <h3>Tout est calme ici.</h3>
-          <p>Dépose ta première pensée dans le champ au-dessus.</p>
-        </div>`;
-      return;
-    }
-
-    elements.notes.innerHTML = notes.map(renderNote).join("");
-    elements.notes.querySelectorAll("[data-delete]").forEach((button) => {
-      button.addEventListener("click", () => removeNote(
-        Number(button.dataset.delete),
-        decodeURIComponent(button.dataset.content)
-      ));
-    });
-  } catch (error) {
-    elements.notes.innerHTML = `
-      <div class="empty-state error-state">
-        <h3>Les notes ne répondent pas.</h3>
-        <p>${escapeHtml(error.message)}</p>
-        <button class="button secondary" id="retry-notes" type="button">Réessayer</button>
-      </div>`;
-    document.querySelector("#retry-notes")?.addEventListener("click", loadNotes);
-  } finally {
-    elements.notes.setAttribute("aria-busy", "false");
-  }
-}
-
-function showUser(user) {
-  const name = user.displayName || user.username;
-  const initials = name
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase();
-  document.querySelector("#user-avatar").textContent = initials;
-  document.querySelector("#user-name").textContent = name;
-  document.querySelector("#popover-name").textContent = name;
-  document.querySelector("#popover-username").textContent = `@${user.username}`;
-}
-
-elements.analyze.addEventListener("click", analyze);
-elements.save.addEventListener("click", save);
-elements.logout.addEventListener("click", async () => {
-  setButtonBusy(elements.logout, true, "Déconnexion…");
-  try {
-    await logout();
-  } catch (error) {
-    setStatus(error.message);
-    setButtonBusy(elements.logout, false);
-  }
-});
-elements.note.addEventListener("input", () => {
-  elements.characterCount.textContent = `${elements.note.value.length.toLocaleString("fr-FR")} / 5 000`;
-  setStatus();
-  if (analyzedContent && elements.note.value.trim() !== analyzedContent) {
-    elements.preview.classList.add("hidden");
-  }
-});
-elements.note.addEventListener("keydown", (event) => {
-  if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
-    event.preventDefault();
-    save();
-  }
-});
-
-try {
-  const user = await requireSession();
-  if (user) {
-    showUser(user);
-    await loadNotes();
-  }
-} catch (error) {
-  setStatus("Impossible de vérifier ta session. Recharge la page pour réessayer.");
-}
+try{const user=await requireSession();if(user){const name=user.displayName||user.username;$("#user-name").textContent=name;$("#account-name").textContent=name;$("#account-username").textContent=`@${user.username}`;$("#user-avatar").textContent=name.split(/\s+/).slice(0,2).map((part)=>part[0]).join("").toUpperCase();await loadReferenceData();await loadView(location.hash.slice(1)||"home")}}catch{toast("Impossible de vérifier ta session. Recharge la page.","error")}

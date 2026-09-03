@@ -1,0 +1,18 @@
+{
+  "regions": [
+    { "id": "app-shell", "kind": "chrome", "grid": "A0:J9", "note": "matte blue-gray application frame", "container": true },
+    { "id": "sidebar", "kind": "chrome", "grid": "A0:B9", "note": "persistent desktop navigation rail", "container": true },
+    { "id": "workspace-header", "kind": "chrome", "grid": "C0:J0", "note": "page title and global search", "container": true },
+    { "id": "page-title", "kind": "text", "grid": "C0:D0", "note": "Accueil heading" },
+    { "id": "capture-plane", "kind": "chrome", "grid": "C0:G5", "note": "dominant quick capture workplane", "container": true },
+    { "id": "capture-title", "kind": "text", "grid": "C1:E1", "note": "Vide ta tête heading" },
+    { "id": "capture-input", "kind": "control", "grid": "C2:G3", "note": "large textarea" },
+    { "id": "capture-types", "kind": "control", "grid": "C3:F4", "note": "type selectors" },
+    { "id": "capture-options", "kind": "control", "grid": "C4:G5", "note": "progressive metadata and submit action" },
+    { "id": "resume-list", "kind": "chrome", "grid": "C5:G9", "note": "quiet list of recent dumps", "container": true },
+    { "id": "resume-title", "kind": "text", "grid": "C5:D5", "note": "A reprendre heading" },
+    { "id": "today-panel", "kind": "chrome", "grid": "H0:J9", "note": "today and overdue context panel", "container": true },
+    { "id": "today-title", "kind": "text", "grid": "H0:I1", "note": "Aujourd'hui heading" },
+    { "id": "navigation-labels", "kind": "text", "grid": "A0:B7", "note": "brand and navigation labels" }
+  ]
+}
