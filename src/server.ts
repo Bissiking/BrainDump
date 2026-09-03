@@ -12,7 +12,20 @@ import { createAuthService } from "./auth/auth-service.js";
 
 if(!process.env.SESSION_SECRET)throw new Error("Variable d'environnement absente : SESSION_SECRET");
 const port=Number(process.env.PORT??3005);
-const app=Fastify({logger:{redact:["req.headers.authorization","req.headers.cookie","res.headers.set-cookie","body.client_secret","body.refresh_token","body.code","body.code_verifier"]}});
+const app=Fastify({
+  trustProxy: true,
+  logger: {
+    redact: [
+      "req.headers.authorization",
+      "req.headers.cookie",
+      "res.headers.set-cookie",
+      "body.client_secret",
+      "body.refresh_token",
+      "body.code",
+      "body.code_verifier"
+    ]
+  }
+});
 const auth=createAuthService(loadAuthConfig(port));
 await app.register(fastifyCookie);
 await app.register(fastifySession,{secret:process.env.SESSION_SECRET,cookieName:"braindump.sid",saveUninitialized:false,cookie:{path:"/",httpOnly:true,sameSite:"lax",secure:process.env.NODE_ENV==="production",maxAge:7*24*60*60*1000}});
