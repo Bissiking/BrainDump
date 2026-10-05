@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Applications connectées · BrainDump</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/integrations.css" />
+    <script src="/integrations.js" defer></script>
+  </head>
+  <body class="integration-page">
+    <a class="skip-link" href="#main">Aller au contenu</a>
+    <main id="main" class="integration-main">
+      <header>
+        <a class="brand" href="/"
+          ><img src="/favicon.svg" width="32" height="32" alt="" />BrainDump</a
+        ><a class="text-action" href="/">Retour à mes pensées</a>
+      </header>
+      <h1>Applications connectées</h1>
+      <p class="integration-lead">
+        Retrouvez vos notes datées dans Liora. Vos pensées restent personnelles
+        : chaque compte choisit d’autoriser leur lecture.
+      </p>
+      <p id="notice" role="status" hidden></p>
+      <p id="error" role="alert" hidden></p>
+      <section aria-labelledby="new-app-title">
+        <h2 id="new-app-title">Configurer Liora</h2>
+        <p>
+          Créez une application, puis reportez son identifiant et sa clé dans
+          Liora → Administration → Intégrations → BrainDump.
+        </p>
+        <form id="client-form" class="integration-fields">
+          <label
+            >Nom de l’application<input
+              name="name"
+              value="Liora"
+              required
+              maxlength="80"
+          /></label>
+          <label
+            >URL de retour Liora<input
+              name="redirect_uri"
+              type="url"
+              required
+              placeholder="https://liora.exemple.fr/api/v1/integration-callback"
+            /><small
+              >L’adresse exacte de votre installation, terminée par
+              /api/v1/integration-callback.</small
+            ></label
+          >
+          <button class="primary-action" type="submit">
+            Créer l’application
+          </button>
+        </form>
+        <div id="credentials" class="integration-fields" hidden>
+          <h3>Accès créé · copiez la clé maintenant</h3>
+          <label
+            >Identifiant de l’application<input id="client-id" readonly
+          /></label>
+          <label
+            >Clé API · affichée une seule fois<input
+              id="api-key"
+              type="password"
+              readonly
+              autocomplete="off"
+          /></label>
+          <div class="integration-actions">
+            <button id="copy-key" type="button" class="text-action">
+              Copier la clé</button
+            ><button id="hide-key" type="button" class="text-action">
+              Masquer et terminer
+            </button>
+          </div>
+          <p>
+            Cette clé identifie l’application. Elle ne permet de lire aucune
+            note sans autorisation personnelle.
+          </p>
+        </div>
+      </section>
+      <section aria-labelledby="clients-title">
+        <h2 id="clients-title">Mes applications</h2>
+        <p>
+          Changer la clé retire les autorisations existantes. Les comptes
+          devront reconnecter BrainDump dans Liora.
+        </p>
+        <div id="clients" aria-busy="true">Chargement…</div>
+      </section>
+      <section aria-labelledby="grants-title">
+        <h2 id="grants-title">Accès à mes notes</h2>
+        <p>
+          Lecture seule des notes avec une date. Les notes sans date, tâches,
+          idées, bugs et rappels restent dans BrainDump.
+        </p>
+        <div id="grants">Chargement…</div>
+      </section>
+    </main>
+  </body>
+</html>

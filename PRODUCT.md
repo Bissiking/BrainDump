@@ -31,6 +31,7 @@ L’usage principal est une capture personnelle et fréquente depuis un navigate
 - Inbox, Aujourd’hui, vues par type, projets, tags, recherche globale et panneau de détail avec sauvegarde automatique.
 - Aperçu de triage en temps réel dans la capture, sans persistance : type, destination, priorité, échéance, tags et confiance restent des suggestions jusqu’à l’enregistrement explicite.
 - Les dumps sont isolés par l’identifiant Kyros de leur propriétaire. La migration V1 ne rattache automatiquement que les anciennes notes possédant déjà un propriétaire.
+- Applications connectées : enregistrement de Liora, clé d’application affichée une seule fois, consentement personnel PKCE et accès en lecture seule aux notes datées du compte. Autorisations révocables, sans accès aux tâches ni aux notes sans date. Configuration et limites dans DOCS/LIORA_2.1.0.md.
 
 ## Brand Commitments
 

@@ -1,8 +1,8 @@
 {
   "name": "braindump",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "private": true,
-  "description": "Capture rapide et organisation personnelle unifiée.",
+  "description": "Capture rapide et organisation personnelle unifi\u00e9e.",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/server.ts",

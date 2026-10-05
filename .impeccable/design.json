@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-03T10:38:58Z",
+  "generatedAt": "2026-10-05T14:58:04.753896Z",
   "title": "Design System: BrainDump",
   "extensions": {
     "colorMeta": {
@@ -23,7 +23,9 @@
       "success": { "role": "tertiary", "displayName": "Vert de résolution", "canonical": "#61c58b", "tonalRamp": ["oklch(15% 0.127 156.1)", "oklch(25% 0.127 156.1)", "oklch(35% 0.127 156.1)", "oklch(45% 0.127 156.1)", "oklch(55% 0.127 156.1)", "oklch(65% 0.127 156.1)", "oklch(80% 0.127 156.1)", "oklch(95% 0.127 156.1)"] },
       "warning": { "role": "tertiary", "displayName": "Ambre d’échéance", "canonical": "#f1b95d", "tonalRamp": ["oklch(15% 0.127 77.8)", "oklch(25% 0.127 77.8)", "oklch(35% 0.127 77.8)", "oklch(45% 0.127 77.8)", "oklch(55% 0.127 77.8)", "oklch(65% 0.127 77.8)", "oklch(80% 0.127 77.8)", "oklch(95% 0.127 77.8)"] },
       "focus": { "role": "primary", "displayName": "Pêche de focus", "canonical": "#f6a183", "tonalRamp": ["oklch(15% 0.110 40.2)", "oklch(25% 0.110 40.2)", "oklch(35% 0.110 40.2)", "oklch(45% 0.110 40.2)", "oklch(55% 0.110 40.2)", "oklch(65% 0.110 40.2)", "oklch(80% 0.110 40.2)", "oklch(95% 0.110 40.2)"] },
-      "on-accent": { "role": "neutral", "displayName": "Blanc d’action", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(55% 0 0)", "oklch(65% 0 0)", "oklch(80% 0 0)", "oklch(95% 0 0)"] }
+      "on-accent": { "role": "neutral", "displayName": "Blanc d’action", "canonical": "#ffffff", "tonalRamp": ["oklch(15% 0 0)", "oklch(25% 0 0)", "oklch(35% 0 0)", "oklch(45% 0 0)", "oklch(55% 0 0)", "oklch(65% 0 0)", "oklch(80% 0 0)", "oklch(95% 0 0)"] },
+      "integration-primary": {"role": "primary", "displayName": "Rouille de consentement · intégrations seulement", "canonical": "#b7461c", "tonalRamp": ["oklch(15% 0.156 39.0)", "oklch(25% 0.156 39.0)", "oklch(35% 0.156 39.0)", "oklch(45% 0.156 39.0)", "oklch(55% 0.156 39.0)", "oklch(65% 0.156 39.0)", "oklch(80% 0.156 39.0)", "oklch(95% 0.156 39.0)"]},
+      "integration-primary-hover": {"role": "primary", "displayName": "Rouille de survol · intégrations seulement", "canonical": "#bf4c22", "tonalRamp": ["oklch(15% 0.158 39.0)", "oklch(25% 0.158 39.0)", "oklch(35% 0.158 39.0)", "oklch(45% 0.158 39.0)", "oklch(55% 0.158 39.0)", "oklch(65% 0.158 39.0)", "oklch(80% 0.158 39.0)", "oklch(95% 0.158 39.0)"]}
     },
     "typographyMeta": {
       "hero": { "displayName": "Hero", "purpose": "Accroche de connexion fluide et exceptionnelle." },
@@ -42,7 +44,8 @@
       { "name": "menu-float", "value": "0 15px 38px rgba(0,0,0,.35)", "purpose": "Sépare le menu de compte de la navigation." },
       { "name": "drawer-float", "value": "-18px 0 50px rgba(0,0,0,.32)", "purpose": "Sépare l’éditeur contextuel en mode tablette." },
       { "name": "dialog-deep", "value": "0 30px 90px rgba(0,0,0,.55)", "purpose": "Élève le dialogue de recherche au-dessus du backdrop." },
-      { "name": "toast-medium", "value": "0 12px 30px rgba(0,0,0,.35)", "purpose": "Détache le feedback temporaire du contenu." }
+      { "name": "toast-medium", "value": "0 12px 30px rgba(0,0,0,.35)", "purpose": "Détache le feedback temporaire du contenu." },
+      {"name": "integration-primary-flat", "value": "none", "purpose": "Repos et survol des boutons primaires de .integration-main uniquement ; conserve les autres ombres du produit."}
     ],
     "motion": [
       { "name": "ease-standard", "value": "cubic-bezier(.16,1,.3,1)", "purpose": "Easing commun aux changements d’état expressifs." },
@@ -57,7 +60,8 @@
       { "name": "mobile", "value": "720px" },
       { "name": "login-stack", "value": "780px" },
       { "name": "tablet", "value": "1100px" },
-      { "name": "desktop-tight", "value": "1450px" }
+      { "name": "desktop-tight", "value": "1450px" },
+      {"name": "integration-stack", "value": "600px"}
     ]
   },
   "components": [
@@ -128,11 +132,12 @@
       "description": "Feedback temporaire compact, lisible au-dessus des plans de travail.",
       "html": "<div class=\"ds-toast\" role=\"status\">Ajouté à l’Inbox.</div>",
       "css": ".ds-toast{min-width:260px;padding:12px 15px;border:1px solid #52616c;border-radius:6px;background:#233440;color:#fff;font:400 14px/1.5 'IBM Plex Sans',sans-serif;box-shadow:0 12px 30px rgba(0,0,0,.35);animation:ds-toast-in .35s cubic-bezier(.16,1,.3,1)}.ds-toast:hover{border-color:#657783}.ds-toast:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:3px}@keyframes ds-toast-in{from{opacity:0;transform:translateY(12px);filter:blur(3px)}}@media(prefers-reduced-motion:reduce){.ds-toast{animation-duration:.01ms}}"
-    }
+    },
+    {"name": "Integration Primary Button", "kind": "button", "refersTo": "integration-button-primary", "description": "Variante locale rouille pour création et consentement : texte blanc, chanfrein conservé, sans ombre ; focus extrait des sources, sans certification rendue exhaustive.", "html": "<button class=\"ds-integration-primary\" type=\"button\">Autoriser la lecture des notes datées</button>", "css": ".ds-integration-primary{display:flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:0 18px;border:0;border-radius:0;background:#b7461c;color:#fff;font:600 14px/1.5 var(--body,\"IBM Plex Sans\",sans-serif);clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));box-shadow:none;transition:background .2s,transform .2s var(--ease,cubic-bezier(.16,1,.3,1))}.ds-integration-primary:hover{background:#bf4c22;box-shadow:none}.ds-integration-primary:focus-visible{outline:2px solid var(--focus,#f6a183);outline-offset:1px}.ds-integration-primary:active{transform:scale(.985)}@media(max-width:600px){.ds-integration-primary{width:100%}}"}
   ],
   "narrative": {
     "northStar": "L’établi numérique précisionniste",
-    "overview": "BrainDump ressemble à un outil de terrain personnel : des plans bleu ardoise mats, des filets techniques et une encre claire installent un espace calme où la pensée peut être déposée sans mise en scène superflue. La capture domine visuellement; l’organisation vient ensuite, dans une densité utile plutôt que dans une mosaïque de cartes.\n\nLa voix condensée et légèrement imprimée donne de la présence aux titres, tandis qu’IBM Plex Sans maintient les contrôles et les données nets. L’orange rouille est rare et opérationnel : il désigne l’action courante, la sélection et quelques repères d’état, jamais le décor.",
+    "overview": "BrainDump ressemble à un outil de terrain personnel : des plans bleu ardoise mats, des filets techniques et une encre claire installent un espace calme où la pensée peut être déposée sans mise en scène superflue. La capture domine visuellement; l’organisation vient ensuite, dans une densité utile plutôt que dans une mosaïque de cartes.\n\nLa voix condensée et légèrement imprimée donne de la présence aux titres, tandis qu’IBM Plex Sans maintient les contrôles et les données nets. L’orange rouille est rare et opérationnel : il désigne l’action courante, la sélection et quelques repères d’état, jamais le décor.\n\nL’extension 2.1.0 ajoute Applications connectées et le consentement personnel pour Liora 0.7.1 dans ce monde existant. Le contrat `.impeccable/surfaces/liora-integration.md` distingue la configuration d’une application de l’autorisation de chaque compte et limite la lecture aux notes datées. Les sources `public/integrations.html`, `integrations.css`, `integrations.js` et le consentement de `src/integrations/routes.ts` prolongent les primitives natives ; l’entrée Applications connectées reste accessible depuis la navigation existante. Aucune comp ni raster de produit n’a été créé.\n\nLes onze captures `brain-*.png`, conservées dans le dépôt Liora sous `.impeccable/review/`, couvrent applications, configuration, consentement et notes sur desktop (1440 × 1000) et mobile (390 × 844). Les captures des applications montrent le document complet ; les compléments `actions` / `content` montrent le défilement interne de Liora. La revue `finish-braindump.md` conclut **ship** à la portée de F1, résolue par le lien textuel « Retour à BrainDump » du consentement ; aucune autre correction matérielle n’était signalée par la première revue. Les 18 tests et la compilation BrainDump, les 72 tests et la compilation Liora et les parcours Chrome headless/Puppeteer locaux sont rapportés comme passés, avec routeurs et stockages réels et SQLite en mémoire côté BrainDump. Les identités, fournisseurs et contenus sont synthétiques ; Kyros réel, production, états focus/erreur/chargement exhaustifs et mouvement normal restent non certifiés. Cette fusion documentaire n’a relancé ni navigateur, tests ni détecteur.",
     "keyCharacteristics": [
       "Plans sombres continus séparés par des filets fins.",
       "Capture surdimensionnée, immédiatement accessible.",
@@ -154,14 +159,17 @@
       "Do structurer les collections par plans continus, filets et lignes denses.",
       "Do réserver le rouille à l’action courante, au focus actif et aux petits repères d’état.",
       "Do conserver des cibles tactiles d’au moins 42 px sur mobile et un focus clavier distinct.",
-      "Do utiliser le cerveau linéaire comme marque sur les surfaces authentifiées et de connexion."
+      "Do utiliser le cerveau linéaire comme marque sur les surfaces authentifiées et de connexion.",
+      "Do distinguer application configurée et autorisation personnelle, avec compte, destination et lecture seule écrits avant consentement.",
+      "Do conserver les primaires `integration-primary` / `integration-primary-hover` sans ombre sur les seules surfaces d’intégration."
     ],
     "donts": [
       "Don't transformer l’interface en tableau de bord SaaS ou en mosaïque de cartes flottantes.",
       "Don't introduire de gradients, verre, halos ou grosses pilules décoratives.",
       "Don't multiplier les actions rouille de poids équivalent dans une même vue.",
       "Don't utiliser le chanfrein sur les conteneurs informatifs ou les champs ordinaires.",
-      "Don't masquer une action destructive, simuler une fonction absente ou faire reposer un sens sur la couleur seule."
+      "Don't masquer une action destructive, simuler une fonction absente ou faire reposer un sens sur la couleur seule.",
+      "Don't assimiler la clé d’application à un accès au compte, ni proposer dans Liora l’édition des notes BrainDump."
     ]
   }
 }

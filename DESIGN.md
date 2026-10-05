@@ -17,6 +17,8 @@ colors:
   faint: "#85919c"
   accent: "#d85d30"
   accent-hover: "#ed7042"
+  integration-primary: "#b7461c"
+  integration-primary-hover: "#bf4c22"
   danger: "#ef6b64"
   success: "#61c58b"
   warning: "#f1b95d"
@@ -100,6 +102,16 @@ components:
   button-primary-hover:
     backgroundColor: "{colors.accent-hover}"
     textColor: "{colors.on-accent}"
+  integration-button-primary:
+    backgroundColor: "{colors.integration-primary}"
+    textColor: "{colors.on-accent}"
+    typography: "{typography.action}"
+    rounded: "{rounded.none}"
+    padding: "0 18px"
+    height: "46px"
+  integration-button-primary-hover:
+    backgroundColor: "{colors.integration-primary-hover}"
+    textColor: "{colors.on-accent}"
   type-choice:
     backgroundColor: "transparent"
     textColor: "{colors.muted}"
@@ -142,6 +154,10 @@ BrainDump ressemble à un outil de terrain personnel : des plans bleu ardoise ma
 
 La voix condensée et légèrement imprimée donne de la présence aux titres, tandis qu’IBM Plex Sans maintient les contrôles et les données nets. L’orange rouille est rare et opérationnel : il désigne l’action courante, la sélection et quelques repères d’état, jamais le décor.
 
+L’extension 2.1.0 ajoute Applications connectées et le consentement personnel pour Liora 0.7.1 dans ce monde existant. Le contrat `.impeccable/surfaces/liora-integration.md` distingue la configuration d’une application de l’autorisation de chaque compte et limite la lecture aux notes datées. Les sources `public/integrations.html`, `integrations.css`, `integrations.js` et le consentement de `src/integrations/routes.ts` prolongent les primitives natives ; l’entrée Applications connectées reste accessible depuis la navigation existante. Aucune comp ni raster de produit n’a été créé.
+
+Les onze captures `brain-*.png`, conservées dans le dépôt Liora sous `.impeccable/review/`, couvrent applications, configuration, consentement et notes sur desktop (1440 × 1000) et mobile (390 × 844). Les captures des applications montrent le document complet ; les compléments `actions` / `content` montrent le défilement interne de Liora. La revue `finish-braindump.md` conclut **ship** à la portée de F1, résolue par le lien textuel « Retour à BrainDump » du consentement ; aucune autre correction matérielle n’était signalée par la première revue. Les 18 tests et la compilation BrainDump, les 72 tests et la compilation Liora et les parcours Chrome headless/Puppeteer locaux sont rapportés comme passés, avec routeurs et stockages réels et SQLite en mémoire côté BrainDump. Les identités, fournisseurs et contenus sont synthétiques ; Kyros réel, production, états focus/erreur/chargement exhaustifs et mouvement normal restent non certifiés. Cette fusion documentaire n’a relancé ni navigateur, tests ni détecteur.
+
 **Key Characteristics:**
 
 - Plans sombres continus séparés par des filets fins.
@@ -158,6 +174,7 @@ La palette associe des bleus ardoise faiblement chromatiques à une encre froide
 
 - **Rouille d’action** (`accent`): action primaire, sélection active, caret et repère de navigation.
 - **Rouille vive** (`accent-hover`): survol des actions primaires uniquement.
+- **Rouille de consentement** (`integration-primary`) et **rouille de survol d’intégration** (`integration-primary-hover`): variantes locales des boutons primaires d’Applications connectées et du consentement, extraites de `public/integrations.css`. Le texte blanc atteint respectivement (5,38:1) et (4,92:1), selon le calcul de luminance WCAG consigné dans la revue. Ces valeurs ne remplacent pas les accents de capture ou de navigation.
 
 ### Tertiary
 
@@ -225,6 +242,8 @@ Le rythme est dense et régulier : 4–16 px à l’intérieur des contrôles, 2
 
 **The Capture-First Rule.** Sur chaque format, le champ de capture, son type et son action principale restent visibles avant les outils d’organisation.
 
+Applications connectées est une page de réglages à défilement de document : largeur maximale de (900 px), padding (36 px 32 px 64 px), formulaire à (650 px maximum) et sections séparées par un filet. Son titre condensé fait (48 px), ses titres de section (28 px). Le consentement reprend la page avec (760 px maximum) et (64 px) en tête. Sous (600 px), le cadre passe à (24 px 20 px 40 px), l’en-tête s’empile, le titre à (36 px), et création/autorisation occupent toute la largeur. Cette composition propre aux réglages ne modifie pas le poste de capture.
+
 ## Elevation & Depth
 
 Le système est plat par défaut. La profondeur vient d’abord des différences de plans et des filets de 1 px; les ombres apparaissent seulement lorsqu’un élément flotte, reçoit le focus ou confirme un changement d’état.
@@ -236,6 +255,8 @@ Le système est plat par défaut. La profondeur vient d’abord des différences
 - **Menu flottant** (`0 15px 38px rgba(0,0,0,.35)`): ombre structurelle sous le menu de compte.
 - **Dialogue modal** (`0 30px 90px rgba(0,0,0,.55)`): ombre profonde associée à un backdrop sombre.
 - **Toast** (`0 12px 30px rgba(0,0,0,.35)`): ombre moyenne pour séparer la confirmation du contenu.
+
+Les boutons primaires d’Applications connectées et du consentement imposent `box-shadow: none` au repos et au survol dans `.integration-main`. Cette exception locale renforce la hiérarchie par la couleur et le chanfrein ; les ombres existantes de capture, focus, menus, dialogues et toasts sont conservées.
 
 ### Named Rules
 
@@ -287,6 +308,14 @@ Le titre, le textarea, les choix de type, les options repliables et l’action f
 
 La recherche globale est un déclencheur bordé avec rappel `⌘ K`, puis un dialogue large dont les résultats restent des lignes séparées. Les feuilles mobiles, menus, toasts, squelettes et états vides reprennent les mêmes plans mats. Les mouvements restent courts et `prefers-reduced-motion` ramène animations et transitions à 0,01 ms.
 
+### Applications connectées et consentement
+
+Configurer Liora associe nom d’application et URL de retour exacte dans un formulaire simple, puis Créer l’application. L’identifiant et la clé apparaissent après cette action ; la clé reste masquée dans un champ de mot de passe en lecture, affichée une seule fois, avec Copier la clé / Masquer et terminer. Le texte précise qu’une clé d’application ne donne aucun accès aux notes sans autorisation personnelle. Les champs reprennent le plan de navigation, filet de (1 px), rayon de (4 px) et padding de (12 px).
+
+Mes applications et Accès à mes notes restent deux listes distinctes de lignes à padding vertical de (18 px), filet inférieur et destination pouvant revenir à la ligne. Changer la clé et Révoquer l’application portent sur l’application ; Retirer l’accès à mes notes porte sur l’autorisation personnelle. La rotation et la révocation demandent la confirmation existante et gardent les notes dans BrainDump. Les actions se replient avec un écart de (12 px), puis (8 px) sur mobile, et une hauteur minimale de (44 px). Succès, erreur et liste vide sont écrits ; ces comportements sont extraits des sources, sans certification exhaustive des états rendus.
+
+Le consentement montre compte, destination, portée lecture seule et retrait futur de l’autorisation avant ses deux décisions. Autoriser la lecture des notes datées utilise le primaire local rouille, sans ombre, à chanfrein de (9 px) ; Refuser reste textuel. « Retour à BrainDump » conserve son lien vers l’accueil, sans glyphe servant d’icône. La portée exclut les tâches, notes sans date et autres types de pensées ; l’interface Liora montre la source BrainDump sans commandes d’édition ou de suppression.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -296,6 +325,8 @@ La recherche globale est un déclencheur bordé avec rappel `⌘ K`, puis un dia
 - **Do** réserver le rouille à l’action courante, au focus actif et aux petits repères d’état.
 - **Do** conserver des cibles tactiles d’au moins 42 px sur mobile et un focus clavier distinct.
 - **Do** utiliser le cerveau linéaire comme marque sur les surfaces authentifiées et de connexion.
+- **Do** distinguer application configurée et autorisation personnelle, avec compte, destination et lecture seule écrits avant consentement.
+- **Do** conserver les primaires `integration-primary` / `integration-primary-hover` sans ombre sur les seules surfaces d’intégration.
 
 ### Don't:
 
@@ -304,3 +335,4 @@ La recherche globale est un déclencheur bordé avec rappel `⌘ K`, puis un dia
 - **Don't** multiplier les actions rouille de poids équivalent dans une même vue.
 - **Don't** utiliser le chanfrein sur les conteneurs informatifs ou les champs ordinaires.
 - **Don't** masquer une action destructive, simuler une fonction absente ou faire reposer un sens sur la couleur seule.
+- **Don't** assimiler la clé d’application à un accès au compte, ni proposer dans Liora l’édition des notes BrainDump.

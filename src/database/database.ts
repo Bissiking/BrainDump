@@ -7,6 +7,7 @@ import type { AttachmentRecord, DumpFilters, DumpRecord, DumpStatus, DumpType, P
 const databasePath = process.env.BRAINDUMP_DATABASE_PATH ? resolve(process.env.BRAINDUMP_DATABASE_PATH) : resolve("data/braindump.db");
 mkdirSync(dirname(databasePath), { recursive: true });
 const db = new Database(databasePath);
+export { db as database };
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
 

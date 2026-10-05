@@ -1,4 +1,4 @@
-# BrainDump V2
+# BrainDump V2 · 2.1.0
 
 BrainDump est une application personnelle de capture rapide : on vide ce que l’on a en tête, puis on organise plus tard. Elle regroupe notes, tâches, idées, bugs et rappels autour d’un modèle commun `Dump`.
 
@@ -71,3 +71,7 @@ npm run visual:qa
 ```
 
 La validation visuelle locale utilise Chrome installé sur macOS et un serveur de données simulé ; elle ne remplace pas un parcours réel contre une instance Kyros V4 configurée.
+
+## Intégration Liora — 2.1.0
+
+**Applications connectées**, depuis le compte ou Plus sur mobile, crée l’accès applicatif Liora. Chaque compte consent ensuite séparément à la lecture seule de ses notes datées. Rotation, révocation et contrôle des propriétaires sont disponibles ; les autres types restent privés dans BrainDump. Migration SQLite additive 3 au démarrage. [Configuration et contrat](DOCS/LIORA_2.1.0.md).

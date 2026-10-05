@@ -1,0 +1,133 @@
+/* public/integrations.css */
+body.integration-page {
+  overflow: auto;
+  height: auto;
+}
+.integration-main {
+  max-width: 900px;
+  padding: 36px 32px 64px;
+  margin: 0 auto;
+}
+.integration-main > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.integration-main .brand {
+  margin: 0;
+}
+.integration-main .primary-action {
+  background: #b7461c;
+  box-shadow: none;
+}
+.integration-main .primary-action:hover {
+  background: #bf4c22;
+  box-shadow: none;
+}
+.integration-main h1 {
+  font-family: var(--display);
+  font-size: 48px;
+  line-height: 1.1;
+  margin: 0 0 20px;
+  font-weight: 600;
+}
+.integration-main h2 {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.integration-main p {
+  max-width: 70ch;
+  color: var(--muted);
+}
+.integration-main section {
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+  margin-top: 32px;
+}
+.integration-fields {
+  display: grid;
+  gap: 20px;
+  max-width: 650px;
+  margin-top: 24px;
+}
+.integration-fields label {
+  display: grid;
+  gap: 8px;
+}
+.integration-fields input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--sidebar);
+}
+.integration-fields small {
+  color: var(--muted);
+}
+.integration-fields > button {
+  justify-self: start;
+}
+.integration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+}
+.integration-actions button {
+  min-height: 44px;
+  padding: 10px 14px;
+}
+.integration-row {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.integration-row p {
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+}
+.integration-row .danger {
+  color: var(--danger);
+}
+.integration-main #error {
+  color: var(--danger);
+}
+.integration-main #notice {
+  color: var(--success);
+}
+.consent-main {
+  max-width: 760px;
+  padding-top: 64px;
+}
+.consent-main h1 {
+  margin-top: 40px;
+}
+.consent-main form {
+  margin-top: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+@media (max-width: 600px) {
+  .integration-main {
+    padding: 24px 20px 40px;
+  }
+  .integration-main > header {
+    align-items: start;
+    flex-direction: column;
+    margin-bottom: 32px;
+  }
+  .integration-main h1 {
+    font-size: 36px;
+  }
+  .integration-fields > button,
+  .consent-main .primary-action {
+    width: 100%;
+  }
+  .integration-actions {
+    gap: 8px;
+  }
+}
