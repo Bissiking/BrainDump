@@ -1,0 +1,146 @@
+{
+  "pins": {
+    "papicons": "00af3a2a15436f6710306b0ed3a6f24231060de7",
+    "lucide": "2c2ee80687cbd86030d10f2315daf509b12829c3"
+  },
+  "icons": {
+    "home": {
+      "library": "lucide",
+      "file": "house.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/house.svg"
+    },
+    "inbox": {
+      "library": "lucide",
+      "file": "inbox.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/inbox.svg"
+    },
+    "calendar": {
+      "library": "lucide",
+      "file": "calendar-days.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/calendar-days.svg"
+    },
+    "check": {
+      "library": "lucide",
+      "file": "check.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/check.svg"
+    },
+    "note": {
+      "library": "lucide",
+      "file": "file-text.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/file-text.svg"
+    },
+    "idea": {
+      "library": "lucide",
+      "file": "lightbulb.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/lightbulb.svg"
+    },
+    "bug": {
+      "library": "lucide",
+      "file": "bug.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/bug.svg"
+    },
+    "bell": {
+      "library": "lucide",
+      "file": "bell.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/bell.svg"
+    },
+    "folder": {
+      "library": "lucide",
+      "file": "folder.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/folder.svg"
+    },
+    "archive": {
+      "library": "lucide",
+      "file": "archive.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/archive.svg"
+    },
+    "search": {
+      "library": "lucide",
+      "file": "search.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/search.svg"
+    },
+    "tag": {
+      "library": "lucide",
+      "file": "tag.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/tag.svg"
+    },
+    "star": {
+      "library": "lucide",
+      "file": "star.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/star.svg"
+    },
+    "trash": {
+      "library": "lucide",
+      "file": "trash.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/trash.svg"
+    },
+    "more": {
+      "library": "lucide",
+      "file": "ellipsis.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/ellipsis.svg"
+    },
+    "paperclip": {
+      "library": "lucide",
+      "file": "paperclip.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/paperclip.svg"
+    },
+    "lock": {
+      "library": "lucide",
+      "file": "lock-keyhole.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/lock-keyhole.svg"
+    },
+    "settings": {
+      "library": "lucide",
+      "file": "settings-2.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/settings-2.svg"
+    },
+    "undo": {
+      "library": "lucide",
+      "file": "undo-2.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/undo-2.svg"
+    },
+    "edit": {
+      "library": "lucide",
+      "file": "pencil.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/pencil.svg"
+    },
+    "logout": {
+      "library": "lucide",
+      "file": "log-out.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/log-out.svg"
+    },
+    "link": {
+      "library": "lucide",
+      "file": "plug.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/plug.svg"
+    },
+    "sparkles": {
+      "library": "lucide",
+      "file": "sparkles.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/sparkles.svg"
+    },
+    "arrow": {
+      "library": "lucide",
+      "file": "arrow-right.svg",
+      "source": "https://raw.githubusercontent.com/lucide-icons/lucide/2c2ee80687cbd86030d10f2315daf509b12829c3/icons/arrow-right.svg"
+    },
+    "plus": {
+      "library": "papicons",
+      "file": "add.svg",
+      "scale": 0.7,
+      "source": "https://raw.githubusercontent.com/PapillonApp/Papicons/00af3a2a15436f6710306b0ed3a6f24231060de7/icons/add.svg"
+    },
+    "close": {
+      "library": "papicons",
+      "file": "cross.svg",
+      "scale": 0.7,
+      "source": "https://raw.githubusercontent.com/PapillonApp/Papicons/00af3a2a15436f6710306b0ed3a6f24231060de7/icons/cross.svg"
+    },
+    "chevron": {
+      "library": "papicons",
+      "file": "chevron-right.svg",
+      "scale": 0.7,
+      "source": "https://raw.githubusercontent.com/PapillonApp/Papicons/00af3a2a15436f6710306b0ed3a6f24231060de7/icons/chevron-right.svg"
+    }
+  }
+}

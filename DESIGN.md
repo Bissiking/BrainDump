@@ -154,7 +154,7 @@ BrainDump ressemble à un outil de terrain personnel : des plans bleu ardoise ma
 
 La voix condensée et légèrement imprimée donne de la présence aux titres, tandis qu’IBM Plex Sans maintient les contrôles et les données nets. L’orange rouille est rare et opérationnel : il désigne l’action courante, la sélection et quelques repères d’état, jamais le décor.
 
-L’extension 2.1.0 ajoute Applications connectées et le consentement personnel pour Liora 0.7.1 dans ce monde existant. Le contrat `.impeccable/surfaces/liora-integration.md` distingue la configuration d’une application de l’autorisation de chaque compte et limite la lecture aux notes datées. Les sources `public/integrations.html`, `integrations.css`, `integrations.js` et le consentement de `src/integrations/routes.ts` prolongent les primitives natives ; l’entrée Applications connectées reste accessible depuis la navigation existante. Aucune comp ni raster de produit n’a été créé.
+L’extension 2.1.0 ajoute Applications connectées et le consentement personnel pour Liora 0.7.1 dans ce monde existant. Le contrat `.impeccable/surfaces/liora-integration.md` distingue la configuration d’une application de l’autorisation de chaque compte et limite la lecture aux notes datées. Les sources `views/integrations.html`, `public/assets/css/integrations.css`, `public/assets/js/pages/integrations.js` et le consentement de `src/integrations/routes.ts` prolongent les primitives natives ; l’entrée Applications connectées reste accessible depuis la navigation existante. Aucune comp ni raster de produit n’a été créé.
 
 Les onze captures `brain-*.png`, conservées dans le dépôt Liora sous `.impeccable/review/`, couvrent applications, configuration, consentement et notes sur desktop (1440 × 1000) et mobile (390 × 844). Les captures des applications montrent le document complet ; les compléments `actions` / `content` montrent le défilement interne de Liora. La revue `finish-braindump.md` conclut **ship** à la portée de F1, résolue par le lien textuel « Retour à BrainDump » du consentement ; aucune autre correction matérielle n’était signalée par la première revue. Les 18 tests et la compilation BrainDump, les 72 tests et la compilation Liora et les parcours Chrome headless/Puppeteer locaux sont rapportés comme passés, avec routeurs et stockages réels et SQLite en mémoire côté BrainDump. Les identités, fournisseurs et contenus sont synthétiques ; Kyros réel, production, états focus/erreur/chargement exhaustifs et mouvement normal restent non certifiés. Cette fusion documentaire n’a relancé ni navigateur, tests ni détecteur.
 
@@ -174,7 +174,7 @@ La palette associe des bleus ardoise faiblement chromatiques à une encre froide
 
 - **Rouille d’action** (`accent`): action primaire, sélection active, caret et repère de navigation.
 - **Rouille vive** (`accent-hover`): survol des actions primaires uniquement.
-- **Rouille de consentement** (`integration-primary`) et **rouille de survol d’intégration** (`integration-primary-hover`): variantes locales des boutons primaires d’Applications connectées et du consentement, extraites de `public/integrations.css`. Le texte blanc atteint respectivement (5,38:1) et (4,92:1), selon le calcul de luminance WCAG consigné dans la revue. Ces valeurs ne remplacent pas les accents de capture ou de navigation.
+- **Rouille de consentement** (`integration-primary`) et **rouille de survol d’intégration** (`integration-primary-hover`): variantes locales des boutons primaires d’Applications connectées et du consentement, extraites de `public/assets/css/integrations.css`. Le texte blanc atteint respectivement (5,38:1) et (4,92:1), selon le calcul de luminance WCAG consigné dans la revue. Ces valeurs ne remplacent pas les accents de capture ou de navigation.
 
 ### Tertiary
 
@@ -336,3 +336,34 @@ Le consentement montre compte, destination, portée lecture seule et retrait fut
 - **Don't** utiliser le chanfrein sur les conteneurs informatifs ou les champs ordinaires.
 - **Don't** masquer une action destructive, simuler une fonction absente ou faire reposer un sens sur la couleur seule.
 - **Don't** assimiler la clé d’application à un accès au compte, ni proposer dans Liora l’édition des notes BrainDump.
+
+
+## Extension 2.2.0 — Smart & Simple
+
+La direction existante est conservée. Paramètres (`/#settings`) est une vue
+Operate de sections séparées par des filets, avec réglages natifs et libellés
+explicites. Le lien de compte du bas de la sidebar y mène directement ; Plus
+sur mobile ne duplique plus l’entrée Applications connectées. La déconnexion,
+le consentement et les clés d’applications restent des actions distinctes.
+
+La capture mobile conserve son en-tête et son bouton visibles, avec les champs
+secondaires dans une zone défilante. Inbox remplace Accueil dans la barre
+mobile ; le logo reste un accès à l’accueil. Les zones de sécurité et la hauteur
+du viewport visuel bornent la feuille, sans certification de clavier physique.
+Les filtres principaux sont visibles ; les autres sont repliés. La navigation
+et les filtres persistent dans le fragment d’URL.
+
+L’iconographie est maintenant gérée par `resources/icons/catalog.json` et un sprite
+local généré hors ligne : Papicons pour les glyphes simples sélectionnés,
+Lucide pour les contours, `currentColor`, grille 24 et trait 1,8. Le cerveau
+historique reste à 32. Voir `DOCS/ICONS.md` pour les provenances et licences.
+
+Les libellés secondaires utilisent `#a2adb7` pour leur contraste. Les boutons
+primaires reprennent `integration-primary` (`#b7461c`) et son survol (`#bf4c22`)
+sur toutes les vues : le blanc reste lisible (contrastes 5,38:1 et 4,92:1).
+L’accent de marque `#d85d30`, les logos et le monde bleu ardoise restent inchangés.
+Les espacements de champs et actions tactiles vont jusqu’à 44–48 px ; les menus
+de ligne restent disponibles au clavier et au toucher, sans dépendre du survol.
+
+Les preuves 2.2.0 et leurs limites sont dans `DOCS/V2.2.0.md` ; elles ne remplacent
+pas les limites des anciennes revues reproduites plus haut.

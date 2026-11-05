@@ -23,6 +23,8 @@ test("applications, consentement PKCE, identité, notes datées seulement, rotat
     db.prepare(
       "INSERT INTO dumps VALUES(?,?,?,'Contenu',?,?, '2026-10-05T10:00:00Z','2026-10-05T10:00:00Z',?)",
     ).run(id, user, "Note", type, due, archived);
+  // La nouvelle date de référence ne devient pas une échéance ni une donnée exportée.
+  db.exec("ALTER TABLE dumps ADD COLUMN reference_at TEXT; UPDATE dumps SET reference_at='2000-01-01T10:00:00Z' WHERE id IN (1,4)");
   const app = Fastify();
   await app.register(cookie);
   await app.register(session, {
@@ -186,6 +188,8 @@ test("applications, consentement PKCE, identité, notes datées seulement, rotat
       notes.data.map((n: any) => n.id),
       [1],
     );
+    assert.equal(Object.hasOwn(notes.data[0], "referenceAt"), false);
+    assert.equal(Object.hasOwn(notes.data[0], "reference_at"), false);
     assert.ok(
       !JSON.stringify(db.prepare("SELECT * FROM app_grants").all()).includes(
         tokens.refresh_token,

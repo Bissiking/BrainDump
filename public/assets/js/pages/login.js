@@ -1,4 +1,4 @@
-import { getSession } from "/auth.js";
+import { getSession } from "../shared/auth.js";
 
 const errorMessages = {
   cancelled: "La connexion Kyros a été annulée. Tu peux réessayer quand tu veux.",

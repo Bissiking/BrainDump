@@ -25,11 +25,12 @@ export interface AttachmentRecord { id: number; name: string; url: string; mimeT
 
 export interface DumpRecord {
   id: number; userId: string; title: string | null; content: string; type: DumpType; status: DumpStatus; priority: Priority;
-  dueAt: string | null; projectId: number | null; project: Pick<ProjectRecord, "id" | "name" | "color" | "icon"> | null;
+  dueAt: string | null; referenceAt: string | null; projectId: number | null; project: Pick<ProjectRecord, "id" | "name" | "color" | "icon"> | null;
   tags: TagRecord[]; attachments: AttachmentRecord[]; favorite: boolean; parentId: number | null;
   createdAt: string; updatedAt: string; archivedAt: string | null; completedAt: string | null;
 }
 
 export interface DumpFilters {
   type?: DumpType; status?: DumpStatus | "active" | "archived"; projectId?: number; tag?: string; search?: string; favorite?: boolean; limit?: number;
+  priority?: Priority; dateField?: "dueAt" | "referenceAt" | "createdAt" | "updatedAt"; from?: string; to?: string;
 }

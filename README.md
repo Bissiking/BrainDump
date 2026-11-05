@@ -1,4 +1,4 @@
-# BrainDump V2 · 2.1.0
+# BrainDump V2 · 2.2.0 — Smart & Simple
 
 BrainDump est une application personnelle de capture rapide : on vide ce que l’on a en tête, puis on organise plus tard. Elle regroupe notes, tâches, idées, bugs et rappels autour d’un modèle commun `Dump`.
 
@@ -8,6 +8,20 @@ BrainDump est une application personnelle de capture rapide : on vide ce que l�
 - interface HTML/CSS/JavaScript native, sans framework client
 - SQLite avec migrations automatiques au démarrage
 - Kyros SSO V4 : PAR, PKCE S256, callback avec `state` et `iss`, jetons RS256 vérifiés par JWKS, session serveur et refresh rotatif
+
+## Organisation du dépôt
+
+- `src/` : serveur, API, authentification, SQLite et moteur de triage.
+- `views/` : pages HTML servies par les routes de l’application.
+- `public/assets/` : CSS, JavaScript, polices, icônes générées et marque.
+- `resources/icons/` : catalogue, SVG sources et licences de référence.
+- `scripts/` : génération hors ligne des icônes.
+- `test/` : tests serveur et parcours navigateur.
+- `DOCS/` : contrats, changements et preuves de validation.
+
+[Arborescence et conventions](DOCS/STRUCTURE.md). Pour exécuter une livraison,
+conserver `views/` et `public/` à côté de `dist/` ; les pages ne sont pas copiées
+par TypeScript.
 
 ## Lancer le projet
 
@@ -70,8 +84,56 @@ npm test
 npm run visual:qa
 ```
 
-La validation visuelle locale utilise Chrome installé sur macOS et un serveur de données simulé ; elle ne remplace pas un parcours réel contre une instance Kyros V4 configurée.
+La validation navigateur utilise Chrome headless et Puppeteer, les routes Fastify réelles et une base SQLite temporaire supprimée en fin de parcours. Seule l’identité Kyros est synthétique : ce test ne remplace pas un parcours contre Kyros V4 réel ni une validation sur téléphone physique. `CHROME_PATH` permet de sélectionner Chrome for Testing ; `VIEWPORTS` et `QA_PORT` sont facultatifs. Les captures et le rapport sont dans `.impeccable/review/v2.2.0/`.
 
 ## Intégration Liora — 2.1.0
 
-**Applications connectées**, depuis le compte ou Plus sur mobile, crée l’accès applicatif Liora. Chaque compte consent ensuite séparément à la lecture seule de ses notes datées. Rotation, révocation et contrôle des propriétaires sont disponibles ; les autres types restent privés dans BrainDump. Migration SQLite additive 3 au démarrage. [Configuration et contrat](DOCS/LIORA_2.1.0.md).
+**Applications connectées**, depuis Paramètres (compte en bas de la sidebar, ou Plus → Paramètres sur mobile), crée l’accès applicatif Liora. Chaque compte consent ensuite séparément à la lecture seule de ses notes datées. Rotation, révocation et contrôle des propriétaires sont disponibles ; les autres types restent privés dans BrainDump. Migration SQLite additive 3 au démarrage. [Configuration et contrat](DOCS/LIORA_2.1.0.md).
+
+
+## Nouveautés 2.2.0
+
+- **Paramètres** (`/#settings`) : triage personnel, réinitialisation, applications
+  connectées, compte et déconnexion au même endroit.
+- **Triage expliqué** : suggestion prudente du type, confiance, projet actif,
+  tags et échéance. Un choix manuel garde la priorité. Une faible confiance
+  conserve une note dans l’Inbox et invite à préciser son type.
+- **Captures desktop et mobile** : même choix de projet, tags avec suggestions
+  et suppression individuelle, échéance et date de référence facultatives.
+  Un projet automatique se distingue de « Aucun » ; « Sans échéance » empêche
+  explicitement l’inférence d’une date. Vider un champ de tags déjà modifié retire
+  les tags au lieu de rétablir les suggestions.
+- **Filtres** : recherche, type et statut visibles ; projet, tag, priorité,
+  favoris et dates repliables. L’URL conserve la vue et les filtres au rechargement.
+- **Actions rapides** : terminer une tâche, favori, archivage/désarchivage,
+  changement de type et édition. Une annulation temporaire est disponible pour
+  les actions réversibles ; la suppression définitive reste confirmée.
+- **Icônes SVG locales** : sélection Papicons/Lucide, catalogue central et licences
+  conservées. [Conventions et remplacement](DOCS/ICONS.md).
+
+### Migration additive 4
+
+Le démarrage ajoute `dumps.reference_at`, `triage_preferences` et
+`triage_patterns` dans une transaction idempotente. Aucune date ni pensée
+existante n’est reclassée ou réinterprétée. `referenceAt` est distinct de `dueAt`
+et ne constitue pas une échéance ; les dates de création/modification sont
+visibles dans le détail. Aucune nouvelle donnée n’est exposée à Liora.
+
+Le triage personnel est **désactivé par défaut**. Lorsqu’il est activé, les choix
+manuels de type à la création et les changements de type à l’édition alimentent
+au plus 100 associations par compte. Deux choix consécutifs identiques sur les
+deux premiers mots significatifs permettent une proposition future, sauf préfixe
+explicite. Seules l’empreinte de ces mots, le type et un compteur sont conservés ;
+cette empreinte n’est pas une garantie d’anonymat. Désactiver ignore et gèle les
+associations ; réinitialiser les efface et désactive le mécanisme. Il n’y a ni
+modèle global ni appel à une IA externe.
+
+API ajoutée sous `/api` et `/api/braindump` :
+
+- `GET/PATCH/DELETE /preferences/triage` (session requise, propriétaire courant).
+- `referenceAt` optionnel pour `POST/PATCH /dumps`.
+- Filtres `priority`, `dateField` (`dueAt`, `referenceAt`, `createdAt`, `updatedAt`),
+  `from` et `to` (ISO UTC) sur `GET /dumps`.
+
+Les collections restent bornées à 500 éléments ; un compteur de limite invite
+à affiner les filtres. [Audit, changements, preuves et limites](DOCS/V2.2.0.md).

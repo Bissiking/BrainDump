@@ -1,6 +1,6 @@
 # BrainDump 2.1.0 — applications et notes datées Liora
 
-Applications connectées est accessible depuis le compte et depuis Plus sur mobile. Créer une application avec nom et URL de retour Liora exacte, copier son identifiant et la clé affichée une fois, puis les configurer dans Liora → Administration → Intégrations → BrainDump. Le callback est `https://liora.exemple.fr/api/v1/integration-callback`. Liora doit utiliser le même émetteur Kyros que BrainDump.
+En 2.2.0, Applications connectées est accessible dans Paramètres : lien du compte en bas de la sidebar, ou Plus → Paramètres sur mobile. Le contrat 2.1.0 décrit ci-dessous reste inchangé. Créer une application avec nom et URL de retour Liora exacte, copier son identifiant et la clé affichée une fois, puis les configurer dans Liora → Administration → Intégrations → BrainDump. Le callback est `https://liora.exemple.fr/api/v1/integration-callback`. Liora doit utiliser le même émetteur Kyros que BrainDump.
 
 La clé ne représente aucun utilisateur : elle identifie l'application. Chaque compte consent séparément à la lecture **notes:dated:read**. Les seules ressources accessibles sont ses notes de type `note`, avec une échéance et sans archive. Aucun accès en écriture, tâche, idée, bug, rappel ou note sans date. Un snapshot au-delà de 500 notes datées actives est refusé, pour éviter un import incomplet. Le résultat comprend sujet et émetteur que Liora compare à son identité locale.
 

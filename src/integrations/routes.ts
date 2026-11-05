@@ -5,6 +5,7 @@ import { randomBytes, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import type { AuthService } from "../auth/auth-service.js";
 import { createIntegrationStore, IntegrationError } from "./store.js";
+import { viewsRoot } from "../web/paths.js";
 declare module "fastify" {
   interface Session {
     integrationReturn?: string;
@@ -89,7 +90,7 @@ export async function registerIntegrationRoutes(
       );
     app.get("/integrations", async (req, reply) => {
       await session(req);
-      return reply.sendFile("integrations.html");
+      return reply.sendFile("integrations.html", viewsRoot);
     });
     app.get("/api/integrations/clients", async (req) => ({
       data: store.list((await session(req)).id),
@@ -184,7 +185,7 @@ export async function registerIntegrationRoutes(
         .header("Referrer-Policy", "same-origin")
         .type("text/html; charset=utf-8")
         .send(
-          `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Autoriser ${text(c.name)} · BrainDump</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/integrations.css"></head><body class="integration-page"><main id="main" class="integration-main consent-main"><a href="/">Retour à BrainDump</a><h1>Autoriser ${text(c.name)}</h1><p>Compte : <strong>${text(req.session.user.displayName)}</strong></p><p>Cette application pourra lire uniquement vos notes avec une date. Elle ne pourra ni les modifier ni lire vos tâches ou notes sans date.</p><p>Destination : <strong>${text(new URL(c.redirect_uri).origin)}</strong></p><p>Vous pourrez retirer cette autorisation dans Applications connectées.</p><form action="/integrations/authorize" method="post">${Object.entries(
+          `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Autoriser ${text(c.name)} · BrainDump</title><link rel="stylesheet" href="/assets/css/app.css"><link rel="stylesheet" href="/assets/css/integrations.css"></head><body class="integration-page"><main id="main" class="integration-main consent-main"><a href="/">Retour à BrainDump</a><h1>Autoriser ${text(c.name)}</h1><p>Compte : <strong>${text(req.session.user.displayName)}</strong></p><p>Cette application pourra lire uniquement vos notes avec une date. Elle ne pourra ni les modifier ni lire vos tâches ou notes sans date.</p><p>Destination : <strong>${text(new URL(c.redirect_uri).origin)}</strong></p><p>Vous pourrez retirer cette autorisation dans Applications connectées.</p><form action="/integrations/authorize" method="post">${Object.entries(
             { ...q, csrf },
           )
             .map(

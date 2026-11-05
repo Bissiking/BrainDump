@@ -18,3 +18,12 @@ test("migre les notes attribuées vers le modèle Dump sans exposer les orphelin
 test("isole le CRUD, les projets et les tags par utilisateur",()=>{const project=database.createProject("user-a",{name:"Harmonix",color:"#5577aa"});const dump=database.createDump("user-a",{title:"Préparer la sortie",content:"Tester le build",type:"task",status:"todo",priority:"high",projectId:project.id,tags:["release","mobile"]});assert.equal(database.getDump("user-b",dump.id),null);assert.equal(database.updateDump("user-b",dump.id,{title:"Intrusion"}),null);assert.equal(database.deleteDump("user-b",dump.id),false);assert.equal(database.getDump("user-a",dump.id)?.project?.name,"Harmonix");assert.deepEqual(database.getDump("user-a",dump.id)?.tags.map((tag)=>tag.name),["mobile","release"]);assert.equal(database.updateDump("user-a",dump.id,{status:"done"})?.completedAt!=null,true)});
 
 test("recherche dans le contenu, le projet et les tags",()=>{assert.equal(database.listDumps("user-a",{search:"Harmonix"}).some((dump)=>dump.title==="Préparer la sortie"),true);assert.equal(database.listDumps("user-a",{search:"mobile"}).some((dump)=>dump.title==="Préparer la sortie"),true);assert.equal(database.listDumps("user-b",{search:"mobile"}).length,0)});
+
+test('date de référence indépendante et migration additive appliquée une fois',()=>{
+  const due='2026-12-01T10:00:00.000Z',reference='2001-01-01T10:00:00.000Z';
+  const dump=database.createDump('date-user',{content:'Deux dates différentes',type:'note',dueAt:due,referenceAt:reference});
+  assert.equal(dump.dueAt,due);assert.equal(dump.referenceAt,reference);
+  const updated=database.updateDump('date-user',dump.id,{referenceAt:null})!;assert.equal(updated.dueAt,due);assert.equal(updated.referenceAt,null);
+  const historical=database.listDumps('user-a').find(item=>item.content==='Note historique')!;assert.equal(historical.referenceAt,null);
+  assert.equal((database.database.prepare('SELECT count(*) n FROM schema_migrations WHERE version=4').get() as any).n,1);
+});

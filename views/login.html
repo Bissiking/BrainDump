@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101b27">
   <title>Connexion · BrainDump</title>
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/assets/branding/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/branding/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/branding/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/assets/css/app.css">
 </head>
 <body class="login-page">
   <a class="skip-link" href="#main">Aller au contenu</a>
@@ -21,13 +21,13 @@
       <div class="thought-demo"><span class="demo-caret"></span><p>Préparer le point hebdo demain à 10 h #Harmonix</p><div><span>Tâche</span><span>Demain, 10:00</span><span>Harmonix</span></div></div>
     </section>
     <section class="login-panel" aria-labelledby="access-title">
-      <span class="login-lock" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3m-12 0h14v11H5Z"/></svg></span>
+      <span class="login-lock" aria-hidden="true"><svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#i-lock"/></svg></span>
       <div><h2 id="access-title">Retrouve ton espace</h2><p>BrainDump ne stocke aucun mot de passe. Kyros vérifie ton identité puis te ramène ici.</p></div>
       <div id="login-error" class="login-error" role="alert" hidden></div>
-      <a id="login-button" class="primary-action login-button" href="/auth/login">Continuer avec Kyros <svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></a>
+      <a id="login-button" class="primary-action login-button" href="/auth/login">Continuer avec Kyros <svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#i-arrow"/></svg></a>
       <small>Session serveur sécurisée · SSO V4 · PKCE S256</small>
     </section>
   </main>
-  <script type="module" src="/login.js"></script>
+  <script type="module" src="/assets/js/pages/login.js"></script>
 </body>
 </html>

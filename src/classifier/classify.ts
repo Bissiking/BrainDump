@@ -3,7 +3,7 @@ import * as chrono from "chrono-node";
 import { categoryRules, explicitTypePrefixes, imperativeActions, knownProjects, priorityRules, tagRules } from "./rules.js";
 import type { ClassificationResult, NoteType, Priority } from "../types.js";
 
-export interface ClassificationOptions { projects?:string[]; referenceDate?:Date }
+export interface ClassificationOptions { projects?:string[]; referenceDate?:Date; includeKnownProjects?:boolean }
 
 const typeOrder:NoteType[]=["bug","reminder","task","idea","information"];
 const normalize=(value:string)=>value.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[’']/g," ").toLowerCase();
@@ -23,8 +23,8 @@ function findDueDate(content:string,referenceDate:Date){
   return result?.start.date().toISOString()??null;
 }
 
-function findProject(text:string,projects:string[]){
-  const candidates=[...new Map([...projects,...knownProjects].filter(Boolean).map((name)=>[searchable(name),name])).values()].sort((a,b)=>b.length-a.length);
+function findProject(text:string,projects:string[],includeKnownProjects=true){
+  const candidates=[...new Map([...projects,...(includeKnownProjects?knownProjects:[])].filter(Boolean).map((name)=>[searchable(name),name])).values()].sort((a,b)=>b.length-a.length);
   return candidates.find((name)=>includesPhrase(text,name))??null;
 }
 
@@ -74,7 +74,7 @@ export function classifyNote(content:string,options:ClassificationOptions={}):Cl
   else if(low){priority="low";signals.push(`priority:low:${low}`)}
   else if(finalType==="bug"&&bestScore>=7){priority="high";signals.push("priority:high:bug confirmé")}
 
-  const project=findProject(text,options.projects??[]);
+  const project=findProject(text,options.projects??[],options.includeKnownProjects);
   if(project)signals.push(`project:${project}`);
   const semanticTags=Object.entries(tagRules).filter(([,keywords])=>keywords.some((keyword)=>includesPhrase(text,keyword)&&!isNegated(text,keyword))).map(([tag])=>tag);
   const tags=[...new Set([...explicitHashtagTags(content),...semanticTags])].slice(0,12);

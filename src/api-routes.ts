@@ -3,25 +3,25 @@ import type { FastifyInstance } from "fastify";
 import { z } from "zod";
 import type { AuthService } from "./auth/auth-service.js";
 import { classifyNote } from "./classifier/classify.js";
+import { analyzeForUser, rememberCorrection, resetTriagePreferences, setTriagePreferences, triagePreferences } from "./classifier/personal-triage.js";
 import {
   addAttachment, createDump, createProject, createTag, deleteAttachment, deleteDump, deleteProject, deleteTag,
-  getDump, getProject, listDumps, listProjects, listTags, listToday, updateDump, updateProject
+  database, getDump, getProject, listDumps, listProjects, listTags, listToday, updateDump, updateProject
 } from "./database/database.js";
-import type { DumpType } from "./types.js";
 
 const idSchema=z.coerce.number().int().positive();
 const typeSchema=z.enum(["note","task","idea","bug","reminder"]);
 const statusSchema=z.enum(["inbox","todo","in_progress","done","cancelled"]);
 const prioritySchema=z.enum(["low","normal","high","urgent"]);
 const nullableDate=z.union([z.iso.datetime(),z.null()]);
-const dumpFields=z.object({title:z.string().trim().max(200).nullable().optional(),content:z.string().trim().max(20_000).optional(),type:typeSchema.optional(),status:statusSchema.optional(),priority:prioritySchema.optional(),dueAt:nullableDate.optional(),projectId:z.number().int().positive().nullable().optional(),tags:z.array(z.string().trim().min(1).max(40)).max(12).optional(),favorite:z.boolean().optional(),parentId:z.number().int().positive().nullable().optional()});
+const dumpFields=z.object({title:z.string().trim().max(200).nullable().optional(),content:z.string().trim().max(20_000).optional(),type:typeSchema.optional(),status:statusSchema.optional(),priority:prioritySchema.optional(),dueAt:nullableDate.optional(),referenceAt:nullableDate.optional(),projectId:z.number().int().positive().nullable().optional(),tags:z.array(z.string().trim().min(1).max(40)).max(12).optional(),favorite:z.boolean().optional(),parentId:z.number().int().positive().nullable().optional()});
 const dumpCreateSchema=dumpFields.refine((value)=>Boolean(value.title||value.content),{message:"Ajoute un titre ou un contenu."});
 const dumpUpdateSchema=dumpFields.partial().extend({archivedAt:nullableDate.optional()});
 const projectSchema=z.object({name:z.string().trim().min(1).max(80),description:z.string().trim().max(500).nullable().optional(),color:z.string().regex(/^#[0-9a-f]{6}$/i).optional(),icon:z.string().trim().max(30).nullable().optional()});
 const projectUpdateSchema=projectSchema.partial().extend({status:z.enum(["active","archived"]).optional()});
 const tagSchema=z.object({name:z.string().trim().min(1).max(40),color:z.string().regex(/^#[0-9a-f]{6}$/i).optional()});
 const attachmentSchema=z.object({name:z.string().trim().min(1).max(180),url:z.url().max(2_000).refine((value)=>["http:","https:"].includes(new URL(value).protocol),"L’URL doit utiliser HTTP ou HTTPS."),mimeType:z.string().trim().max(100).nullable().optional(),size:z.number().int().min(0).max(100_000_000).nullable().optional()});
-const filterSchema=z.object({type:typeSchema.optional(),status:z.enum(["inbox","todo","in_progress","done","cancelled","active","archived"]).optional(),projectId:z.coerce.number().int().positive().optional(),tag:z.string().trim().max(40).optional(),search:z.string().trim().max(200).optional(),favorite:z.enum(["true"]).optional(),limit:z.coerce.number().int().min(1).max(500).optional()});
+const filterSchema=z.object({type:typeSchema.optional(),status:z.enum(["inbox","todo","in_progress","done","cancelled","active","archived"]).optional(),projectId:z.coerce.number().int().positive().optional(),tag:z.string().trim().max(40).optional(),search:z.string().trim().max(200).optional(),favorite:z.enum(["true"]).optional(),priority:prioritySchema.optional(),dateField:z.enum(["dueAt","referenceAt","createdAt","updatedAt"]).optional(),from:z.iso.datetime().optional(),to:z.iso.datetime().optional(),limit:z.coerce.number().int().min(1).max(500).optional()}).refine((value)=>!value.from||!value.to||value.from<=value.to,{message:"La date de début doit précéder la date de fin."});
 function validationError(reply:any,error:z.ZodError){return reply.code(400).send({error:error.issues[0]?.message??"Données invalides."})}
 
 export async function registerApiRoutes(app:FastifyInstance,auth:AuthService){
@@ -29,9 +29,45 @@ export async function registerApiRoutes(app:FastifyInstance,auth:AuthService){
     app.get(`${prefix}/dumps`,{preHandler:auth.requireSession},async(request,reply)=>{const query=filterSchema.safeParse(request.query);if(!query.success)return validationError(reply,query.error);return listDumps(request.currentUser!.id,{...query.data,favorite:query.data.favorite==="true"?true:undefined})});
     app.get(`${prefix}/today`,{preHandler:auth.requireSession},async(request)=>listToday(request.currentUser!.id));
     app.get<{Params:{id:string}}>(`${prefix}/dumps/:id`,{preHandler:auth.requireSession},async(request,reply)=>{const parsed=idSchema.safeParse(request.params.id);if(!parsed.success)return validationError(reply,parsed.error);const dump=getDump(request.currentUser!.id,parsed.data);return dump??reply.code(404).send({error:"Dump introuvable."})});
-    app.post(`${prefix}/analyze`,{preHandler:auth.requireSession},async(request,reply)=>{const parsed=z.object({content:z.string().trim().min(2).max(20_000)}).safeParse(request.body);if(!parsed.success)return validationError(reply,parsed.error);const projects=listProjects(request.currentUser!.id);return classifyNote(parsed.data.content,{projects:projects.map((project)=>project.name)})});
-    app.post(`${prefix}/dumps`,{preHandler:auth.requireSession},async(request,reply)=>{const parsed=dumpCreateSchema.safeParse(request.body);if(!parsed.success)return validationError(reply,parsed.error);const userId=request.currentUser!.id;if(parsed.data.projectId&&!getProject(userId,parsed.data.projectId))return reply.code(400).send({error:"Projet invalide."});if(parsed.data.parentId&&!getDump(userId,parsed.data.parentId))return reply.code(400).send({error:"Élément parent invalide."});const projects=listProjects(userId);const classification=classifyNote(parsed.data.content||parsed.data.title||"",{projects:projects.map((project)=>project.name)});const type=(parsed.data.type??(classification.type==="information"?"note":classification.type)) as DumpType;const project=parsed.data.projectId??projects.find((item)=>item.name.toLowerCase()===classification.project?.toLowerCase())?.id??null;return reply.code(201).send(createDump(userId,{...parsed.data,content:parsed.data.content??"",type,priority:parsed.data.priority??classification.priority,dueAt:parsed.data.dueAt===undefined?classification.dueDate:parsed.data.dueAt,projectId:project,tags:parsed.data.tags??classification.tags}))});
-    app.patch<{Params:{id:string}}>(`${prefix}/dumps/:id`,{preHandler:auth.requireSession},async(request,reply)=>{const id=idSchema.safeParse(request.params.id);const body=dumpUpdateSchema.safeParse(request.body);if(!id.success)return validationError(reply,id.error);if(!body.success)return validationError(reply,body.error);const userId=request.currentUser!.id;if(body.data.projectId&&!getProject(userId,body.data.projectId))return reply.code(400).send({error:"Projet invalide."});if(body.data.parentId&&!getDump(userId,body.data.parentId))return reply.code(400).send({error:"Élément parent invalide."});return updateDump(userId,id.data,body.data)??reply.code(404).send({error:"Dump introuvable."})});
+    app.post(`${prefix}/analyze`,{preHandler:auth.requireSession},async(request,reply)=>{const parsed=z.object({content:z.string().trim().min(2).max(20_000)}).safeParse(request.body);if(!parsed.success)return validationError(reply,parsed.error);return analyzeForUser(request.currentUser!.id,parsed.data.content)});
+    app.get(`${prefix}/preferences/triage`,{preHandler:auth.requireSession},async(request)=>triagePreferences(request.currentUser!.id));
+    app.patch(`${prefix}/preferences/triage`,{preHandler:auth.requireSession},async(request,reply)=>{
+      const parsed=z.object({enabled:z.boolean()}).safeParse(request.body);
+      if(!parsed.success)return validationError(reply,parsed.error);
+      return setTriagePreferences(request.currentUser!.id,parsed.data.enabled);
+    });
+    app.delete(`${prefix}/preferences/triage`,{preHandler:auth.requireSession},async(request)=>resetTriagePreferences(request.currentUser!.id));
+    app.post(`${prefix}/dumps`,{preHandler:auth.requireSession},async(request,reply)=>{
+      const parsed=dumpCreateSchema.safeParse(request.body);if(!parsed.success)return validationError(reply,parsed.error);
+      const userId=request.currentUser!.id;const input=parsed.data;
+      if(input.projectId&&!getProject(userId,input.projectId))return reply.code(400).send({error:"Projet invalide."});
+      if(input.parentId&&!getDump(userId,input.parentId))return reply.code(400).send({error:"Élément parent invalide."});
+      const projects=listProjects(userId).filter((project)=>project.status==="active");
+      const classification=analyzeForUser(userId,input.content||input.title||"");
+      const type=input.type??classification.suggestedType??"note";
+      const projectId=input.projectId===undefined?projects.find((item)=>item.name===classification.project)?.id??null:input.projectId;
+      const dump=database.transaction(()=>{
+        const created=createDump(userId,{...input,content:input.content??"",type,priority:input.priority??classification.priority,dueAt:input.dueAt===undefined?classification.dueDate:input.dueAt,projectId,tags:input.tags??classification.tags});
+        if(input.type)rememberCorrection(userId,input.content||input.title||"",input.type);
+        return created;
+      })();
+      return reply.code(201).send(dump);
+    });
+    app.patch<{Params:{id:string}}>(`${prefix}/dumps/:id`,{preHandler:auth.requireSession},async(request,reply)=>{
+      const id=idSchema.safeParse(request.params.id);const body=dumpUpdateSchema.safeParse(request.body);
+      if(!id.success)return validationError(reply,id.error);if(!body.success)return validationError(reply,body.error);
+      const userId=request.currentUser!.id;
+      if(body.data.projectId&&!getProject(userId,body.data.projectId))return reply.code(400).send({error:"Projet invalide."});
+      if(body.data.parentId&&!getDump(userId,body.data.parentId))return reply.code(400).send({error:"Élément parent invalide."});
+      const dump=database.transaction(()=>{
+        const before=getDump(userId,id.data);
+        const updated=updateDump(userId,id.data,body.data);
+        if(updated&&body.data.type&&body.data.type!==before?.type)rememberCorrection(userId,updated.content,body.data.type);
+        return updated;
+      })();
+      if(!dump)return reply.code(404).send({error:"Dump introuvable."});
+      return dump;
+    });
     app.delete<{Params:{id:string}}>(`${prefix}/dumps/:id`,{preHandler:auth.requireSession},async(request,reply)=>{const id=idSchema.safeParse(request.params.id);if(!id.success)return validationError(reply,id.error);return deleteDump(request.currentUser!.id,id.data)?reply.code(204).send():reply.code(404).send({error:"Dump introuvable."})});
     app.get(`${prefix}/projects`,{preHandler:auth.requireSession},async(request)=>listProjects(request.currentUser!.id));
     app.post(`${prefix}/projects`,{preHandler:auth.requireSession},async(request,reply)=>{const body=projectSchema.safeParse(request.body);if(!body.success)return validationError(reply,body.error);try{return reply.code(201).send(createProject(request.currentUser!.id,body.data))}catch{return reply.code(409).send({error:"Ce projet existe déjà."})}});

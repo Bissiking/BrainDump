@@ -1,4 +1,4 @@
-// public/integrations.js
+// public/assets/js/pages/integrations.js
 const $ = (selector) => document.querySelector(selector);
 let busy = false;
 async function request(url, method = "GET", body) {

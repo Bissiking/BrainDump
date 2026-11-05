@@ -33,13 +33,21 @@ L’usage principal est une capture personnelle et fréquente depuis un navigate
 - Les dumps sont isolés par l’identifiant Kyros de leur propriétaire. La migration V1 ne rattache automatiquement que les anciennes notes possédant déjà un propriétaire.
 - Applications connectées : enregistrement de Liora, clé d’application affichée une seule fois, consentement personnel PKCE et accès en lecture seule aux notes datées du compte. Autorisations révocables, sans accès aux tâches ni aux notes sans date. Configuration et limites dans DOCS/LIORA_2.1.0.md.
 
+### Extension 2.2.0
+
+Paramètres rassemble le triage personnel facultatif, sa réinitialisation, les
+applications connectées et le compte. Les captures mobile/desktop proposent
+projet, tags, échéance et date de référence indépendante. Les filtres, actions
+rapides avec annulation et SVG locaux Papicons/Lucide complètent les parcours
+existants. Aucun HUB ni nouveau périmètre de données Liora n’est ajouté.
+
 ## Brand Commitments
 
 Le nom BrainDump et la langue française sont conservés. Le ton peut rester direct et légèrement malicieux, sans gêner la compréhension des actions importantes. La direction choisie est un établi numérique sombre et précisionniste : plans bleu ardoise, typographie condensée et accent rouille réservé à l’action. La capture reste visuellement dominante sur chaque format.
 
 ## Evidence on Hand
 
-Le dépôt contient l’application fonctionnelle et ses textes dans `public/`, les routes serveur dans `src/server.ts`, le moteur de classification dans `src/classifier/` et la persistance dans `src/database/`. Aucun témoignage, logo, donnée marketing ou promesse chiffrée ne doit être inventé.
+Le dépôt contient les pages HTML dans `views/`, les ressources navigateur dans `public/assets/` et les sources d’icônes dans `resources/icons/`, les routes serveur dans `src/server.ts`, le moteur de classification dans `src/classifier/` et la persistance dans `src/database/`. Aucun témoignage, logo, donnée marketing ou promesse chiffrée ne doit être inventé.
 
 ## Product Principles
 

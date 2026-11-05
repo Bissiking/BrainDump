@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111a24">
+  <title>BrainDump · Vide ta tête</title>
+  <link rel="icon" href="/assets/branding/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/branding/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/assets/branding/apple-touch-icon.png" sizes="180x180">
+  <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+  <svg class="icon-sprite" aria-hidden="true">
+    <filter id="chalk-edge" x="-4%" y="-6%" width="108%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="1" seed="7" result="grain"/>
+      <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.15" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <div class="app-shell r-app-shell">
+    <aside class="sidebar r-sidebar" aria-label="Navigation principale">
+      <a class="brand" href="#home" data-view="home" aria-label="BrainDump, accueil"><span class="brand-mark"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-brain"/></svg></span><span>BrainDump</span></a>
+      <nav class="side-nav" id="side-nav">
+        <a href="#home" data-view="home" class="active"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-home"/></svg><span>Accueil</span></a>
+        <a href="#inbox" data-view="inbox"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-inbox"/></svg><span>Inbox</span><b id="inbox-count">0</b></a>
+        <a href="#today" data-view="today"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-calendar"/></svg><span>Aujourd’hui</span></a>
+        <a href="#tasks" data-view="tasks"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-check"/></svg><span>Tâches</span></a>
+        <a href="#notes" data-view="notes"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-note"/></svg><span>Notes</span></a>
+        <a href="#ideas" data-view="ideas"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-idea"/></svg><span>Idées</span></a>
+        <a href="#bugs" data-view="bugs"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-bug"/></svg><span>Bugs</span></a>
+        <a href="#reminders" data-view="reminders"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-bell"/></svg><span>Rappels</span></a>
+        <a href="#projects" data-view="projects"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-folder"/></svg><span>Projets</span></a>
+        <a href="#archives" data-view="archives"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-archive"/></svg><span>Archives</span></a>
+      </nav>
+      <a class="settings-link" href="#settings" data-view="settings" aria-label="Paramètres et compte"><span class="avatar" id="user-avatar">?</span><span><strong id="user-name">Mon compte</strong><small>Paramètres</small></span><svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#i-settings"/></svg></a>
+    </aside>
+
+    <main id="main" class="workspace">
+      <header class="workspace-header r-workspace-header">
+        <div><button class="mobile-logo" data-view="home" aria-label="Accueil"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-brain"/></svg></button><h1 id="view-title" class="r-page-title">Accueil</h1><p id="view-subtitle">Un endroit net pour ce qui te traverse.</p></div>
+        <button class="search-trigger" id="open-search" type="button"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-search"/></svg><span>Rechercher partout…</span><kbd>⌘ K</kbd></button>
+      </header>
+
+      <section class="capture-plane r-capture-plane" id="capture-plane" aria-labelledby="capture-title">
+        <h2 id="capture-title" class="r-capture-title">Vide ta tête.</h2>
+        <div class="capture-input-wrap">
+          <textarea id="capture-content" class="r-capture-input" maxlength="20000" placeholder="Écris ici tout ce qui te passe par la tête…" aria-label="Nouvelle pensée"></textarea>
+          <div id="triage-preview" class="triage-preview" aria-live="polite" hidden></div>
+        </div>
+        <div class="type-selector r-capture-types" id="type-selector" aria-label="Type du Dump">
+          <button type="button" data-type="task"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-check"/></svg>Tâche</button>
+          <button type="button" data-type="note"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-note"/></svg>Note</button>
+          <button type="button" data-type="idea"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-idea"/></svg>Idée</button>
+          <button type="button" data-type="bug"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-bug"/></svg>Bug</button>
+          <button type="button" data-type="reminder"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-bell"/></svg>Rappel</button>
+        </div>
+        <div class="capture-options r-capture-options">
+          <button class="options-toggle" id="options-toggle" type="button" aria-expanded="false"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-chevron"/></svg>Plus d’options</button>
+          <div class="capture-fields" id="capture-fields">
+            <label>Projet<select id="capture-project"><option value="">Automatique</option><option value="none">Aucun</option></select></label>
+            <label>Tags<input id="capture-tags" list="known-tags" placeholder="travail, idée"><small>Virgule pour séparer · vide : suggestions</small></label>
+            <label>Échéance<input id="capture-due" type="datetime-local"></label><label>Date de référence<input id="capture-reference" type="datetime-local"></label><label class="check-field"><input id="capture-no-due" type="checkbox">Sans échéance</label>
+          </div>
+          <button class="primary-action" id="save-dump" type="button"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-inbox"/></svg><span>Ajouter à l’Inbox</span></button>
+        </div>
+      </section>
+
+      <section class="content-plane r-resume-list" aria-labelledby="content-title">
+        <header><div><h2 id="content-title" class="r-resume-title">À reprendre</h2><p id="content-count">Chargement…</p></div><button class="text-action" id="view-all" type="button">Voir tout <svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-chevron"/></svg></button></header>
+        <form id="filters" class="filters" role="search" aria-label="Filtrer les pensées">
+          <div class="filter-primary">
+            <label>Recherche<input id="filter-search" type="search" maxlength="200" placeholder="Un mot, une pensée…"></label>
+            <label>Type<select id="filter-type"><option value="">Tous les types</option></select></label>
+            <label>Statut<select id="filter-status"><option value="">Tous les statuts</option></select></label>
+          </div>
+          <div class="filter-summary"><button id="reset-filters" class="text-action" type="button">Réinitialiser</button><output id="filter-count">Aucun filtre actif</output></div>
+          <details id="secondary-filters"><summary>Plus de filtres</summary><div class="filter-secondary">
+            <label>Projet<select id="filter-project"><option value="">Tous les projets</option></select></label>
+            <label>Tag<select id="filter-tag"><option value="">Tous les tags</option></select></label>
+            <label>Priorité<select id="filter-priority"><option value="">Toutes les priorités</option></select></label>
+            <label>Date à filtrer<select id="filter-date-field"><option value="dueAt">Échéance</option><option value="referenceAt">Référence</option><option value="createdAt">Création</option><option value="updatedAt">Modification</option></select></label>
+            <label>Du<input id="filter-from" type="date"></label><label>Au<input id="filter-to" type="date"></label>
+            <label class="check-field"><input id="filter-favorite" type="checkbox">Favoris uniquement</label>
+          </div></details>
+        </form>
+        <div id="dump-list" class="dump-list" aria-live="polite" aria-busy="true"><div class="skeleton-list" aria-label="Chargement"><i></i><i></i><i></i><i></i></div></div>
+      </section>
+    </main>
+
+    <aside class="context-panel r-today-panel" id="context-panel" aria-label="Contexte">
+      <div id="today-context">
+        <header><h2 class="r-today-title"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-calendar"/></svg>Aujourd’hui</h2><button class="icon-button" type="button" data-view="today" aria-label="Ouvrir Aujourd’hui"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-chevron"/></svg></button></header>
+        <div id="today-summary" class="today-summary"><div class="skeleton-list"><i></i><i></i><i></i></div></div>
+      </div>
+      <form id="detail-form" class="detail-form" hidden>
+        <header><button class="icon-button" id="favorite-dump" type="button" aria-label="Ajouter aux favoris"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-star"/></svg></button><span id="save-state">Enregistré</span><button class="icon-button" id="close-detail" type="button" aria-label="Fermer"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-close"/></svg></button></header>
+        <input id="detail-title" class="detail-title" maxlength="200" placeholder="Sans titre" aria-label="Titre">
+        <label>Contenu<textarea id="detail-content" maxlength="20000" placeholder="Commence à écrire…"></textarea></label>
+        <div class="detail-grid">
+          <label>Type<select id="detail-type"></select></label><label>Statut<select id="detail-status"></select></label>
+          <label>Priorité<select id="detail-priority"></select></label><label>Projet<select id="detail-project"><option value="">Aucun</option></select></label>
+          <label>Échéance<input id="detail-due" type="datetime-local"></label><label>Date de référence<input id="detail-reference" type="datetime-local"></label><label>Tags<input id="detail-tags" list="known-tags" placeholder="tag, tag"></label>
+        </div>
+        <dl id="detail-dates" class="detail-dates"></dl><div id="detail-attachments" class="attachments"></div>
+        <footer><button id="archive-dump" type="button"><svg class="icon" aria-hidden="true"><use href="/assets/icons/sprite.svg#i-archive"/></svg><span>Archiver</span></button><button class="danger-action" id="delete-dump" type="button"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-trash"/></svg>Supprimer</button></footer>
+      </form>
+    </aside>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navigation mobile">
+    <button data-view="inbox"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-inbox"/></svg><span>Inbox</span></button>
+    <button data-view="tasks"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-check"/></svg><span>Tâches</span></button>
+    <button id="mobile-add" class="mobile-add" aria-label="Capture rapide"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-plus"/></svg></button>
+    <button data-view="notes"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-note"/></svg><span>Notes</span></button>
+    <button data-view="more"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-more"/></svg><span>Plus</span></button>
+  </nav>
+
+  <dialog id="mobile-capture" class="bottom-sheet">
+    <form method="dialog" class="sheet-head"><strong>Capture rapide</strong><button aria-label="Fermer"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-close"/></svg></button></form>
+    <div class="sheet-body">
+    <div class="capture-input-wrap">
+      <textarea id="mobile-content" maxlength="20000" placeholder="Qu’est-ce qui te traverse l’esprit ?" aria-label="Nouvelle pensée mobile" autofocus></textarea>
+      <div id="mobile-triage-preview" class="triage-preview" aria-live="polite" hidden></div>
+    </div>
+    <div class="mobile-types" id="mobile-types">
+      <button type="button" data-type="task"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-check"/></svg>Tâche</button><button type="button" data-type="note"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-note"/></svg>Note</button><button type="button" data-type="idea"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-idea"/></svg>Idée</button><button type="button" data-type="bug"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-bug"/></svg>Bug</button><button type="button" data-type="reminder"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-bell"/></svg>Rappel</button>
+    </div>
+    <details class="mobile-options"><summary>Projet, tags et dates</summary><div class="mobile-fields">
+      <label>Projet<select id="mobile-project"><option value="">Automatique</option><option value="none">Aucun</option></select></label>
+      <label>Tags<input id="mobile-tags" list="known-tags" placeholder="travail, idée"><small>Virgule pour séparer · vide : suggestions</small></label>
+      <label>Échéance<input id="mobile-due" type="datetime-local"></label>
+      <label>Date de référence<input id="mobile-reference" type="datetime-local"></label>
+      <label class="check-field"><input id="mobile-no-due" type="checkbox">Sans échéance</label>
+    </div></details>
+    </div>
+    <button class="primary-action mobile-save" id="mobile-save" type="button">Ajouter à l’Inbox</button>
+  </dialog>
+
+  <dialog id="search-dialog" class="search-dialog">
+    <form method="dialog" class="search-box"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-search"/></svg><input id="global-search" type="search" aria-label="Rechercher dans toutes les pensées" placeholder="Chercher dans les titres, contenus, projets et tags…" autocomplete="off"><button aria-label="Fermer"><svg class="icon" aria-hidden="true" focusable="false"><use href="/assets/icons/sprite.svg#i-close"/></svg></button></form>
+    <div id="search-results" class="search-results"><p>Commence à écrire pour retrouver une pensée.</p></div>
+  </dialog>
+
+  <datalist id="known-tags"></datalist>
+  <div id="toast-region" class="toast-region" aria-live="polite"></div>
+  <script type="module" src="/assets/js/pages/app.js"></script>
+</body>
+</html>
